@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:portfolio_eriel/src/widgets/project_logo.dart';
-import 'package:portfolio_eriel/src/widgets/spacers.dart';
-import 'package:portfolio_eriel/src/widgets/tech_tag.dart';
+import 'package:portfolio_eriel/app/shared/__.dart';
 
 class Tmp extends StatelessWidget {
 
@@ -46,7 +44,7 @@ class Tmp extends StatelessWidget {
           Container(
             decoration: BoxDecoration(),
             padding: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
-            child: buildTagRow(),
+            // child: buildTagRow(),
           ),
         ],
       ),
@@ -87,20 +85,20 @@ class Tmp extends StatelessWidget {
     );
   }
 
-  Widget buildTagRow() {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        TechTag(),
-        const HSp8(),
-        TechTag(),
-        const HSp8(),
-        TechTag(),
-        const HSp8(),
-        TechTag(),
-      ],
-    );
-  }
+  // Widget buildTagRow() {
+  //   return Row(
+  //     mainAxisSize: MainAxisSize.min,
+  //     children: [
+  //       TechTag(),
+  //       const HSp8(),
+  //       TechTag(),
+  //       const HSp8(),
+  //       TechTag(),
+  //       const HSp8(),
+  //       TechTag(),
+  //     ],
+  //   );
+  // }
 
   Widget oldTagRow() {
     return Row(

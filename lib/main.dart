@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:portfolio_eriel/src/pages/home.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:portfolio_eriel/app/bloc/bloc.dart';
+import 'package:portfolio_eriel/app/bloc/event.dart';
+import 'package:portfolio_eriel/app/presentation/home/home.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(BlocProvider(create: (_) => FilterBloc()..add(const FilterEventInit()), child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {

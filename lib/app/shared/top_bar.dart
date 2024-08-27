@@ -1,6 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:portfolio_eriel/src/widgets/spacers.dart';
+import 'package:portfolio_eriel/app/shared/__.dart';
 
 class TopBar extends StatelessWidget {
   const TopBar({super.key});

@@ -35,9 +35,18 @@ class Project {
     this.industries,
   });
 
+  static List<String> allTechTags() {
+    return Project.myProjects()
+        .map((p) => p.techTags ?? [])
+        .toList()
+        .expand((element) => element)
+        .toSet() // Convierte a Set para eliminar duplicados
+        .toList(); // Vuelve a convertir a List
+  }
+
   static List<Project> myProjects() {
     List<Project> samples = [];
-    for(int i = 0; i < 20; i++) {
+    for (int i = 0; i < 20; i++) {
       samples.add(sampleProject());
     }
     return samples;
@@ -47,8 +56,7 @@ class Project {
     return Project(
       id: 1,
       title: "JukeAudio",
-      logoUrl:
-      "https://cdn.prod.website-files.com/65026a74e1e0ef386dea70f2/65046543b137643501680d7b_logo.webp",
+      logoUrl: "https://cdn.prod.website-files.com/65026a74e1e0ef386dea70f2/65046543b137643501680d7b_logo.webp",
       subtitle: "Test Subtitle",
       description: "Test Description",
       techTags: ["Python", "Flutter", "Django", "Flask", "IoT", "Postgres"],
@@ -57,14 +65,13 @@ class Project {
         "https://cdn.prod.website-files.com/65026a74e1e0ef386dea70f2/66b2499d518b1932ed559465_The-Mobile-App.webp",
         "https://cdn.prod.website-files.com/65026a74e1e0ef386dea70f2/66b2499d518b1932ed559465_The-Mobile-App.webp",
       ],
-      appLink:
-      "https://play.google.com/store/apps/details?id=com.juke.audio.juke_audio&pcampaignid=web_share",
+      appLink: "https://play.google.com/store/apps/details?id=com.juke.audio.juke_audio&pcampaignid=web_share",
       projectStartDate: DateTime(2022, 1, 1),
       projectLaunchDate: DateTime(2023, 4, 7),
       isInProgress: false,
       projectOwner: "Juke Audio",
       projectOwnerLogoUrl:
-      "https://cdn.prod.website-files.com/65026a74e1e0ef386dea70f2/65046543b137643501680d7b_logo.webp",
+          "https://cdn.prod.website-files.com/65026a74e1e0ef386dea70f2/65046543b137643501680d7b_logo.webp",
       projectType: ProjectType.freelance,
       industries: ["Home Entertainment", "IoT"],
     );

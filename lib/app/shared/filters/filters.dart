@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:portfolio_eriel/src/widgets/small_banding_banner.dart';
-import 'package:portfolio_eriel/src/widgets/spacers.dart';
-import 'package:portfolio_eriel/src/widgets/time_period_selection.dart';
-import 'package:portfolio_eriel/src/widgets/vertical_tag_filtering.dart';
+import 'package:portfolio_eriel/app/shared/__.dart';
+import 'package:portfolio_eriel/domain/entities/__.dart';
 
 class FilteringSection extends StatelessWidget {
   const FilteringSection({super.key});
@@ -22,18 +20,30 @@ class FilteringSection extends StatelessWidget {
           children: [
             SmallBrandingBanner(),
             VSp24(),
-            Text("Filter by tech"),
-            VSp8(),
             VerticalTagFiltering(),
             VSp24(),
-            SizedBox(width: 200, child: Divider(),),
-            VSp10(),
-            Text("Time period selection"),
-            VSp8(),
             TimePeriodSelection(),
           ],
         ),
       ),
     );
   }
+}
+
+Widget buildTechTags({List<String>? techTags, Function(String)? onTab, Function(String)? onRemove}) {
+  List<Widget> tags = (techTags ?? Project.allTechTags())
+      .map(
+        (e) => TechTag(
+          name: e,
+          onTap: onTab == null ? null : () => onTab.call(e),
+          onRemoved: onRemove == null ? null : () => onRemove.call(e),
+        ),
+      )
+      .toList();
+  return Wrap(
+    alignment: WrapAlignment.start,
+    spacing: 8.0, // gap between adjacent chips
+    runSpacing: 4.0, // gap between lines
+    children: tags,
+  );
 }

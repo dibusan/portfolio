@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:portfolio_eriel/src/widgets/project_logo.dart';
-import 'package:portfolio_eriel/src/widgets/project_title_section.dart';
-import 'package:portfolio_eriel/src/widgets/spacers.dart';
-import 'package:portfolio_eriel/src/widgets/tech_tag.dart';
+import 'package:portfolio_eriel/app/shared/__.dart';
 
 class ProjectPreviewCard extends StatelessWidget {
   const ProjectPreviewCard({super.key});
@@ -48,7 +45,6 @@ class ProjectPreviewCard extends StatelessWidget {
                     ],
                   ),
                   const VSp8(),
-                  buildTagRow(),
                 ],
               ),
             ),
@@ -60,20 +56,20 @@ class ProjectPreviewCard extends StatelessWidget {
 
 
 
-  Widget buildTagRow() {
-    return const Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        TechTag(),
-        HSp8(),
-        TechTag(),
-        HSp8(),
-        TechTag(),
-        HSp8(),
-        TechTag(),
-      ],
-    );
-  }
+  // Widget buildTagRow() {
+  //   return const Row(
+  //     mainAxisSize: MainAxisSize.min,
+  //     children: [
+  //       TechTag(),
+  //       HSp8(),
+  //       TechTag(),
+  //       HSp8(),
+  //       TechTag(),
+  //       HSp8(),
+  //       TechTag(),
+  //     ],
+  //   );
+  // }
 
 
 }

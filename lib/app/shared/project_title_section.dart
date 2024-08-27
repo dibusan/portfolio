@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:portfolio_eriel/src/widgets/spacers.dart';
+import 'package:portfolio_eriel/app/shared/__.dart';
 
 class ProjectTitleSection extends StatelessWidget {
   const ProjectTitleSection({super.key});

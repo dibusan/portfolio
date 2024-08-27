@@ -1,8 +1,8 @@
 import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:portfolio_eriel/src/widgets/project_preview_card.dart';
+import 'package:portfolio_eriel/app/shared/__.dart';
 
-import '../data/models/project.dart';
+import '../../domain/entities/project/project.dart';
 
 class ProjectsGrid extends StatelessWidget {
   final List<Project> projects;
