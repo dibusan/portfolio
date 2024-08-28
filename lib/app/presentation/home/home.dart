@@ -72,7 +72,7 @@ class _HomePageState extends State<HomePage> {
                 Container(
                   width: 330,
                   margin: const EdgeInsets.only(top: 16, bottom: 16, left: 16, right: 8),
-                  child: FilteringSection(projects: projects),
+                  child: FilteringSection(projects: stateProjects.projects),
                 ),
                 Expanded(
                   child: Column(

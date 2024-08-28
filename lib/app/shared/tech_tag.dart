@@ -13,7 +13,7 @@ class TechTag extends StatelessWidget {
       onTap: onTap,
       child: Chip(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        color: WidgetStateProperty.all(onRemoved == null ? Colors.grey.shade200 : Colors.red.shade50),
+        color: WidgetStateProperty.all(onRemoved == null ? Colors.grey.shade50 : Colors.red.shade50),
         label: Text(name),
         padding: EdgeInsets.zero,
         onDeleted: onRemoved,
