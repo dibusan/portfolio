@@ -1,12 +1,14 @@
 import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
 import 'package:flutter/material.dart';
-import 'package:portfolio_eriel/src/widgets/project_logo.dart';
-import 'package:portfolio_eriel/src/widgets/project_title_section.dart';
-import 'package:portfolio_eriel/src/widgets/spacers.dart';
-import 'package:portfolio_eriel/src/widgets/tech_tag.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:portfolio_eriel/app/bloc/project/project_bloc.dart';
+import 'package:portfolio_eriel/app/shared/__.dart';
+import 'package:portfolio_eriel/domain/entities/__.dart';
 
 class ProjectDetails extends StatelessWidget {
-  const ProjectDetails({super.key});
+  final Project? project;
+
+  const ProjectDetails({super.key, this.project});
 
   @override
   Widget build(BuildContext context) {
@@ -19,14 +21,23 @@ class ProjectDetails extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: IconButton(
+                    onPressed: () {
+                      BlocProvider.of<ProjectBloc>(context).add(const ProjectEventSelect(project: null));
+                    },
+                    icon: const Icon(Icons.close),
+                  ),
+                ),
                 // Logo -> Title -> Subtitles
                 Container(
                   padding: const EdgeInsets.all(16),
-                  child: const Column(
+                  child: Column(
                     children: <Widget>[
-                      ProjectLogo(),
-                      VSp8(),
-                      ProjectTitleSection(),
+                      ProjectLogo(imageUrl: project?.logoUrl),
+                      const VSp8(),
+                      ProjectMiniInfoSection(project: project, expand: true),
                     ],
                   ),
                 ),
@@ -36,8 +47,7 @@ class ProjectDetails extends StatelessWidget {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
@@ -90,15 +100,13 @@ class ProjectDetails extends StatelessWidget {
               children: <Widget>[
                 Container(
                   decoration: const BoxDecoration(),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+                  padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
                       Container(
                         decoration: const BoxDecoration(),
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 0, vertical: 0),
+                        padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: <Widget>[
@@ -120,8 +128,7 @@ class ProjectDetails extends StatelessWidget {
                       const SizedBox(height: 10),
                       Container(
                         decoration: const BoxDecoration(),
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 0, vertical: 0),
+                        padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: <Widget>[
@@ -156,8 +163,7 @@ class ProjectDetails extends StatelessWidget {
                       const SizedBox(height: 10),
                       Container(
                         decoration: const BoxDecoration(),
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 0, vertical: 0),
+                        padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: <Widget>[
@@ -209,15 +215,13 @@ class ProjectDetails extends StatelessWidget {
               children: <Widget>[
                 Container(
                   decoration: const BoxDecoration(),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+                  padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
                       Container(
                         decoration: const BoxDecoration(),
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 0, vertical: 0),
+                        padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: <Widget>[
@@ -252,8 +256,7 @@ class ProjectDetails extends StatelessWidget {
                       const SizedBox(height: 10),
                       Container(
                         decoration: const BoxDecoration(),
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 0, vertical: 0),
+                        padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: <Widget>[
@@ -288,8 +291,7 @@ class ProjectDetails extends StatelessWidget {
                       const SizedBox(height: 10),
                       Container(
                         decoration: const BoxDecoration(),
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 0, vertical: 0),
+                        padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: <Widget>[
@@ -390,16 +392,12 @@ class ProjectDetails extends StatelessWidget {
   }
 
   Widget buildTechTags() {
-    List<Widget> tags = [];
-    for (int i = 0; i < 8; i++) {
-      tags.add(const TechTag());
-    }
-
+    List<String> tags = Project.allTechTags();
     return DynamicHeightGridView(
       itemCount: tags.length,
       crossAxisCount: 4,
       builder: (context, index) {
-        return const TechTag();
+        return TechTag(name: tags[index]);
       },
     );
   }

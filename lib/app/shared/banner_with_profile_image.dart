@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:portfolio_eriel/src/widgets/profile_banner.dart';
-import 'package:portfolio_eriel/src/widgets/profile_image.dart';
+import 'package:portfolio_eriel/app/shared/__.dart';
 
 class BannerWithProfileImage extends StatelessWidget {
   final String profileImageUrl;
