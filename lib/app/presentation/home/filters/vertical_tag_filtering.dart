@@ -5,21 +5,23 @@ import 'package:portfolio_eriel/app/bloc/filter/event.dart';
 import 'package:portfolio_eriel/app/bloc/filter/state.dart';
 import 'package:portfolio_eriel/app/presentation/home/filters/filters.dart';
 import 'package:portfolio_eriel/app/presentation/home/filters/search_bar.dart';
+import 'package:portfolio_eriel/app/presentation/home/widgets/tech_tag_wrap.dart';
 import 'package:portfolio_eriel/app/shared/__.dart';
 import 'package:portfolio_eriel/domain/entities/__.dart';
 
 class VerticalTagFiltering extends StatelessWidget {
-  const VerticalTagFiltering({super.key});
+  final List<Project> projects;
+
+  const VerticalTagFiltering({super.key, required this.projects});
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
     return SizedBox(
-      width: size.width * 0.16,
+      width: double.maxFinite,
       child: BlocBuilder<FilterBloc, FilterState>(
         builder: (context, state) {
           final bloc = BlocProvider.of<FilterBloc>(context);
-          List<String> tags = Project.allTechTags();
+          List<String> tags = Project.allTechTags(projects: projects);
           tags = tags
               .where(
                   (ele) => ele.toLowerCase().contains(state.filterTag.toLowerCase()) && !state.techTags.contains(ele))
@@ -38,7 +40,7 @@ class VerticalTagFiltering extends StatelessWidget {
                     minHeight: 20,
                     minWidth: double.maxFinite,
                   ),
-                  child: buildTechTags(
+                  child: TechTagsWrap(
                       techTags: state.techTags,
                       onRemove: (tagName) {
                         context.read<FilterBloc>().add(FilterEventTechTag(name: tagName, removed: true));
@@ -49,11 +51,12 @@ class VerticalTagFiltering extends StatelessWidget {
               const SizedBox(width: 100, child: Divider()),
               SizedBox(
                 width: double.maxFinite,
-                child: buildTechTags(
-                    techTags: tags,
-                    onTab: (tagName) {
-                      context.read<FilterBloc>().add(FilterEventTechTag(name: tagName, removed: false));
-                    }),
+                child: TechTagsWrap(
+                  techTags: tags,
+                  onTab: (tagName) {
+                    context.read<FilterBloc>().add(FilterEventTechTag(name: tagName, removed: false));
+                  },
+                ),
               ),
             ],
           );

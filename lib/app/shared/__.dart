@@ -9,4 +9,3 @@ export './projects_grid.dart';
 export './spacers.dart';
 export './tech_tag.dart';
 export './tmp.dart';
-export './top_bar.dart';

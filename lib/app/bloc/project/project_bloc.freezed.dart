@@ -190,6 +190,8 @@ abstract class _$$ProjectEventSelectImplCopyWith<$Res> {
       __$$ProjectEventSelectImplCopyWithImpl<$Res>;
   @useResult
   $Res call({Project? project});
+
+  $ProjectCopyWith<$Res>? get project;
 }
 
 /// @nodoc
@@ -213,6 +215,20 @@ class __$$ProjectEventSelectImplCopyWithImpl<$Res>
           : project // ignore: cast_nullable_to_non_nullable
               as Project?,
     ));
+  }
+
+  /// Create a copy of ProjectEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ProjectCopyWith<$Res>? get project {
+    if (_value.project == null) {
+      return null;
+    }
+
+    return $ProjectCopyWith<$Res>(_value.project!, (value) {
+      return _then(_value.copyWith(project: value));
+    });
   }
 }
 
@@ -350,6 +366,8 @@ abstract class $ProjectStateCopyWith<$Res> {
       Developer? developer,
       List<Project> projects,
       Project? selected});
+
+  $ProjectCopyWith<$Res>? get selected;
 }
 
 /// @nodoc
@@ -391,6 +409,20 @@ class _$ProjectStateCopyWithImpl<$Res, $Val extends ProjectState>
               as Project?,
     ) as $Val);
   }
+
+  /// Create a copy of ProjectState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ProjectCopyWith<$Res>? get selected {
+    if (_value.selected == null) {
+      return null;
+    }
+
+    return $ProjectCopyWith<$Res>(_value.selected!, (value) {
+      return _then(_value.copyWith(selected: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -406,6 +438,9 @@ abstract class _$$ProjectStateImplCopyWith<$Res>
       Developer? developer,
       List<Project> projects,
       Project? selected});
+
+  @override
+  $ProjectCopyWith<$Res>? get selected;
 }
 
 /// @nodoc

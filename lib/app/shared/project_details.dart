@@ -1,5 +1,7 @@
 import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:portfolio_eriel/app/bloc/project/project_bloc.dart';
 import 'package:portfolio_eriel/app/shared/__.dart';
 import 'package:portfolio_eriel/domain/entities/__.dart';
 
@@ -19,6 +21,15 @@ class ProjectDetails extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: IconButton(
+                    onPressed: () {
+                      BlocProvider.of<ProjectBloc>(context).add(const ProjectEventSelect(project: null));
+                    },
+                    icon: const Icon(Icons.close),
+                  ),
+                ),
                 // Logo -> Title -> Subtitles
                 Container(
                   padding: const EdgeInsets.all(16),

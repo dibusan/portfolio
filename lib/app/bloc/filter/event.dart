@@ -1,14 +1,12 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:portfolio_eriel/app/bloc/filter/state.dart';
-import 'package:portfolio_eriel/domain/entities/__.dart';
+import 'package:portfolio_eriel/app/shared/__.dart';
 
 part 'event.freezed.dart';
 
 @freezed
 abstract class FilterEvent with _$FilterEvent {
-  const factory FilterEvent.init({
-    @Default([]) List<Project> projects,
-  }) = FilterEventInit;
+  const factory FilterEvent.init() = FilterEventInit;
 
   const factory FilterEvent.datetime({
     required DateFilter dateTime,

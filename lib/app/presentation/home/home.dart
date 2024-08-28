@@ -6,7 +6,7 @@ import 'package:portfolio_eriel/app/bloc/filter/event.dart';
 import 'package:portfolio_eriel/app/bloc/filter/state.dart';
 import 'package:portfolio_eriel/app/bloc/project/project_bloc.dart';
 import 'package:portfolio_eriel/app/presentation/home/filters/filters.dart';
-
+import 'package:portfolio_eriel/app/presentation/home/widgets/header.dart';
 import 'package:portfolio_eriel/app/shared/__.dart';
 import 'package:portfolio_eriel/domain/entities/__.dart';
 
@@ -27,9 +27,9 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    return BlocBuilder<FilterBloc, FilterState>(
-      builder: (context, stateFilters) {
-        return BlocBuilder<ProjectBloc, ProjectState>(builder: (_, stateProjects) {
+    return BlocBuilder<ProjectBloc, ProjectState>(
+      builder: (context, stateProjects) {
+        return BlocBuilder<FilterBloc, FilterState>(builder: (_, stateFilters) {
           List<Project> projects = stateProjects.projects;
           List<String> tags = stateFilters.techTags;
           final String search = stateFilters.filterGeneral;
@@ -72,15 +72,13 @@ class _HomePageState extends State<HomePage> {
                 Container(
                   width: 330,
                   margin: const EdgeInsets.only(top: 16, bottom: 16, left: 16, right: 8),
-                  child: const FilteringSection(),
+                  child: FilteringSection(projects: projects),
                 ),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Center(
-                        child: TopBar(),
-                      ),
+                      const HeaderAppBar(),
                       Text('Total Projects: ${projects.length}', textAlign: TextAlign.start),
                       Expanded(
                         child: Row(
@@ -95,6 +93,7 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ),
                             AnimatedContainer(
+                              constraints: BoxConstraints(minWidth: stateProjects.selected == null ? 0 : 350),
                               width: stateProjects.selected == null ? 0 : size.width * 0.25,
                               duration: const Duration(milliseconds: 600),
                               child: ProjectDetails(project: stateProjects.selected),

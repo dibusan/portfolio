@@ -32,12 +32,12 @@ class FilterBloc extends Bloc<FilterEvent, FilterState> {
   }
 
   void _init(FilterEventInit event, Emitter<FilterState> emit) async {
-    List<Project> projects = Project.myProjects();
     final DateTime dateTime = DateTime.now();
 
     emit(
       state.copyWith(
         filterTag: filterTagController.text,
+        filterGeneral: generalController.text,
         dates: [
           DateFilter(date: dateTime, title: "All"),
           DateFilter(date: dateTime.subtract(const Duration(days: 30 * 6)), title: "6 months"),

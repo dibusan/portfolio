@@ -18,7 +18,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$FilterEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<Project> projects) init,
+    required TResult Function(List<String> techTags) init,
     required TResult Function(DateFilter dateTime) datetime,
     required TResult Function(String value) writeFilterTag,
     required TResult Function(String value) writeFilterGeneral,
@@ -27,7 +27,7 @@ mixin _$FilterEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<Project> projects)? init,
+    TResult? Function(List<String> techTags)? init,
     TResult? Function(DateFilter dateTime)? datetime,
     TResult? Function(String value)? writeFilterTag,
     TResult? Function(String value)? writeFilterGeneral,
@@ -36,7 +36,7 @@ mixin _$FilterEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<Project> projects)? init,
+    TResult Function(List<String> techTags)? init,
     TResult Function(DateFilter dateTime)? datetime,
     TResult Function(String value)? writeFilterTag,
     TResult Function(String value)? writeFilterGeneral,
@@ -101,7 +101,7 @@ abstract class _$$FilterEventInitImplCopyWith<$Res> {
           $Res Function(_$FilterEventInitImpl) then) =
       __$$FilterEventInitImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({List<Project> projects});
+  $Res call({List<String> techTags});
 }
 
 /// @nodoc
@@ -117,13 +117,13 @@ class __$$FilterEventInitImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? projects = null,
+    Object? techTags = null,
   }) {
     return _then(_$FilterEventInitImpl(
-      projects: null == projects
-          ? _value._projects
-          : projects // ignore: cast_nullable_to_non_nullable
-              as List<Project>,
+      techTags: null == techTags
+          ? _value._techTags
+          : techTags // ignore: cast_nullable_to_non_nullable
+              as List<String>,
     ));
   }
 }
@@ -131,21 +131,21 @@ class __$$FilterEventInitImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$FilterEventInitImpl implements FilterEventInit {
-  const _$FilterEventInitImpl({final List<Project> projects = const []})
-      : _projects = projects;
+  const _$FilterEventInitImpl({final List<String> techTags = const []})
+      : _techTags = techTags;
 
-  final List<Project> _projects;
+  final List<String> _techTags;
   @override
   @JsonKey()
-  List<Project> get projects {
-    if (_projects is EqualUnmodifiableListView) return _projects;
+  List<String> get techTags {
+    if (_techTags is EqualUnmodifiableListView) return _techTags;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_projects);
+    return EqualUnmodifiableListView(_techTags);
   }
 
   @override
   String toString() {
-    return 'FilterEvent.init(projects: $projects)';
+    return 'FilterEvent.init(techTags: $techTags)';
   }
 
   @override
@@ -153,12 +153,12 @@ class _$FilterEventInitImpl implements FilterEventInit {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$FilterEventInitImpl &&
-            const DeepCollectionEquality().equals(other._projects, _projects));
+            const DeepCollectionEquality().equals(other._techTags, _techTags));
   }
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_projects));
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(_techTags));
 
   /// Create a copy of FilterEvent
   /// with the given fields replaced by the non-null parameter values.
@@ -172,31 +172,31 @@ class _$FilterEventInitImpl implements FilterEventInit {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<Project> projects) init,
+    required TResult Function(List<String> techTags) init,
     required TResult Function(DateFilter dateTime) datetime,
     required TResult Function(String value) writeFilterTag,
     required TResult Function(String value) writeFilterGeneral,
     required TResult Function(String name, bool removed) techTag,
   }) {
-    return init(projects);
+    return init(techTags);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<Project> projects)? init,
+    TResult? Function(List<String> techTags)? init,
     TResult? Function(DateFilter dateTime)? datetime,
     TResult? Function(String value)? writeFilterTag,
     TResult? Function(String value)? writeFilterGeneral,
     TResult? Function(String name, bool removed)? techTag,
   }) {
-    return init?.call(projects);
+    return init?.call(techTags);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<Project> projects)? init,
+    TResult Function(List<String> techTags)? init,
     TResult Function(DateFilter dateTime)? datetime,
     TResult Function(String value)? writeFilterTag,
     TResult Function(String value)? writeFilterGeneral,
@@ -204,7 +204,7 @@ class _$FilterEventInitImpl implements FilterEventInit {
     required TResult orElse(),
   }) {
     if (init != null) {
-      return init(projects);
+      return init(techTags);
     }
     return orElse();
   }
@@ -251,10 +251,10 @@ class _$FilterEventInitImpl implements FilterEventInit {
 }
 
 abstract class FilterEventInit implements FilterEvent {
-  const factory FilterEventInit({final List<Project> projects}) =
+  const factory FilterEventInit({final List<String> techTags}) =
       _$FilterEventInitImpl;
 
-  List<Project> get projects;
+  List<String> get techTags;
 
   /// Create a copy of FilterEvent
   /// with the given fields replaced by the non-null parameter values.
@@ -333,7 +333,7 @@ class _$FilterEventDateTimeImpl implements FilterEventDateTime {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<Project> projects) init,
+    required TResult Function(List<String> techTags) init,
     required TResult Function(DateFilter dateTime) datetime,
     required TResult Function(String value) writeFilterTag,
     required TResult Function(String value) writeFilterGeneral,
@@ -345,7 +345,7 @@ class _$FilterEventDateTimeImpl implements FilterEventDateTime {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<Project> projects)? init,
+    TResult? Function(List<String> techTags)? init,
     TResult? Function(DateFilter dateTime)? datetime,
     TResult? Function(String value)? writeFilterTag,
     TResult? Function(String value)? writeFilterGeneral,
@@ -357,7 +357,7 @@ class _$FilterEventDateTimeImpl implements FilterEventDateTime {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<Project> projects)? init,
+    TResult Function(List<String> techTags)? init,
     TResult Function(DateFilter dateTime)? datetime,
     TResult Function(String value)? writeFilterTag,
     TResult Function(String value)? writeFilterGeneral,
@@ -494,7 +494,7 @@ class _$FilterEventWriteTagImpl implements FilterEventWriteTag {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<Project> projects) init,
+    required TResult Function(List<String> techTags) init,
     required TResult Function(DateFilter dateTime) datetime,
     required TResult Function(String value) writeFilterTag,
     required TResult Function(String value) writeFilterGeneral,
@@ -506,7 +506,7 @@ class _$FilterEventWriteTagImpl implements FilterEventWriteTag {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<Project> projects)? init,
+    TResult? Function(List<String> techTags)? init,
     TResult? Function(DateFilter dateTime)? datetime,
     TResult? Function(String value)? writeFilterTag,
     TResult? Function(String value)? writeFilterGeneral,
@@ -518,7 +518,7 @@ class _$FilterEventWriteTagImpl implements FilterEventWriteTag {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<Project> projects)? init,
+    TResult Function(List<String> techTags)? init,
     TResult Function(DateFilter dateTime)? datetime,
     TResult Function(String value)? writeFilterTag,
     TResult Function(String value)? writeFilterGeneral,
@@ -657,7 +657,7 @@ class _$FilterEventWriteGeneralImpl implements FilterEventWriteGeneral {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<Project> projects) init,
+    required TResult Function(List<String> techTags) init,
     required TResult Function(DateFilter dateTime) datetime,
     required TResult Function(String value) writeFilterTag,
     required TResult Function(String value) writeFilterGeneral,
@@ -669,7 +669,7 @@ class _$FilterEventWriteGeneralImpl implements FilterEventWriteGeneral {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<Project> projects)? init,
+    TResult? Function(List<String> techTags)? init,
     TResult? Function(DateFilter dateTime)? datetime,
     TResult? Function(String value)? writeFilterTag,
     TResult? Function(String value)? writeFilterGeneral,
@@ -681,7 +681,7 @@ class _$FilterEventWriteGeneralImpl implements FilterEventWriteGeneral {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<Project> projects)? init,
+    TResult Function(List<String> techTags)? init,
     TResult Function(DateFilter dateTime)? datetime,
     TResult Function(String value)? writeFilterTag,
     TResult Function(String value)? writeFilterGeneral,
@@ -825,7 +825,7 @@ class _$FilterEventTechTagImpl implements FilterEventTechTag {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<Project> projects) init,
+    required TResult Function(List<String> techTags) init,
     required TResult Function(DateFilter dateTime) datetime,
     required TResult Function(String value) writeFilterTag,
     required TResult Function(String value) writeFilterGeneral,
@@ -837,7 +837,7 @@ class _$FilterEventTechTagImpl implements FilterEventTechTag {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<Project> projects)? init,
+    TResult? Function(List<String> techTags)? init,
     TResult? Function(DateFilter dateTime)? datetime,
     TResult? Function(String value)? writeFilterTag,
     TResult? Function(String value)? writeFilterGeneral,
@@ -849,7 +849,7 @@ class _$FilterEventTechTagImpl implements FilterEventTechTag {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<Project> projects)? init,
+    TResult Function(List<String> techTags)? init,
     TResult Function(DateFilter dateTime)? datetime,
     TResult Function(String value)? writeFilterTag,
     TResult Function(String value)? writeFilterGeneral,

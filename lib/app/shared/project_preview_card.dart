@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:portfolio_eriel/app/bloc/project/project_bloc.dart';
+import 'package:portfolio_eriel/app/presentation/home/filters/filters.dart';
+import 'package:portfolio_eriel/app/presentation/home/widgets/tech_tag_wrap.dart';
 import 'package:portfolio_eriel/app/shared/__.dart';
 import 'package:portfolio_eriel/domain/entities/__.dart';
 
@@ -42,6 +44,7 @@ class ProjectPreviewCard extends StatelessWidget {
                 child: Container(
                   padding: const EdgeInsets.all(16),
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Row(
                         mainAxisSize: MainAxisSize.min,
@@ -52,6 +55,10 @@ class ProjectPreviewCard extends StatelessWidget {
                         ],
                       ),
                       const VSp8(),
+                      TechTagsWrap(
+                        techTags: project.techTags,
+                        only4: true,
+                      ),
                     ],
                   ),
                 ),

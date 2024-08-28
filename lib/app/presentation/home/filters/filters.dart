@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:portfolio_eriel/app/bloc/project/project_bloc.dart';
 import 'package:portfolio_eriel/app/presentation/home/filters/small_banding_banner.dart';
 import 'package:portfolio_eriel/app/presentation/home/filters/time_period_selection.dart';
 import 'package:portfolio_eriel/app/presentation/home/filters/vertical_tag_filtering.dart';
@@ -6,7 +8,9 @@ import 'package:portfolio_eriel/app/shared/__.dart';
 import 'package:portfolio_eriel/domain/entities/__.dart';
 
 class FilteringSection extends StatelessWidget {
-  const FilteringSection({super.key});
+  final List<Project> projects;
+
+  const FilteringSection({super.key, required this.projects});
 
   @override
   Widget build(BuildContext context) {
@@ -19,34 +23,16 @@ class FilteringSection extends StatelessWidget {
       ),
       child: Container(
         padding: const EdgeInsets.all(16),
-        child: const Column(
+        child: Column(
           children: [
-            SmallBrandingBanner(),
-            VSp24(),
-            VerticalTagFiltering(),
-            VSp24(),
-            TimePeriodSelection(),
+            const SmallBrandingBanner(),
+            const VSp24(),
+            VerticalTagFiltering(projects: projects),
+            const VSp24(),
+            const TimePeriodSelection(),
           ],
         ),
       ),
     );
   }
-}
-
-Widget buildTechTags({List<String>? techTags, Function(String)? onTab, Function(String)? onRemove}) {
-  List<Widget> tags = (techTags ?? Project.allTechTags())
-      .map(
-        (e) => TechTag(
-          name: e,
-          onTap: onTab == null ? null : () => onTab.call(e),
-          onRemoved: onRemove == null ? null : () => onRemove.call(e),
-        ),
-      )
-      .toList();
-  return Wrap(
-    alignment: WrapAlignment.start,
-    spacing: 8.0, // gap between adjacent chips
-    runSpacing: 4.0, // gap between lines
-    children: tags,
-  );
 }

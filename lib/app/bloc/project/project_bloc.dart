@@ -10,8 +10,9 @@ part 'project_bloc.freezed.dart';
 
 class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
   ProjectBloc() : super(const ProjectState()) {
-    on<ProjectEvent>((event, emit) {
-      emit(state.copyWith(projects: Project.myProjects()));
+    on<ProjectEvent>((event, emit) async {
+      List<Project> projects = await Project.loadFromJson();
+      emit(state.copyWith(projects: projects));
     });
     on<ProjectEventSelect>((event, emit) {
       emit(state.copyWith(selected: event.project));
