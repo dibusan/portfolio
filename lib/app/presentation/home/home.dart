@@ -40,7 +40,7 @@ class _HomePageState extends State<HomePage> {
             projects = projects
                 .where(
                   (element) =>
-                      (element.title ?? "").toLowerCase().contains(
+                      (element.title).toLowerCase().contains(
                             search.toLowerCase(),
                           ) ||
                       (element.subtitle ?? "").toLowerCase().contains(
@@ -49,9 +49,7 @@ class _HomePageState extends State<HomePage> {
                       (element.description ?? "").toLowerCase().contains(
                             search.toLowerCase(),
                           ) ||
-                      (element.industries ?? [])
-                          .where((i) => i.toLowerCase().contains(search.toLowerCase()))
-                          .isNotEmpty,
+                      (element.industries).where((i) => i.toLowerCase().contains(search.toLowerCase())).isNotEmpty,
                 )
                 .toList();
           }
