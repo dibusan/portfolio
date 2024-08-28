@@ -4,7 +4,7 @@ class Project {
   String? logoUrl; // Logo del proyecto
   String? subtitle;
   String? description;
-  List<String>? techTags; // Python, Flutter, PgSQL, etc
+  List<String> techTags; // Python, Flutter, PgSQL, etc
   List<String>? images; // Imagenes de demostracion
   String? githubLink; // Link a codigo
   String? appLink; // Link a webpage o descarga en mobil
@@ -22,7 +22,7 @@ class Project {
     this.logoUrl,
     this.subtitle,
     this.description,
-    this.techTags,
+    this.techTags = const [],
     this.images,
     this.githubLink,
     this.appLink,
@@ -37,7 +37,7 @@ class Project {
 
   static List<String> allTechTags() {
     return Project.myProjects()
-        .map((p) => p.techTags ?? [])
+        .map((p) => p.techTags)
         .toList()
         .expand((element) => element)
         .toSet() // Convierte a Set para eliminar duplicados
@@ -47,18 +47,19 @@ class Project {
   static List<Project> myProjects() {
     List<Project> samples = [];
     for (int i = 0; i < 20; i++) {
-      samples.add(sampleProject());
+      samples.add(sampleProject(id: i));
     }
     return samples;
   }
 
-  static Project sampleProject() {
+  static Project sampleProject({int id = 1}) {
     return Project(
-      id: 1,
+      id: id,
       title: "JukeAudio",
       logoUrl: "https://cdn.prod.website-files.com/65026a74e1e0ef386dea70f2/65046543b137643501680d7b_logo.webp",
       subtitle: "Test Subtitle",
-      description: "Test Description",
+      description:
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
       techTags: ["Python", "Flutter", "Django", "Flask", "IoT", "Postgres"],
       images: [
         "https://cdn.prod.website-files.com/65026a74e1e0ef386dea70f2/66b2499d518b1932ed559465_The-Mobile-App.webp",

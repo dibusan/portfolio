@@ -1,75 +1,65 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:portfolio_eriel/app/bloc/project/project_bloc.dart';
 import 'package:portfolio_eriel/app/shared/__.dart';
+import 'package:portfolio_eriel/domain/entities/__.dart';
 
 class ProjectPreviewCard extends StatelessWidget {
-  const ProjectPreviewCard({super.key});
+  final Project project;
+
+  const ProjectPreviewCard({super.key, required this.project});
 
   @override
   Widget build(BuildContext context) {
-    return  Center(
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          boxShadow: const [
-            BoxShadow(
-              color: Color.fromRGBO(89, 148, 227, 0.1),
-              offset: Offset(0, 2),
-              blurRadius: 10,
+    return BlocBuilder<ProjectBloc, ProjectState>(
+      builder: (context, state) {
+        bool isSelected = state.selected?.id == project.id;
+        return Center(
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20),
+              boxShadow: const [
+                BoxShadow(
+                  color: Color.fromRGBO(89, 148, 227, 0.1),
+                  offset: Offset(0, 2),
+                  blurRadius: 10,
+                ),
+              ],
             ),
-          ],
-        ),
-        // --- Top Level Card
-        child: Card(
-          margin: const EdgeInsets.only(left: 8, right: 8, bottom: 8),
-          clipBehavior: Clip.hardEdge,
-          color: Colors.white,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
-          ),
-          child: InkWell(
-            splashColor: Colors.blue.withAlpha(30),
-            onTap: () {
-              debugPrint('Card tapped.');
-            },
-            // --- First Level Column
-            child:  Container(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                children: [
-                  const Row(
-                    mainAxisSize: MainAxisSize.min,
+            // --- Top Level Card
+            child: Card(
+              margin: const EdgeInsets.only(left: 8, right: 8, bottom: 8),
+              clipBehavior: Clip.hardEdge,
+              color: isSelected ? Colors.grey.shade200 : Colors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: InkWell(
+                splashColor: Colors.blue.withAlpha(30),
+                onTap: () =>
+                    BlocProvider.of<ProjectBloc>(context).add(ProjectEventSelect(project: isSelected ? null : project)),
+                // --- First Level Column
+                child: Container(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
                     children: [
-                      ProjectLogo(),
-                      HSp8(),
-                      ProjectTitleSection(),
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          ProjectLogo(imageUrl: project.logoUrl),
+                          const HSp8(),
+                          Expanded(child: ProjectMiniInfoSection(project: project)),
+                        ],
+                      ),
+                      const VSp8(),
                     ],
                   ),
-                  const VSp8(),
-                ],
+                ),
               ),
             ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
-
-
-
-  // Widget buildTagRow() {
-  //   return const Row(
-  //     mainAxisSize: MainAxisSize.min,
-  //     children: [
-  //       TechTag(),
-  //       HSp8(),
-  //       TechTag(),
-  //       HSp8(),
-  //       TechTag(),
-  //       HSp8(),
-  //       TechTag(),
-  //     ],
-  //   );
-  // }
-
-
 }

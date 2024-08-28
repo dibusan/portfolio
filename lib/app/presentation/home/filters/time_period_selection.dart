@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:portfolio_eriel/app/bloc/bloc.dart';
-import 'package:portfolio_eriel/app/bloc/bloc.dart';
-import 'package:portfolio_eriel/app/bloc/event.dart';
-import 'package:portfolio_eriel/app/bloc/state.dart';
+import 'package:portfolio_eriel/app/bloc/filter/bloc.dart';
+import 'package:portfolio_eriel/app/bloc/filter/event.dart';
+import 'package:portfolio_eriel/app/bloc/filter/state.dart';
 import 'package:portfolio_eriel/app/shared/__.dart';
 
 class TimePeriodSelection extends StatelessWidget {
@@ -17,9 +16,7 @@ class TimePeriodSelection extends StatelessWidget {
           children: [
             const Text("Time period selection"),
             const VSp10(),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
+            Wrap(
               children: state.dates
                   .map(
                     (e) => buildChip(
@@ -29,7 +26,7 @@ class TimePeriodSelection extends StatelessWidget {
                     ),
                   )
                   .toList(),
-            ),
+            )
           ],
         );
       },

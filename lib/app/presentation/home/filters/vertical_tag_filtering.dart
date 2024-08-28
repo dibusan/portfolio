@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:portfolio_eriel/app/bloc/bloc.dart';
-import 'package:portfolio_eriel/app/bloc/event.dart';
-import 'package:portfolio_eriel/app/bloc/state.dart';
+import 'package:portfolio_eriel/app/bloc/filter/bloc.dart';
+import 'package:portfolio_eriel/app/bloc/filter/event.dart';
+import 'package:portfolio_eriel/app/bloc/filter/state.dart';
+import 'package:portfolio_eriel/app/presentation/home/filters/filters.dart';
+import 'package:portfolio_eriel/app/presentation/home/filters/search_bar.dart';
 import 'package:portfolio_eriel/app/shared/__.dart';
-import 'package:portfolio_eriel/app/shared/filters/search_bar.dart';
 import 'package:portfolio_eriel/domain/entities/__.dart';
 
 class VerticalTagFiltering extends StatelessWidget {
@@ -19,7 +20,10 @@ class VerticalTagFiltering extends StatelessWidget {
         builder: (context, state) {
           final bloc = BlocProvider.of<FilterBloc>(context);
           List<String> tags = Project.allTechTags();
-          tags = tags.where((ele) => ele.toLowerCase().contains(state.filterTag.toLowerCase())).toList();
+          tags = tags
+              .where(
+                  (ele) => ele.toLowerCase().contains(state.filterTag.toLowerCase()) && !state.techTags.contains(ele))
+              .toList();
 
           return Column(
             crossAxisAlignment: CrossAxisAlignment.center,

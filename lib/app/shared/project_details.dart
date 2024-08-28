@@ -4,7 +4,9 @@ import 'package:portfolio_eriel/app/shared/__.dart';
 import 'package:portfolio_eriel/domain/entities/__.dart';
 
 class ProjectDetails extends StatelessWidget {
-  const ProjectDetails({super.key});
+  final Project? project;
+
+  const ProjectDetails({super.key, this.project});
 
   @override
   Widget build(BuildContext context) {
@@ -20,11 +22,11 @@ class ProjectDetails extends StatelessWidget {
                 // Logo -> Title -> Subtitles
                 Container(
                   padding: const EdgeInsets.all(16),
-                  child: const Column(
+                  child: Column(
                     children: <Widget>[
-                      ProjectLogo(),
-                      VSp8(),
-                      ProjectTitleSection(),
+                      ProjectLogo(imageUrl: project?.logoUrl),
+                      const VSp8(),
+                      ProjectMiniInfoSection(project: project, expand: true),
                     ],
                   ),
                 ),

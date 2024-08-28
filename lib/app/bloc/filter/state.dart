@@ -13,11 +13,10 @@ class DateFilter {
 @freezed
 abstract class FilterState with _$FilterState {
   const factory FilterState({
-    @Default(true) bool loading,
-    Developer? developer,
-    @Default([]) List<Project> projects,
+
     @Default([]) List<String> techTags,
     @Default("") String filterTag,
+    @Default("") String filterGeneral,
     DateFilter? dateFilter,
     @Default([]) List<DateFilter> dates,
   }) = _FilterState;

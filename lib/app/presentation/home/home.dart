@@ -1,11 +1,14 @@
+import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:portfolio_eriel/app/bloc/bloc.dart';
-import 'package:portfolio_eriel/app/bloc/event.dart';
-import 'package:portfolio_eriel/app/bloc/state.dart';
-import 'package:portfolio_eriel/domain/entities/__.dart';
+import 'package:portfolio_eriel/app/bloc/filter/bloc.dart';
+import 'package:portfolio_eriel/app/bloc/filter/event.dart';
+import 'package:portfolio_eriel/app/bloc/filter/state.dart';
+import 'package:portfolio_eriel/app/bloc/project/project_bloc.dart';
+import 'package:portfolio_eriel/app/presentation/home/filters/filters.dart';
 
 import 'package:portfolio_eriel/app/shared/__.dart';
+import 'package:portfolio_eriel/domain/entities/__.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -16,11 +19,52 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   @override
+  void initState() {
+    BlocProvider.of<FilterBloc>(context).add(const FilterEventInit());
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (BuildContext context) => FilterBloc()..add(const FilterEventInit()),
-      child: BlocBuilder<FilterBloc, FilterState>(
-        builder: (context, state) {
+    final size = MediaQuery.of(context).size;
+    return BlocBuilder<FilterBloc, FilterState>(
+      builder: (context, stateFilters) {
+        return BlocBuilder<ProjectBloc, ProjectState>(builder: (_, stateProjects) {
+          List<Project> projects = stateProjects.projects;
+          List<String> tags = stateFilters.techTags;
+          final String search = stateFilters.filterGeneral;
+          if (tags.isNotEmpty) {
+            projects = projects.where((project) => project.techTags.any((tag) => tags.contains(tag))).toList();
+          }
+          if (search.isNotEmpty) {
+            projects = projects
+                .where(
+                  (element) =>
+                      (element.title ?? "").toLowerCase().contains(
+                            search.toLowerCase(),
+                          ) ||
+                      (element.subtitle ?? "").toLowerCase().contains(
+                            search.toLowerCase(),
+                          ) ||
+                      (element.description ?? "").toLowerCase().contains(
+                            search.toLowerCase(),
+                          ) ||
+                      (element.industries ?? [])
+                          .where((i) => i.toLowerCase().contains(search.toLowerCase()))
+                          .isNotEmpty,
+                )
+                .toList();
+          }
+          if (stateFilters.dateFilter?.title != 'All') {
+            projects = projects
+                .where((element) =>
+                    (element.projectStartDate != null &&
+                        stateFilters.dateFilter!.date.isAfter(element.projectStartDate!)) &&
+                    (element.projectLaunchDate != null &&
+                        stateFilters.dateFilter!.date.isBefore(element.projectLaunchDate!)))
+                .toList();
+          }
+
           return Scaffold(
             backgroundColor: const Color.fromARGB(1, 235, 239, 242),
             body: Row(
@@ -31,38 +75,41 @@ class _HomePageState extends State<HomePage> {
                   child: const FilteringSection(),
                 ),
                 Expanded(
-                  child: Wrap(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Column(
-                        children: [
-                          const Center(
-                            child: TopBar(),
-                          ),
-                          Text('Total Projects: ${state.projects.length}'),
-                          Row(
-                            children: [
-                              Container(
-                                constraints: BoxConstraints(
-                                  maxHeight: MediaQuery.sizeOf(context).height,
-                                  maxWidth: MediaQuery.sizeOf(context).width / 2,
-                                ),
-                                child: ProjectsGrid(projects: state.projects),
-                              ),
-                              const Expanded(
-                                child: ProjectDetails(),
-                              ),
-                            ],
-                          ),
-                        ],
+                      const Center(
+                        child: TopBar(),
                       ),
+                      Text('Total Projects: ${projects.length}', textAlign: TextAlign.start),
+                      Expanded(
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: LayoutBuilder(
+                                builder: (_, constrains) => DynamicHeightGridView(
+                                  itemCount: projects.length,
+                                  crossAxisCount: (constrains.maxWidth / 350).toInt(),
+                                  builder: (context, index) => ProjectPreviewCard(project: projects[index]),
+                                ),
+                              ),
+                            ),
+                            AnimatedContainer(
+                              width: stateProjects.selected == null ? 0 : size.width * 0.25,
+                              duration: const Duration(milliseconds: 600),
+                              child: ProjectDetails(project: stateProjects.selected),
+                            ),
+                          ],
+                        ),
+                      )
                     ],
                   ),
                 ),
               ],
             ),
           );
-        },
-      ),
+        });
+      },
     );
   }
 }

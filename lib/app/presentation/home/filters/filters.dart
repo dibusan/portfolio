@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:portfolio_eriel/app/presentation/home/filters/small_banding_banner.dart';
+import 'package:portfolio_eriel/app/presentation/home/filters/time_period_selection.dart';
+import 'package:portfolio_eriel/app/presentation/home/filters/vertical_tag_filtering.dart';
 import 'package:portfolio_eriel/app/shared/__.dart';
 import 'package:portfolio_eriel/domain/entities/__.dart';
 

@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:portfolio_eriel/app/bloc/bloc.dart';
-import 'package:portfolio_eriel/app/bloc/event.dart';
+import 'package:portfolio_eriel/app/bloc/filter/bloc.dart';
+import 'package:portfolio_eriel/app/bloc/project/project_bloc.dart';
 import 'package:portfolio_eriel/app/presentation/home/home.dart';
 
 void main() {
-  runApp(BlocProvider(create: (_) => FilterBloc()..add(const FilterEventInit()), child: const MyApp()));
+  runApp(MultiBlocProvider(providers: [
+    BlocProvider(create: (_) => ProjectBloc()..add(const ProjectEventStarted())),
+    BlocProvider(create: (_) => FilterBloc()),
+  ], child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {

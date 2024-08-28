@@ -16,11 +16,9 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$FilterState {
-  bool get loading => throw _privateConstructorUsedError;
-  Developer? get developer => throw _privateConstructorUsedError;
-  List<Project> get projects => throw _privateConstructorUsedError;
   List<String> get techTags => throw _privateConstructorUsedError;
   String get filterTag => throw _privateConstructorUsedError;
+  String get filterGeneral => throw _privateConstructorUsedError;
   DateFilter? get dateFilter => throw _privateConstructorUsedError;
   List<DateFilter> get dates => throw _privateConstructorUsedError;
 
@@ -38,11 +36,9 @@ abstract class $FilterStateCopyWith<$Res> {
       _$FilterStateCopyWithImpl<$Res, FilterState>;
   @useResult
   $Res call(
-      {bool loading,
-      Developer? developer,
-      List<Project> projects,
-      List<String> techTags,
+      {List<String> techTags,
       String filterTag,
+      String filterGeneral,
       DateFilter? dateFilter,
       List<DateFilter> dates});
 }
@@ -62,27 +58,13 @@ class _$FilterStateCopyWithImpl<$Res, $Val extends FilterState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? loading = null,
-    Object? developer = freezed,
-    Object? projects = null,
     Object? techTags = null,
     Object? filterTag = null,
+    Object? filterGeneral = null,
     Object? dateFilter = freezed,
     Object? dates = null,
   }) {
     return _then(_value.copyWith(
-      loading: null == loading
-          ? _value.loading
-          : loading // ignore: cast_nullable_to_non_nullable
-              as bool,
-      developer: freezed == developer
-          ? _value.developer
-          : developer // ignore: cast_nullable_to_non_nullable
-              as Developer?,
-      projects: null == projects
-          ? _value.projects
-          : projects // ignore: cast_nullable_to_non_nullable
-              as List<Project>,
       techTags: null == techTags
           ? _value.techTags
           : techTags // ignore: cast_nullable_to_non_nullable
@@ -90,6 +72,10 @@ class _$FilterStateCopyWithImpl<$Res, $Val extends FilterState>
       filterTag: null == filterTag
           ? _value.filterTag
           : filterTag // ignore: cast_nullable_to_non_nullable
+              as String,
+      filterGeneral: null == filterGeneral
+          ? _value.filterGeneral
+          : filterGeneral // ignore: cast_nullable_to_non_nullable
               as String,
       dateFilter: freezed == dateFilter
           ? _value.dateFilter
@@ -112,11 +98,9 @@ abstract class _$$FilterStateImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {bool loading,
-      Developer? developer,
-      List<Project> projects,
-      List<String> techTags,
+      {List<String> techTags,
       String filterTag,
+      String filterGeneral,
       DateFilter? dateFilter,
       List<DateFilter> dates});
 }
@@ -134,27 +118,13 @@ class __$$FilterStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? loading = null,
-    Object? developer = freezed,
-    Object? projects = null,
     Object? techTags = null,
     Object? filterTag = null,
+    Object? filterGeneral = null,
     Object? dateFilter = freezed,
     Object? dates = null,
   }) {
     return _then(_$FilterStateImpl(
-      loading: null == loading
-          ? _value.loading
-          : loading // ignore: cast_nullable_to_non_nullable
-              as bool,
-      developer: freezed == developer
-          ? _value.developer
-          : developer // ignore: cast_nullable_to_non_nullable
-              as Developer?,
-      projects: null == projects
-          ? _value._projects
-          : projects // ignore: cast_nullable_to_non_nullable
-              as List<Project>,
       techTags: null == techTags
           ? _value._techTags
           : techTags // ignore: cast_nullable_to_non_nullable
@@ -162,6 +132,10 @@ class __$$FilterStateImplCopyWithImpl<$Res>
       filterTag: null == filterTag
           ? _value.filterTag
           : filterTag // ignore: cast_nullable_to_non_nullable
+              as String,
+      filterGeneral: null == filterGeneral
+          ? _value.filterGeneral
+          : filterGeneral // ignore: cast_nullable_to_non_nullable
               as String,
       dateFilter: freezed == dateFilter
           ? _value.dateFilter
@@ -179,30 +153,13 @@ class __$$FilterStateImplCopyWithImpl<$Res>
 
 class _$FilterStateImpl implements _FilterState {
   const _$FilterStateImpl(
-      {this.loading = true,
-      this.developer,
-      final List<Project> projects = const [],
-      final List<String> techTags = const [],
+      {final List<String> techTags = const [],
       this.filterTag = "",
+      this.filterGeneral = "",
       this.dateFilter,
       final List<DateFilter> dates = const []})
-      : _projects = projects,
-        _techTags = techTags,
+      : _techTags = techTags,
         _dates = dates;
-
-  @override
-  @JsonKey()
-  final bool loading;
-  @override
-  final Developer? developer;
-  final List<Project> _projects;
-  @override
-  @JsonKey()
-  List<Project> get projects {
-    if (_projects is EqualUnmodifiableListView) return _projects;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_projects);
-  }
 
   final List<String> _techTags;
   @override
@@ -217,6 +174,9 @@ class _$FilterStateImpl implements _FilterState {
   @JsonKey()
   final String filterTag;
   @override
+  @JsonKey()
+  final String filterGeneral;
+  @override
   final DateFilter? dateFilter;
   final List<DateFilter> _dates;
   @override
@@ -229,7 +189,7 @@ class _$FilterStateImpl implements _FilterState {
 
   @override
   String toString() {
-    return 'FilterState(loading: $loading, developer: $developer, projects: $projects, techTags: $techTags, filterTag: $filterTag, dateFilter: $dateFilter, dates: $dates)';
+    return 'FilterState(techTags: $techTags, filterTag: $filterTag, filterGeneral: $filterGeneral, dateFilter: $dateFilter, dates: $dates)';
   }
 
   @override
@@ -237,13 +197,11 @@ class _$FilterStateImpl implements _FilterState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$FilterStateImpl &&
-            (identical(other.loading, loading) || other.loading == loading) &&
-            (identical(other.developer, developer) ||
-                other.developer == developer) &&
-            const DeepCollectionEquality().equals(other._projects, _projects) &&
             const DeepCollectionEquality().equals(other._techTags, _techTags) &&
             (identical(other.filterTag, filterTag) ||
                 other.filterTag == filterTag) &&
+            (identical(other.filterGeneral, filterGeneral) ||
+                other.filterGeneral == filterGeneral) &&
             (identical(other.dateFilter, dateFilter) ||
                 other.dateFilter == dateFilter) &&
             const DeepCollectionEquality().equals(other._dates, _dates));
@@ -252,11 +210,9 @@ class _$FilterStateImpl implements _FilterState {
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      loading,
-      developer,
-      const DeepCollectionEquality().hash(_projects),
       const DeepCollectionEquality().hash(_techTags),
       filterTag,
+      filterGeneral,
       dateFilter,
       const DeepCollectionEquality().hash(_dates));
 
@@ -271,24 +227,18 @@ class _$FilterStateImpl implements _FilterState {
 
 abstract class _FilterState implements FilterState {
   const factory _FilterState(
-      {final bool loading,
-      final Developer? developer,
-      final List<Project> projects,
-      final List<String> techTags,
+      {final List<String> techTags,
       final String filterTag,
+      final String filterGeneral,
       final DateFilter? dateFilter,
       final List<DateFilter> dates}) = _$FilterStateImpl;
 
   @override
-  bool get loading;
-  @override
-  Developer? get developer;
-  @override
-  List<Project> get projects;
-  @override
   List<String> get techTags;
   @override
   String get filterTag;
+  @override
+  String get filterGeneral;
   @override
   DateFilter? get dateFilter;
   @override

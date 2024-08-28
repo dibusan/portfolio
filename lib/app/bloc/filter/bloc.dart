@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:portfolio_eriel/domain/entities/__.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'event.dart';
-import 'state.dart';
+import './event.dart';
+import './state.dart';
 
 class FilterBloc extends Bloc<FilterEvent, FilterState> {
   late TextEditingController filterTagController = TextEditingController(text: "");
+  late TextEditingController generalController = TextEditingController(text: "");
 
   onWrite() {
     if (filterTagController.text != state.filterTag) {
@@ -13,13 +14,21 @@ class FilterBloc extends Bloc<FilterEvent, FilterState> {
     }
   }
 
+  onWriteGeneral() {
+    if (generalController.text != state.filterGeneral) {
+      add(FilterEventWriteGeneral(value: generalController.text));
+    }
+  }
+
   FilterBloc() : super(const FilterState()) {
     filterTagController.addListener(onWrite);
+    generalController.addListener(onWriteGeneral);
 
     on<FilterEventInit>(_init);
     on<FilterEventDateTime>(_filterDateTime);
     on<FilterEventTechTag>(_filterTechTag);
     on<FilterEventWriteTag>(_filterWriteTechTag);
+    on<FilterEventWriteGeneral>(_filterWriteGeneral);
   }
 
   void _init(FilterEventInit event, Emitter<FilterState> emit) async {
@@ -28,10 +37,7 @@ class FilterBloc extends Bloc<FilterEvent, FilterState> {
 
     emit(
       state.copyWith(
-        loading: false,
         filterTag: filterTagController.text,
-        developer: Developer.eriel(),
-        projects: projects,
         dates: [
           DateFilter(date: dateTime, title: "All"),
           DateFilter(date: dateTime.subtract(const Duration(days: 30 * 6)), title: "6 months"),
@@ -50,6 +56,10 @@ class FilterBloc extends Bloc<FilterEvent, FilterState> {
     emit(state.copyWith(filterTag: event.value));
   }
 
+  void _filterWriteGeneral(FilterEventWriteGeneral event, Emitter<FilterState> emit) async {
+    emit(state.copyWith(filterGeneral: event.value));
+  }
+
   void _filterTechTag(FilterEventTechTag event, Emitter<FilterState> emit) async {
     final result = state.techTags.toList();
 
@@ -66,6 +76,7 @@ class FilterBloc extends Bloc<FilterEvent, FilterState> {
   @override
   Future<void> close() {
     filterTagController.removeListener(onWrite);
+    generalController.removeListener(onWriteGeneral);
     return super.close();
   }
 }

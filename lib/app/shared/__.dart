@@ -1,14 +1,10 @@
-export 'filters/filters.dart';
-export 'filters/time_period_selection.dart';
-export 'filters/small_banding_banner.dart';
-export 'filters/vertical_tag_filtering.dart';
 export './banner_with_profile_image.dart';
 export './profile_banner.dart';
 export './profile_image.dart';
 export './project_details.dart';
 export './project_logo.dart';
 export './project_preview_card.dart';
-export './project_title_section.dart';
+export './project_mini_info_section.dart';
 export './projects_grid.dart';
 export './spacers.dart';
 export './tech_tag.dart';

@@ -11,20 +11,12 @@ class ProjectsGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var projects = buildProjectPreviews();
-
     return DynamicHeightGridView(
       itemCount: projects.length,
       crossAxisCount: 2,
       builder: (context, index) {
-        return const ProjectPreviewCard();
+        return ProjectPreviewCard(project: projects[index]);
       },
     );
-  }
-
-  List<Widget> buildProjectPreviews() {
-    return projects.map((p) {
-      return const ProjectPreviewCard();
-    }).toList();
   }
 }
