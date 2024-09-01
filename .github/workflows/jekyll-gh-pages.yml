@@ -28,18 +28,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Set up Flutter
-        uses: subosito/flutter-action@v3  
-      - name: Install dependencies
-        run: flutter pub get
-      - name: Build Flutter Web
-        run: flutter build web
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Build with Jekyll
         uses: actions/jekyll-build-pages@v1
         with:
-          source: ./build/web
+          source: ./docs
           destination: ./_site
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
