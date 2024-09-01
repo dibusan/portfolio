@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:portfolio_eriel/app/bloc/project/project_bloc.dart';
-import 'package:portfolio_eriel/app/presentation/home/filters/filters.dart';
-import 'package:portfolio_eriel/app/presentation/home/widgets/tech_tag_wrap.dart';
+import 'package:portfolio_eriel/app/presentation/project/widgets/project_logo.dart';
+import 'package:portfolio_eriel/app/presentation/project/widgets/tech_tag_wrap.dart';
+import 'package:portfolio_eriel/app/presentation/project/widgets/mini_info.dart';
 import 'package:portfolio_eriel/app/shared/__.dart';
 import 'package:portfolio_eriel/domain/entities/__.dart';
 

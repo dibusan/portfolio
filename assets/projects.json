@@ -11,7 +11,9 @@
       "Django",
       "Flask",
       "IoT",
-      "Postgres"
+      "Postgres",
+      "AWS",
+      "Automotive"
     ],
     "images": [
       "https://cdn.prod.website-files.com/65026a74e1e0ef386dea70f2/66b2499d518b1932ed559465_The-Mobile-App.webp",
@@ -20,7 +22,7 @@
     "githubLink": null,
     "appLink": "https://play.google.com/store/apps/details?id=com.juke.audio.juke_audio&pcampaignid=web_share",
     "projectStartDate": "2022-01-01T00:00:00",
-    "projectLaunchDate": "2023-04-07T00:00:00",
+    "projectLaunchDate": "2024-04-07T00:00:00",
     "isInProgress": false,
     "projectOwner": "Juke Audio",
     "projectOwnerLogoUrl": "https://cdn.prod.website-files.com/65026a74e1e0ef386dea70f2/65046543b137643501680d7b_logo.webp",

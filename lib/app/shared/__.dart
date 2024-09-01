@@ -1,11 +1,5 @@
 export './banner_with_profile_image.dart';
 export './profile_banner.dart';
 export './profile_image.dart';
-export './project_details.dart';
-export './project_logo.dart';
-export './project_preview_card.dart';
-export './project_mini_info_section.dart';
-export './projects_grid.dart';
 export './spacers.dart';
-export './tech_tag.dart';
-export './tmp.dart';
+export './cache_image.dart';

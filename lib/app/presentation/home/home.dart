@@ -7,7 +7,8 @@ import 'package:portfolio_eriel/app/bloc/filter/state.dart';
 import 'package:portfolio_eriel/app/bloc/project/project_bloc.dart';
 import 'package:portfolio_eriel/app/presentation/home/filters/filters.dart';
 import 'package:portfolio_eriel/app/presentation/home/widgets/header.dart';
-import 'package:portfolio_eriel/app/shared/__.dart';
+import 'package:portfolio_eriel/app/presentation/project/project.dart';
+import 'package:portfolio_eriel/app/presentation/project/widgets/project_preview_card.dart';
 import 'package:portfolio_eriel/domain/entities/__.dart';
 
 class HomePage extends StatefulWidget {
@@ -94,7 +95,7 @@ class _HomePageState extends State<HomePage> {
                               constraints: BoxConstraints(minWidth: stateProjects.selected == null ? 0 : 350),
                               width: stateProjects.selected == null ? 0 : size.width * 0.25,
                               duration: const Duration(milliseconds: 600),
-                              child: ProjectDetails(project: stateProjects.selected),
+                              child: ProjectPage(project: stateProjects.selected),
                             ),
                           ],
                         ),

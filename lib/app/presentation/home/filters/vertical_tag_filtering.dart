@@ -5,7 +5,7 @@ import 'package:portfolio_eriel/app/bloc/filter/event.dart';
 import 'package:portfolio_eriel/app/bloc/filter/state.dart';
 import 'package:portfolio_eriel/app/presentation/home/filters/filters.dart';
 import 'package:portfolio_eriel/app/presentation/home/filters/search_bar.dart';
-import 'package:portfolio_eriel/app/presentation/home/widgets/tech_tag_wrap.dart';
+import 'package:portfolio_eriel/app/presentation/project/widgets/tech_tag_wrap.dart';
 import 'package:portfolio_eriel/app/shared/__.dart';
 import 'package:portfolio_eriel/domain/entities/__.dart';
 

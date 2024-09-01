@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:portfolio_eriel/app/bloc/project/project_bloc.dart';
-import 'package:portfolio_eriel/app/shared/__.dart';
+import 'package:portfolio_eriel/app/presentation/project/widgets/tech_tags.dart';
 import 'package:portfolio_eriel/domain/entities/project/project.dart';
 
 class TechTagsWrap extends StatelessWidget {

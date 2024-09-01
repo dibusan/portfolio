@@ -1,14 +1,19 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:portfolio_eriel/app/bloc/project/project_bloc.dart';
+import 'package:portfolio_eriel/app/presentation/project/widgets/mini_info.dart';
+import 'package:portfolio_eriel/app/presentation/project/widgets/project_logo.dart';
+import 'package:portfolio_eriel/app/presentation/project/widgets/tech_tag_wrap.dart';
+import 'package:portfolio_eriel/app/presentation/project/widgets/tech_tags.dart';
 import 'package:portfolio_eriel/app/shared/__.dart';
 import 'package:portfolio_eriel/domain/entities/__.dart';
 
-class ProjectDetails extends StatelessWidget {
+class ProjectPage extends StatelessWidget {
   final Project? project;
 
-  const ProjectDetails({super.key, this.project});
+  const ProjectPage({super.key, this.project});
 
   @override
   Widget build(BuildContext context) {
@@ -18,61 +23,88 @@ class ProjectDetails extends StatelessWidget {
         child: Card(
           color: const Color.fromARGB(1, 235, 239, 242),
           child: SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Align(
-                  alignment: Alignment.topLeft,
-                  child: IconButton(
-                    onPressed: () {
-                      BlocProvider.of<ProjectBloc>(context).add(const ProjectEventSelect(project: null));
-                    },
-                    icon: const Icon(Icons.close),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  const VSp24(),
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: IconButton(
+                      onPressed: () {
+                        BlocProvider.of<ProjectBloc>(context).add(const ProjectEventSelect(project: null));
+                      },
+                      icon: const Icon(Icons.close),
+                    ),
                   ),
-                ),
-                // Logo -> Title -> Subtitles
-                Container(
-                  padding: const EdgeInsets.all(16),
-                  child: Column(
-                    children: <Widget>[
-                      ProjectLogo(imageUrl: project?.logoUrl),
-                      const VSp8(),
-                      ProjectMiniInfoSection(project: project, expand: true),
-                    ],
+                  // Logo -> Title -> Subtitles
+                  Container(
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      children: <Widget>[
+                        ProjectLogo(imageUrl: project?.logoUrl),
+                        const VSp8(),
+                        ProjectMiniInfoSection(project: project, expand: true),
+                      ],
+                    ),
                   ),
-                ),
-                const SizedBox(width: 200, child: Divider()),
-                // Tech Stack
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
+                  const SizedBox(width: 200, child: Divider()),
+                  // Tech Stack
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        const Center(
+                          child: Text("Tech Stack"),
+                        ),
+                        const VSp8(),
+                        TechTagsWrap(techTags: project?.techTags ?? []),
+                      ],
+                    ),
                   ),
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      const Center(
-                        child: Text("Tech Stack"),
-                      ),
-                      const VSp8(),
-                      Container(
-                        constraints: const BoxConstraints(maxHeight: 100),
-                        width: 300,
-                        child: buildTechTags(),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(width: 200, child: Divider()),
-                // Images
-                buildImages(),
-                const SizedBox(width: 200, child: Divider()),
-                // Long Description
-                buildLongDescription(),
-                const SizedBox(width: 200, child: Divider()),
-                // Dates -> Client Info
-                buildDatesAndClientInfo(),
-              ],
+                  const SizedBox(width: 200, child: Divider()),
+                  // Images
+                  if (project?.images != null)
+                    LayoutBuilder(builder: (context, constrains) {
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 24),
+                        child: CarouselSlider(
+                          options: CarouselOptions(
+                            height: 300.0,
+                            autoPlay: true,
+                          ),
+                          items: project?.images.map((i) {
+                            final dec = BoxDecoration(
+                              color: const Color.fromRGBO(255, 255, 255, 1),
+                              borderRadius: BorderRadius.circular(20),
+                            );
+                            return Builder(
+                              builder: (BuildContext context) {
+                                return Container(
+                                  width: constrains.maxWidth * 0.8,
+                                  margin: const EdgeInsets.symmetric(horizontal: 5.0),
+                                  decoration: dec,
+                                  child: ImageOnCache(
+                                    imageUrl: i,
+                                    boxDecoration: dec,
+                                  ),
+                                );
+                              },
+                            );
+                          }).toList(),
+                        ),
+                      );
+                    }),
+                  const SizedBox(width: 200, child: Divider()),
+                  // Dates -> Client Info
+                  buildDatesAndClientInfo(),
+                ],
+              ),
             ),
           ),
         ));
@@ -388,17 +420,6 @@ class ProjectDetails extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-
-  Widget buildTechTags() {
-    List<String> tags = Project.allTechTags();
-    return DynamicHeightGridView(
-      itemCount: tags.length,
-      crossAxisCount: 4,
-      builder: (context, index) {
-        return TechTag(name: tags[index]);
-      },
     );
   }
 }
