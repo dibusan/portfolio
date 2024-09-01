@@ -1,0 +1,206 @@
+[
+  {
+    "id": 1,
+    "title": "JukeAudio",
+    "logoUrl": "https://cdn.prod.website-files.com/65026a74e1e0ef386dea70f2/65046543b137643501680d7b_logo.webp",
+    "subtitle": "Smart Audio System",
+    "description": "A multi-room audio system that lets you play different songs in every room.",
+    "techTags": [
+      "Python",
+      "Flutter",
+      "Django",
+      "Flask",
+      "IoT",
+      "Postgres",
+      "AWS",
+      "Automotive"
+    ],
+    "images": [
+      "https://cdn.prod.website-files.com/65026a74e1e0ef386dea70f2/66b2499d518b1932ed559465_The-Mobile-App.webp",
+      "https://cdn.prod.website-files.com/65026a74e1e0ef386dea70f2/66b2499d518b1932ed559465_The-Mobile-App.webp"
+    ],
+    "githubLink": null,
+    "appLink": "https://play.google.com/store/apps/details?id=com.juke.audio.juke_audio&pcampaignid=web_share",
+    "projectStartDate": "2022-01-01T00:00:00",
+    "projectLaunchDate": "2024-04-07T00:00:00",
+    "isInProgress": false,
+    "projectOwner": "Juke Audio",
+    "projectOwnerLogoUrl": "https://cdn.prod.website-files.com/65026a74e1e0ef386dea70f2/65046543b137643501680d7b_logo.webp",
+    "projectType": "freelance",
+    "industries": [
+      "Home Entertainment",
+      "IoT"
+    ]
+  },
+  {
+    "id": 2,
+    "title": "FinTrack",
+    "logoUrl": "https://cdn-icons-png.flaticon.com/512/929/929432.png",
+    "subtitle": "Personal Finance Management",
+    "description": "An app that helps users track and manage their personal finances.",
+    "techTags": [
+      "React",
+      "Node.js",
+      "MongoDB"
+    ],
+    "images": [
+      "https://cdn.pixabay.com/photo/2017/12/14/21/53/finance-3025542_1280.jpg",
+      "https://cdn.pixabay.com/photo/2018/01/22/21/45/money-3091837_1280.jpg"
+    ],
+    "githubLink": "https://github.com/user/fintrack",
+    "appLink": "https://www.fintrack.com",
+    "projectStartDate": "2021-05-15T00:00:00",
+    "projectLaunchDate": "2022-11-01T00:00:00",
+    "isInProgress": true,
+    "projectOwner": "FinTrack Inc.",
+    "projectOwnerLogoUrl": "https://cdn-icons-png.flaticon.com/512/929/929432.png",
+    "projectType": "contract",
+    "industries": [
+      "Finance",
+      "Blockchain"
+    ]
+  },
+  {
+    "id": 3,
+    "title": "EcoDrive",
+    "logoUrl": "https://cdn-icons-png.flaticon.com/512/2917/2917991.png",
+    "subtitle": "Sustainable Vehicle Tracking",
+    "description": "A platform that promotes sustainable driving by tracking carbon emissions.",
+    "techTags": [
+      "Angular",
+      "Spring Boot",
+      "MySQL",
+      "AWS"
+    ],
+    "images": [
+      "https://cdn.pixabay.com/photo/2020/09/08/20/44/electric-car-5553182_1280.jpg",
+      "https://cdn.pixabay.com/photo/2016/07/29/08/57/electric-car-1551490_1280.jpg"
+    ],
+    "githubLink": "https://github.com/user/ecodrive",
+    "appLink": "https://www.ecodrive.com",
+    "projectStartDate": "2020-03-22T00:00:00",
+    "projectLaunchDate": "2021-09-14T00:00:00",
+    "isInProgress": false,
+    "projectOwner": "GreenTech Solutions",
+    "projectOwnerLogoUrl": "https://cdn-icons-png.flaticon.com/512/2917/2917991.png",
+    "projectType": "fullTime",
+    "industries": [
+      "Automotive",
+      "Environment"
+    ]
+  },
+  {
+    "id": 4,
+    "title": "HealthSync",
+    "logoUrl": "https://cdn-icons-png.flaticon.com/512/2913/2913465.png",
+    "subtitle": "Patient Health Monitoring",
+    "description": "A healthcare app that syncs patient data across different medical providers.",
+    "techTags": [
+      "Flutter",
+      "Firebase",
+      "GraphQL"
+    ],
+    "images": [
+      "https://cdn.pixabay.com/photo/2018/03/02/18/58/telemedicine-3194619_1280.jpg",
+      "https://cdn.pixabay.com/photo/2016/11/29/05/16/doctor-1869428_1280.jpg"
+    ],
+    "githubLink": "https://github.com/user/healthsync",
+    "appLink": "https://www.healthsync.com",
+    "projectStartDate": "2019-07-12T00:00:00",
+    "projectLaunchDate": "2020-12-20T00:00:00",
+    "isInProgress": true,
+    "projectOwner": "HealthSync Inc.",
+    "projectOwnerLogoUrl": "https://cdn-icons-png.flaticon.com/512/2913/2913465.png",
+    "projectType": "freelance",
+    "industries": [
+      "Healthcare",
+      "Technology"
+    ]
+  },
+  {
+    "id": 5,
+    "title": "ShopEase",
+    "logoUrl": "https://cdn-icons-png.flaticon.com/512/869/869869.png",
+    "subtitle": "E-commerce Platform",
+    "description": "An e-commerce platform designed to enhance the online shopping experience.",
+    "techTags": [
+      "Vue.js",
+      "Laravel",
+      "Stripe API"
+    ],
+    "images": [
+      "https://cdn.pixabay.com/photo/2019/08/27/08/06/online-4438998_1280.jpg",
+      "https://cdn.pixabay.com/photo/2016/03/31/19/47/shopping-1299009_1280.jpg"
+    ],
+    "githubLink": "https://github.com/user/shopease",
+    "appLink": "https://www.shopease.com",
+    "projectStartDate": "2018-10-01T00:00:00",
+    "projectLaunchDate": "2019-12-15T00:00:00",
+    "isInProgress": false,
+    "projectOwner": "ShopEase Corp.",
+    "projectOwnerLogoUrl": "https://cdn-icons-png.flaticon.com/512/869/869869.png",
+    "projectType": "contract",
+    "industries": [
+      "E-commerce",
+      "Retail"
+    ]
+  },
+  {
+    "id": 6,
+    "title": "Tourista",
+    "logoUrl": "https://cdn-icons-png.flaticon.com/512/3564/3564679.png",
+    "subtitle": "Travel Planning App",
+    "description": "A travel app that helps users plan and book their vacations effortlessly.",
+    "techTags": [
+      "Kotlin",
+      "Java",
+      "Firebase",
+      "Google Maps API"
+    ],
+    "images": [
+      "https://cdn.pixabay.com/photo/2015/10/12/15/09/tourist-984202_1280.jpg",
+      "https://cdn.pixabay.com/photo/2017/02/02/15/15/architecture-2030113_1280.jpg"
+    ],
+    "githubLink": "https://github.com/user/tourista",
+    "appLink": "https://www.tourista.com",
+    "projectStartDate": "2021-01-01T00:00:00",
+    "projectLaunchDate": "2022-05-10T00:00:00",
+    "isInProgress": true,
+    "projectOwner": "Tourista Inc.",
+    "projectOwnerLogoUrl": "https://cdn-icons-png.flaticon.com/512/3564/3564679.png",
+    "projectType": "fullTime",
+    "industries": [
+      "Travel",
+      "Tourism"
+    ]
+  },
+  {
+    "id": 7,
+    "title": "FitLife",
+    "logoUrl": "https://cdn-icons-png.flaticon.com/512/992/992205.png",
+    "subtitle": "Fitness and Wellness Tracker",
+    "description": "An app that helps users track their fitness activities and wellness goals.",
+    "techTags": [
+      "React Native",
+      "Node.js",
+      "Express",
+      "MongoDB"
+    ],
+    "images": [
+      "https://cdn.pixabay.com/photo/2015/01/08/18/25/gym-593917_1280.jpg",
+      "https://cdn.pixabay.com/photo/2016/10/28/22/05/adult-1780774_1280.jpg"
+    ],
+    "githubLink": "https://github.com/user/fitlife",
+    "appLink": "https://www.fitlife.com",
+    "projectStartDate": "2020-06-01T00:00:00",
+    "projectLaunchDate": "2021-10-01T00:00:00",
+    "isInProgress": false,
+    "projectOwner": "FitLife Corp.",
+    "projectOwnerLogoUrl": "https://cdn-icons-png.flaticon.com/512/992/992205.png",
+    "projectType": "freelance",
+    "industries": [
+      "Health",
+      "Fitness"
+    ]
+  }
+]
