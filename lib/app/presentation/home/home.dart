@@ -1,3 +1,6 @@
+import 'dart:math';
+
+import 'package:aura_box/aura_box.dart';
 import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,6 +13,7 @@ import 'package:portfolio_eriel/app/presentation/home/widgets/header.dart';
 import 'package:portfolio_eriel/app/presentation/project/project.dart';
 import 'package:portfolio_eriel/app/presentation/project/widgets/project_preview_card.dart';
 import 'package:portfolio_eriel/domain/entities/__.dart';
+import 'package:portfolio_eriel/main.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -63,47 +67,67 @@ class _HomePageState extends State<HomePage> {
                         stateFilters.dateFilter!.date.isBefore(element.projectLaunchDate!)))
                 .toList();
           }
+          final size = MediaQuery.of(context).size;
 
           return Scaffold(
-            backgroundColor: const Color.fromARGB(1, 235, 239, 242),
-            body: Row(
-              children: [
-                Container(
-                  width: 330,
-                  margin: const EdgeInsets.only(top: 16, bottom: 16, left: 16, right: 8),
-                  child: FilteringSection(projects: stateProjects.projects),
+            backgroundColor: Colors.grey.shade200,
+            body: AuraBox(
+              spots: [
+                AuraSpot(
+                  color: colorBlue.withOpacity(0.4),
+                  radius: size.width * 0.5,
+                  alignment: const Alignment(-0.7, 1),
+                  blurRadius: 50,
                 ),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const HeaderAppBar(),
-                      Text('Total Projects: ${projects.length}', textAlign: TextAlign.start),
-                      Expanded(
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: LayoutBuilder(
-                                builder: (_, constrains) => DynamicHeightGridView(
-                                  itemCount: projects.length,
-                                  crossAxisCount: (constrains.maxWidth / 350).toInt(),
-                                  builder: (context, index) => ProjectPreviewCard(project: projects[index]),
-                                ),
-                              ),
-                            ),
-                            AnimatedContainer(
-                              constraints: BoxConstraints(minWidth: stateProjects.selected == null ? 0 : 350),
-                              width: stateProjects.selected == null ? 0 : size.width * 0.25,
-                              duration: const Duration(milliseconds: 600),
-                              child: ProjectPage(project: stateProjects.selected),
-                            ),
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
+                AuraSpot(
+                  color: colorRed.withOpacity(0.4),
+                  radius: size.width * 0.5,
+                  alignment: const Alignment(0.9, 0.8),
+                  blurRadius: 50,
                 ),
               ],
+              decoration: BoxDecoration(
+                color: Colors.transparent,
+                shape: BoxShape.rectangle,
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+              child: Row(
+                children: [
+                  FilteringSection(projects: stateProjects.projects),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const HeaderAppBar(),
+                          Expanded(
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: LayoutBuilder(
+                                    builder: (_, constrains) => DynamicHeightGridView(
+                                      itemCount: projects.length,
+                                      crossAxisCount: (constrains.maxWidth / 350).toInt(),
+                                      builder: (context, index) => ProjectPreviewCard(project: projects[index]),
+                                    ),
+                                  ),
+                                ),
+                                AnimatedContainer(
+                                  constraints: BoxConstraints(minWidth: stateProjects.selected == null ? 0 : 350),
+                                  width: stateProjects.selected == null ? 0 : size.width * 0.25,
+                                  duration: const Duration(milliseconds: 600),
+                                  child: ProjectPage(project: stateProjects.selected),
+                                ),
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           );
         });

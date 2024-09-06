@@ -5,11 +5,13 @@ class ImageOnCache extends StatelessWidget {
   final String imageUrl;
   final BoxDecoration boxDecoration;
   final Size? size;
+  final BoxFit fit;
 
   const ImageOnCache({
     super.key,
     required this.imageUrl,
     this.size,
+    this.fit = BoxFit.contain,
     this.boxDecoration = const BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(20))),
   });
 
@@ -21,7 +23,7 @@ class ImageOnCache extends StatelessWidget {
         final box = boxDecoration.copyWith(
           image: DecorationImage(
             image: imageProvider,
-            fit: BoxFit.cover,
+            fit: fit,
           ),
         );
         return Container(width: size?.width, height: size?.height, decoration: box);

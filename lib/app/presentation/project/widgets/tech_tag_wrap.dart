@@ -9,6 +9,9 @@ class TechTagsWrap extends StatelessWidget {
   final Function(String)? onTab;
   final Function(String)? onRemove;
   final bool only4;
+  final Color? borderColor;
+  final Color? textColor;
+  final Color? backgroundColor;
 
   const TechTagsWrap({
     super.key,
@@ -16,6 +19,9 @@ class TechTagsWrap extends StatelessWidget {
     this.onTab,
     this.onRemove,
     this.only4 = false,
+    this.borderColor,
+    this.backgroundColor,
+    this.textColor,
   });
 
   @override
@@ -39,6 +45,9 @@ class TechTagsWrap extends StatelessWidget {
             .map(
               (e) => TechTag(
                 name: e,
+                textColor: textColor,
+                borderColor: borderColor,
+                backgroundColor: backgroundColor,
                 onTap: onTab == null ? null : () => onTab!.call(e),
                 onRemoved: onRemove == null ? null : () => onRemove!.call(e),
               ),
@@ -49,6 +58,9 @@ class TechTagsWrap extends StatelessWidget {
           tagWidgets.add(
             TechTag(
               name: "....",
+              textColor: textColor,
+              borderColor: borderColor,
+              backgroundColor: backgroundColor,
               onTap: () {
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(content: Text('Hay más etiquetas')),

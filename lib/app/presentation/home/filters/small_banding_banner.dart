@@ -6,8 +6,11 @@ class SmallBrandingBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const ImageOnCache(
-      size: Size(double.maxFinite, 100),
+    return ImageOnCache(
+      size: const Size(double.maxFinite, 100),
+      boxDecoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20)
+      ),
       imageUrl:
           "https://avatars.githubusercontent.com/u/135989773?s=400&u=346fc3819db685124f01e4ac11060ae1d6c76f55&v=4",
     );

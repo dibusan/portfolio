@@ -14,7 +14,10 @@ class TimePeriodSelection extends StatelessWidget {
       builder: (context, state) {
         return Column(
           children: [
-            const Text("Time period selection"),
+            const Text(
+              "Time period selection",
+              style: TextStyle(color: Colors.black45, fontWeight: FontWeight.bold, fontSize: 18),
+            ),
             const VSp10(),
             Wrap(
               children: state.dates
@@ -37,21 +40,22 @@ class TimePeriodSelection extends StatelessWidget {
     return InkWell(
       borderRadius: BorderRadius.circular(20),
       onTap: onTap,
-      child: Container(
-        width: 72,
-        height: 24,
-        margin: const EdgeInsets.all(2),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          color: selected ? Colors.blue.shade200 : Colors.grey.shade200,
-        ),
-        child: Center(
-          child: Text(
-            label,
-            textScaler: const TextScaler.linear(0.8),
+      child: Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
           ),
-        ),
-      ),
+          color: selected ? Colors.blue.shade200 : Colors.white,
+          margin: const EdgeInsets.all(2),
+          child: SizedBox(
+            width: 72,
+            height: 24,
+            child: Center(
+              child: Text(
+                label,
+                textScaler: const TextScaler.linear(0.8),
+              ),
+            ),
+          )),
     );
   }
 }

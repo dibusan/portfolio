@@ -16,8 +16,7 @@
       "Automotive"
     ],
     "images": [
-      "https://cdn.prod.website-files.com/65026a74e1e0ef386dea70f2/66b2499d518b1932ed559465_The-Mobile-App.webp",
-      "https://cdn.prod.website-files.com/65026a74e1e0ef386dea70f2/66b2499d518b1932ed559465_The-Mobile-App.webp"
+      "https://picsum.photos/600/300?id=1"
     ],
     "githubLink": null,
     "appLink": "https://play.google.com/store/apps/details?id=com.juke.audio.juke_audio&pcampaignid=web_share",
@@ -44,8 +43,7 @@
       "MongoDB"
     ],
     "images": [
-      "https://cdn.pixabay.com/photo/2017/12/14/21/53/finance-3025542_1280.jpg",
-      "https://cdn.pixabay.com/photo/2018/01/22/21/45/money-3091837_1280.jpg"
+      "https://picsum.photos/600/300?id=2"
     ],
     "githubLink": "https://github.com/user/fintrack",
     "appLink": "https://www.fintrack.com",
@@ -73,8 +71,7 @@
       "AWS"
     ],
     "images": [
-      "https://cdn.pixabay.com/photo/2020/09/08/20/44/electric-car-5553182_1280.jpg",
-      "https://cdn.pixabay.com/photo/2016/07/29/08/57/electric-car-1551490_1280.jpg"
+      "https://picsum.photos/600/300?id=3"
     ],
     "githubLink": "https://github.com/user/ecodrive",
     "appLink": "https://www.ecodrive.com",
@@ -101,8 +98,7 @@
       "GraphQL"
     ],
     "images": [
-      "https://cdn.pixabay.com/photo/2018/03/02/18/58/telemedicine-3194619_1280.jpg",
-      "https://cdn.pixabay.com/photo/2016/11/29/05/16/doctor-1869428_1280.jpg"
+      "https://picsum.photos/600/300?id=4"
     ],
     "githubLink": "https://github.com/user/healthsync",
     "appLink": "https://www.healthsync.com",
@@ -129,8 +125,7 @@
       "Stripe API"
     ],
     "images": [
-      "https://cdn.pixabay.com/photo/2019/08/27/08/06/online-4438998_1280.jpg",
-      "https://cdn.pixabay.com/photo/2016/03/31/19/47/shopping-1299009_1280.jpg"
+      "https://picsum.photos/600/300?id=5"
     ],
     "githubLink": "https://github.com/user/shopease",
     "appLink": "https://www.shopease.com",
@@ -158,8 +153,7 @@
       "Google Maps API"
     ],
     "images": [
-      "https://cdn.pixabay.com/photo/2015/10/12/15/09/tourist-984202_1280.jpg",
-      "https://cdn.pixabay.com/photo/2017/02/02/15/15/architecture-2030113_1280.jpg"
+      "https://picsum.photos/600/300?id=6"
     ],
     "githubLink": "https://github.com/user/tourista",
     "appLink": "https://www.tourista.com",
@@ -187,8 +181,7 @@
       "MongoDB"
     ],
     "images": [
-      "https://cdn.pixabay.com/photo/2015/01/08/18/25/gym-593917_1280.jpg",
-      "https://cdn.pixabay.com/photo/2016/10/28/22/05/adult-1780774_1280.jpg"
+      "https://picsum.photos/600/300?id=7"
     ],
     "githubLink": "https://github.com/user/fitlife",
     "appLink": "https://www.fitlife.com",

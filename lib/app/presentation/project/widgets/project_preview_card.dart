@@ -1,11 +1,38 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:glass_kit/glass_kit.dart';
 import 'package:portfolio_eriel/app/bloc/project/project_bloc.dart';
 import 'package:portfolio_eriel/app/presentation/project/widgets/project_logo.dart';
 import 'package:portfolio_eriel/app/presentation/project/widgets/tech_tag_wrap.dart';
 import 'package:portfolio_eriel/app/presentation/project/widgets/mini_info.dart';
+import 'package:portfolio_eriel/app/presentation/project/widgets/tech_tags.dart';
 import 'package:portfolio_eriel/app/shared/__.dart';
 import 'package:portfolio_eriel/domain/entities/__.dart';
+
+class MyClipper extends CustomClipper<Path> {
+  final double radius;
+
+  MyClipper({required this.radius});
+
+  @override
+  Path getClip(Size size) {
+    var path = Path();
+    path.moveTo(0, 0);
+    path.lineTo(size.width - radius * 2, 0);
+    path.quadraticBezierTo(size.width - radius - 10, 0, size.width - radius - 10, radius / 2);
+    path.quadraticBezierTo(size.width - radius - 6, radius + 6, size.width - radius / 2, radius + 10);
+    path.quadraticBezierTo(size.width, radius + 10, size.width, radius * 2);
+    path.lineTo(size.width, size.height);
+    path.lineTo(0, size.height);
+    path.close();
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) => true;
+}
 
 class ProjectPreviewCard extends StatelessWidget {
   final Project project;
@@ -17,26 +44,110 @@ class ProjectPreviewCard extends StatelessWidget {
     return BlocBuilder<ProjectBloc, ProjectState>(
       builder: (context, state) {
         bool isSelected = state.selected?.id == project.id;
-        return Center(
+        return InkWell(
+          onTap: () => BlocProvider.of<ProjectBloc>(context).add(
+            ProjectEventSelect(project: isSelected ? null : project),
+          ),
+          borderRadius: BorderRadius.circular(20),
           child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              boxShadow: const [
-                BoxShadow(
-                  color: Color.fromRGBO(89, 148, 227, 0.1),
-                  offset: Offset(0, 2),
-                  blurRadius: 10,
+            margin: const EdgeInsets.all(5),
+            width: 200,
+            child: Stack(
+              children: [
+                ClipPath(
+                  clipper: MyClipper(radius: 70),
+                  child: GlassContainer.clearGlass(
+                    borderColor: Colors.transparent,
+                    color: Colors.white.withOpacity(0.3),
+                    height: 320,
+                    elevation: 20,
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(20),
+                      bottomRight: Radius.circular(20),
+                      bottomLeft: Radius.circular(20),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ListTile(
+                            contentPadding: EdgeInsets.zero,
+                            title: Text(
+                              project.title,
+                              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black87),
+                            ),
+                            subtitle: Text(
+                              project.subtitle ?? "",
+                              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black54),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(right: 35),
+                            child: Text(
+                              project.description ?? "",
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(fontSize: 14),
+                            ),
+                          ),
+                          const SizedBox(height: 5),
+                          Expanded(
+                            child: ImageOnCache(
+                              key: Key(project.images.first),
+                              imageUrl: project.images.first,
+                              fit: BoxFit.cover,
+                              boxDecoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                            ),
+                          ),
+                          Container(
+                            padding: const EdgeInsets.symmetric(vertical: 8),
+                            height: 50,
+                            child: ListView.separated(
+                              physics: const BouncingScrollPhysics(),
+                              separatorBuilder: (_, i) => const SizedBox(
+                                width: 4,
+                              ),
+                              scrollDirection: Axis.horizontal,
+                              itemBuilder: (_, i) => TechTag(
+                                name: project.techTags[i],
+                                borderColor: Colors.black87,
+                                textColor: Colors.black87,
+                              ),
+                              itemCount: project.techTags.length,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                Positioned(
+                  top: 0,
+                  right: 0,
+                  child: CircleAvatar(
+                    radius: 35,
+                    backgroundColor: Colors.white,
+                    backgroundImage: NetworkImage(project.logoUrl ?? ''),
+                  ),
                 ),
               ],
             ),
-            // --- Top Level Card
-            child: Card(
-              margin: const EdgeInsets.only(left: 8, right: 8, bottom: 8),
-              clipBehavior: Clip.hardEdge,
-              color: isSelected ? Colors.grey.shade200 : Colors.white,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20),
-              ),
+          ),
+        );
+      },
+    );
+
+    return BlocBuilder<ProjectBloc, ProjectState>(
+      builder: (context, state) {
+        bool isSelected = state.selected?.id == project.id;
+        return Stack(
+          clipBehavior: Clip.none,
+          children: [
+            ClipPath(
+              clipper: MyClipper(radius: 100),
               child: InkWell(
                 splashColor: Colors.blue.withAlpha(30),
                 onTap: () =>
@@ -44,6 +155,7 @@ class ProjectPreviewCard extends StatelessWidget {
                 // --- First Level Column
                 child: Container(
                   padding: const EdgeInsets.all(16),
+                  color: Colors.red,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -65,7 +177,16 @@ class ProjectPreviewCard extends StatelessWidget {
                 ),
               ),
             ),
-          ),
+            Positioned(
+              top: 0,
+              right: 0,
+              child: CircleAvatar(
+                radius: 30,
+                backgroundColor: Colors.blue,
+                child: Icon(Icons.add, color: Colors.white),
+              ),
+            ),
+          ],
         );
       },
     );

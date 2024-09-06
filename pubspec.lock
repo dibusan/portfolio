@@ -38,6 +38,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.11.0"
+  aura_box:
+    dependency: "direct main"
+    description:
+      name: aura_box
+      sha256: "944986570485c44b98e1e719895448eb3889e1cd5d6b8f7fd4a9b4349401f2d8"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.2"
   bloc:
     dependency: transitive
     description:
@@ -341,6 +349,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.0.0"
+  glass_kit:
+    dependency: "direct main"
+    description:
+      name: glass_kit
+      sha256: ccb7c31b07403d757bd338901a0f4859c081db05a6593916be87d7c20f07d9b7
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.0.1"
   glob:
     dependency: transitive
     description:

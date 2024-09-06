@@ -8,6 +8,7 @@ import 'package:portfolio_eriel/app/presentation/home/filters/search_bar.dart';
 import 'package:portfolio_eriel/app/presentation/project/widgets/tech_tag_wrap.dart';
 import 'package:portfolio_eriel/app/shared/__.dart';
 import 'package:portfolio_eriel/domain/entities/__.dart';
+import 'package:portfolio_eriel/main.dart';
 
 class VerticalTagFiltering extends StatelessWidget {
   final List<Project> projects;
@@ -29,12 +30,16 @@ class VerticalTagFiltering extends StatelessWidget {
 
           return Column(
             crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              const Text("Filter by tech"),
+              const Text(
+                "Filter by tech",
+                style: TextStyle(color: Colors.black45, fontWeight: FontWeight.bold, fontSize: 18),
+              ),
+              const VSp8(),
               FilterSearchBar(filterTagController: bloc.filterTagController),
               if (state.techTags.isNotEmpty) ...[
-                const VSp10(),
-                const SizedBox(width: 100, child: Divider()),
+                const VSp24(),
                 Container(
                   constraints: const BoxConstraints(
                     minHeight: 20,
@@ -48,12 +53,15 @@ class VerticalTagFiltering extends StatelessWidget {
                 ),
               ],
               const VSp10(),
-              const SizedBox(width: 100, child: Divider()),
+              const Divider(color: Colors.white),
+              const VSp10(),
               SizedBox(
                 width: double.maxFinite,
                 child: TechTagsWrap(
                   techTags: tags,
+                  textColor: Colors.black45,
                   onTab: (tagName) {
+                    bloc.filterTagController.clear();
                     context.read<FilterBloc>().add(FilterEventTechTag(name: tagName, removed: false));
                   },
                 ),

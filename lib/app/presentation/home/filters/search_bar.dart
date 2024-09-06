@@ -15,10 +15,6 @@ class FilterSearchBar extends StatelessWidget {
             : IconButton(onPressed: () => filterTagController.clear(), icon: const Icon(Icons.close)),
         hintText: "Type to filter tags",
         hintStyle: TextStyle(color: Colors.grey.shade400),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(20),
-        ),
-        isDense: true,
       ),
     );
   }
