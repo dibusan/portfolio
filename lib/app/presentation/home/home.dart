@@ -1,6 +1,7 @@
 import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:glass_kit/glass_kit.dart';
 import 'package:portfolio_eriel/app/bloc/filter/bloc.dart';
 import 'package:portfolio_eriel/app/bloc/filter/event.dart';
 import 'package:portfolio_eriel/app/bloc/filter/state.dart';
@@ -78,43 +79,60 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                 ),
-                Row(
-                  children: [
-                    FilteringSection(projects: stateProjects.projects),
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const HeaderAppBar(),
-                            Expanded(
-                              child: Row(
+                Container(
+                  margin: const EdgeInsets.only(left: 300),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: ClipRRect(
+                          borderRadius: const BorderRadius.only(
+                            topRight: Radius.circular(20),
+                            bottomRight: Radius.circular(20),
+                          ),
+                          child: GlassContainer.clearGlass(
+                            borderColor: Colors.transparent,
+                            elevation: 40,
+                            color: Colors.white.withOpacity(0.2),
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 40, right: 20),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
+                                  const HeaderAppBar(),
                                   Expanded(
-                                    child: LayoutBuilder(
-                                      builder: (_, constrains) => DynamicHeightGridView(
-                                        itemCount: projects.length,
-                                        crossAxisCount: (constrains.maxWidth / 350).toInt(),
-                                        builder: (context, index) => ProjectPreviewCard(project: projects[index]),
-                                      ),
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                          child: LayoutBuilder(
+                                            builder: (_, constrains) => DynamicHeightGridView(
+                                              itemCount: projects.length,
+                                              crossAxisCount: (constrains.maxWidth / 350).toInt(),
+                                              builder: (context, index) => ProjectPreviewCard(project: projects[index]),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                  ),
-                                  AnimatedContainer(
-                                    constraints: BoxConstraints(minWidth: stateProjects.selected == null ? 0 : 350),
-                                    width: stateProjects.selected == null ? 0 : size.width * 0.25,
-                                    duration: const Duration(milliseconds: 200),
-                                    child: ProjectPage(project: stateProjects.selected),
-                                  ),
+                                  )
                                 ],
                               ),
-                            )
-                          ],
+                            ),
+                          ),
                         ),
                       ),
-                    ),
-                  ],
-                )
+                      AnimatedContainer(
+                        constraints: BoxConstraints(minWidth: stateProjects.selected == null ? 0 : 350),
+                        width: stateProjects.selected == null ? 0 : size.width * 0.20,
+                        duration: const Duration(milliseconds: 200),
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 35, left: 15, right: 15),
+                          child: ProjectPage(project: stateProjects.selected),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                FilteringSection(projects: stateProjects.projects),
               ],
             ),
           );

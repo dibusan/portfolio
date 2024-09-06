@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:glass_kit/glass_kit.dart';
 import 'package:portfolio_eriel/app/bloc/project/project_bloc.dart';
 import 'package:portfolio_eriel/app/presentation/project/widgets/mini_info.dart';
 import 'package:portfolio_eriel/app/presentation/project/widgets/project_logo.dart';
@@ -20,13 +21,15 @@ class ProjectPage extends StatelessWidget {
     // Figma Flutter Generator Frame34Widget - FRAME - VERTICAL
     return SizedBox(
         height: MediaQuery.sizeOf(context).height,
-        child: Card(
-          color: const Color.fromARGB(1, 235, 239, 242),
+        child: GlassContainer.clearGlass(
+          borderColor: Colors.transparent,
+          borderRadius: const BorderRadius.only(topRight: Radius.circular(20), topLeft: Radius.circular(20)),
           child: SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
+              padding: const EdgeInsets.symmetric(horizontal: 10),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   const VSp24(),
                   Align(
@@ -45,34 +48,40 @@ class ProjectPage extends StatelessWidget {
                       children: <Widget>[
                         ProjectLogo(imageUrl: project?.logoUrl),
                         const VSp8(),
-                        ProjectMiniInfoSection(project: project, expand: true),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(width: 200, child: Divider()),
-                  // Tech Stack
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        const Center(
-                          child: Text("Tech Stack"),
+                        Text(project?.title ?? "", style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+                        Text(
+                          project?.subtitle ?? "",
+                          style: const TextStyle(fontSize: 16),
                         ),
                         const VSp8(),
-                        TechTagsWrap(techTags: project?.techTags ?? []),
+                        Text(
+                          project?.description ?? "",
+                          textAlign: TextAlign.left,
+                        ),
                       ],
                     ),
                   ),
-                  const SizedBox(width: 200, child: Divider()),
+                  const VSp10(),
+                  const Text(
+                    "Tech Stack",
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                  ),
+                  const VSp8(),
+                  TechTagsWrap(
+                    techTags: project?.techTags ?? [],
+                    backgroundColor: Colors.white,
+                  ),
+                  const VSp10(),
+                  Text(
+                    "Media example",
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                  ),
+                  const VSp8(),
                   // Images
                   if (project?.images != null)
                     LayoutBuilder(builder: (context, constrains) {
                       return Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 24),
+                        padding: const EdgeInsets.symmetric(horizontal: 5),
                         child: CarouselSlider(
                           options: CarouselOptions(
                             height: 300.0,

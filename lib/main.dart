@@ -4,11 +4,6 @@ import 'package:portfolio_eriel/app/bloc/filter/bloc.dart';
 import 'package:portfolio_eriel/app/bloc/project/project_bloc.dart';
 import 'package:portfolio_eriel/app/presentation/home/home.dart';
 
-const colorRed = Color(0xffE33C3C);
-const colorBlue = Color(0xff004E7B);
-const colorNeutral = Color(0xff6694AF);
-const colorLightBlue = Color(0xffCFDAE1);
-
 void main() {
   runApp(MultiBlocProvider(providers: [
     BlocProvider(create: (_) => ProjectBloc()..add(const ProjectEventStarted())),
@@ -26,7 +21,11 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
           useMaterial3: true,
-          colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xff004E7B)),
+          colorScheme: ColorScheme.fromSeed(
+            seedColor: const Color(0xff004E7B),
+            secondary: const Color(0xffE33C3C),
+            primary: const Color(0xff6694AF),
+          ),
           inputDecorationTheme: InputDecorationTheme(
             fillColor: Colors.white.withOpacity(0.3),
             filled: true,
