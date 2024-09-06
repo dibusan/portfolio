@@ -30,7 +30,6 @@ dependencies:
   carousel_slider: ^5.0.0
   json_annotation: ^4.9.0
   glass_kit: ^4.0.1
-  aura_box: ^1.0.2
 
 
 
@@ -48,4 +47,5 @@ flutter:
   uses-material-design: true
   assets:
     - assets/projects.json
+    - assets/background.png
 

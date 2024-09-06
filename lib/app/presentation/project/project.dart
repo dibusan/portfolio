@@ -92,6 +92,7 @@ class ProjectPage extends StatelessWidget {
                                   child: ImageOnCache(
                                     imageUrl: i,
                                     boxDecoration: dec,
+                                    fit: BoxFit.cover,
                                   ),
                                 );
                               },

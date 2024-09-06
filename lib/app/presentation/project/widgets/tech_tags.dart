@@ -33,10 +33,12 @@ class TechTag extends StatelessWidget {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(
-              name,
-              style: TextStyle(color: textColor, fontWeight: FontWeight.bold),
-              overflow: TextOverflow.ellipsis,
+            Flexible(
+              child: Text(
+                name,
+                style: TextStyle(color: textColor, fontWeight: FontWeight.bold),
+                overflow: TextOverflow.ellipsis,
+              ),
             ),
             if (onRemoved != null) ...[
               const SizedBox(width: 5),

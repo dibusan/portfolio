@@ -10,6 +10,7 @@ import 'package:portfolio_eriel/app/presentation/project/widgets/mini_info.dart'
 import 'package:portfolio_eriel/app/presentation/project/widgets/tech_tags.dart';
 import 'package:portfolio_eriel/app/shared/__.dart';
 import 'package:portfolio_eriel/domain/entities/__.dart';
+import 'package:portfolio_eriel/main.dart';
 
 class MyClipper extends CustomClipper<Path> {
   final double radius;
@@ -58,7 +59,7 @@ class ProjectPreviewCard extends StatelessWidget {
                   clipper: MyClipper(radius: 70),
                   child: GlassContainer.clearGlass(
                     borderColor: Colors.transparent,
-                    color: Colors.white.withOpacity(0.3),
+                    color: isSelected ? Colors.grey.withOpacity(0.3) : Colors.white.withOpacity(0.3),
                     height: 320,
                     elevation: 20,
                     borderRadius: const BorderRadius.only(
@@ -129,64 +130,13 @@ class ProjectPreviewCard extends StatelessWidget {
                   right: 0,
                   child: CircleAvatar(
                     radius: 35,
-                    backgroundColor: Colors.white,
+                    backgroundColor: isSelected ? Colors.grey.withOpacity(0.3) : Colors.white.withOpacity(0.3),
                     backgroundImage: NetworkImage(project.logoUrl ?? ''),
                   ),
                 ),
               ],
             ),
           ),
-        );
-      },
-    );
-
-    return BlocBuilder<ProjectBloc, ProjectState>(
-      builder: (context, state) {
-        bool isSelected = state.selected?.id == project.id;
-        return Stack(
-          clipBehavior: Clip.none,
-          children: [
-            ClipPath(
-              clipper: MyClipper(radius: 100),
-              child: InkWell(
-                splashColor: Colors.blue.withAlpha(30),
-                onTap: () =>
-                    BlocProvider.of<ProjectBloc>(context).add(ProjectEventSelect(project: isSelected ? null : project)),
-                // --- First Level Column
-                child: Container(
-                  padding: const EdgeInsets.all(16),
-                  color: Colors.red,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          ProjectLogo(imageUrl: project.logoUrl),
-                          const HSp8(),
-                          Expanded(child: ProjectMiniInfoSection(project: project)),
-                        ],
-                      ),
-                      const VSp8(),
-                      TechTagsWrap(
-                        techTags: project.techTags,
-                        only4: true,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            Positioned(
-              top: 0,
-              right: 0,
-              child: CircleAvatar(
-                radius: 30,
-                backgroundColor: Colors.blue,
-                child: Icon(Icons.add, color: Colors.white),
-              ),
-            ),
-          ],
         );
       },
     );

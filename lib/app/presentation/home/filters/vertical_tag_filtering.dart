@@ -47,6 +47,7 @@ class VerticalTagFiltering extends StatelessWidget {
                   ),
                   child: TechTagsWrap(
                       techTags: state.techTags,
+                      textColor: Colors.black45,
                       onRemove: (tagName) {
                         context.read<FilterBloc>().add(FilterEventTechTag(name: tagName, removed: true));
                       }),
