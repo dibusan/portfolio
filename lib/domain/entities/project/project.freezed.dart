@@ -29,7 +29,9 @@ mixin _$Project {
   List<String> get images => throw _privateConstructorUsedError;
   String? get githubLink => throw _privateConstructorUsedError;
   String? get appLink => throw _privateConstructorUsedError;
+  @TimestampOrStringConverter()
   DateTime? get projectStartDate => throw _privateConstructorUsedError;
+  @TimestampOrStringConverter()
   DateTime? get projectLaunchDate => throw _privateConstructorUsedError;
   bool get isInProgress => throw _privateConstructorUsedError;
   String? get projectOwner => throw _privateConstructorUsedError;
@@ -61,8 +63,8 @@ abstract class $ProjectCopyWith<$Res> {
       List<String> images,
       String? githubLink,
       String? appLink,
-      DateTime? projectStartDate,
-      DateTime? projectLaunchDate,
+      @TimestampOrStringConverter() DateTime? projectStartDate,
+      @TimestampOrStringConverter() DateTime? projectLaunchDate,
       bool isInProgress,
       String? projectOwner,
       String? projectOwnerLogoUrl,
@@ -188,8 +190,8 @@ abstract class _$$ProjectImplCopyWith<$Res> implements $ProjectCopyWith<$Res> {
       List<String> images,
       String? githubLink,
       String? appLink,
-      DateTime? projectStartDate,
-      DateTime? projectLaunchDate,
+      @TimestampOrStringConverter() DateTime? projectStartDate,
+      @TimestampOrStringConverter() DateTime? projectLaunchDate,
       bool isInProgress,
       String? projectOwner,
       String? projectOwnerLogoUrl,
@@ -309,8 +311,8 @@ class _$ProjectImpl implements _Project {
       final List<String> images = const [],
       this.githubLink,
       this.appLink,
-      this.projectStartDate,
-      this.projectLaunchDate,
+      @TimestampOrStringConverter() this.projectStartDate,
+      @TimestampOrStringConverter() this.projectLaunchDate,
       this.isInProgress = false,
       this.projectOwner,
       this.projectOwnerLogoUrl,
@@ -356,8 +358,10 @@ class _$ProjectImpl implements _Project {
   @override
   final String? appLink;
   @override
+  @TimestampOrStringConverter()
   final DateTime? projectStartDate;
   @override
+  @TimestampOrStringConverter()
   final DateTime? projectLaunchDate;
   @override
   @JsonKey()
@@ -463,8 +467,8 @@ abstract class _Project implements Project {
       final List<String> images,
       final String? githubLink,
       final String? appLink,
-      final DateTime? projectStartDate,
-      final DateTime? projectLaunchDate,
+      @TimestampOrStringConverter() final DateTime? projectStartDate,
+      @TimestampOrStringConverter() final DateTime? projectLaunchDate,
       final bool isInProgress,
       final String? projectOwner,
       final String? projectOwnerLogoUrl,
@@ -492,8 +496,10 @@ abstract class _Project implements Project {
   @override
   String? get appLink;
   @override
+  @TimestampOrStringConverter()
   DateTime? get projectStartDate;
   @override
+  @TimestampOrStringConverter()
   DateTime? get projectLaunchDate;
   @override
   bool get isInProgress;

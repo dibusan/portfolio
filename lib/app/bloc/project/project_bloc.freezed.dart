@@ -98,12 +98,20 @@ class __$$ProjectEventStartedImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$ProjectEventStartedImpl implements ProjectEventStarted {
+class _$ProjectEventStartedImpl
+    with DiagnosticableTreeMixin
+    implements ProjectEventStarted {
   const _$ProjectEventStartedImpl();
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'ProjectEvent.started()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty('type', 'ProjectEvent.started'));
   }
 
   @override
@@ -234,15 +242,25 @@ class __$$ProjectEventSelectImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$ProjectEventSelectImpl implements ProjectEventSelect {
+class _$ProjectEventSelectImpl
+    with DiagnosticableTreeMixin
+    implements ProjectEventSelect {
   const _$ProjectEventSelectImpl({this.project});
 
   @override
   final Project? project;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'ProjectEvent.selectProject(project: $project)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'ProjectEvent.selectProject'))
+      ..add(DiagnosticsProperty('project', project));
   }
 
   @override
@@ -501,7 +519,7 @@ class __$$ProjectStateImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$ProjectStateImpl implements _ProjectState {
+class _$ProjectStateImpl with DiagnosticableTreeMixin implements _ProjectState {
   const _$ProjectStateImpl(
       {this.loading = true,
       this.developer,
@@ -527,8 +545,19 @@ class _$ProjectStateImpl implements _ProjectState {
   final Project? selected;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'ProjectState(loading: $loading, developer: $developer, projects: $projects, selected: $selected)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'ProjectState'))
+      ..add(DiagnosticsProperty('loading', loading))
+      ..add(DiagnosticsProperty('developer', developer))
+      ..add(DiagnosticsProperty('projects', projects))
+      ..add(DiagnosticsProperty('selected', selected));
   }
 
   @override

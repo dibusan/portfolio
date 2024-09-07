@@ -1,8 +1,7 @@
 import 'dart:convert';
-
 import 'package:flutter/services.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:flutter/foundation.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 part 'project.freezed.dart';
 
@@ -20,8 +19,8 @@ class Project with _$Project {
     @Default([]) List<String> images,
     String? githubLink,
     String? appLink,
-    DateTime? projectStartDate,
-    DateTime? projectLaunchDate,
+    @TimestampOrStringConverter() DateTime? projectStartDate,
+    @TimestampOrStringConverter() DateTime? projectLaunchDate,
     @Default(false) bool isInProgress,
     String? projectOwner,
     String? projectOwnerLogoUrl,
@@ -36,7 +35,6 @@ class Project with _$Project {
   }
 
   static Future<List<Project>> loadFromJson() async {
-    print("loadFromJson");
     final String jsonString = await rootBundle.loadString('assets/projects.json');
     final List<dynamic> jsonData = json.decode(jsonString);
 
@@ -49,4 +47,21 @@ enum ProjectType {
   fullTime,
   freelance,
   petProject,
+}
+
+class TimestampOrStringConverter implements JsonConverter<DateTime?, Object?> {
+  const TimestampOrStringConverter();
+
+  @override
+  DateTime? fromJson(Object? json) {
+    if (json is Timestamp) {
+      return json.toDate();
+    } else if (json is String) {
+      return DateTime.tryParse(json);
+    }
+    return null;
+  }
+
+  @override
+  Object? toJson(DateTime? date) => date?.toIso8601String();
 }

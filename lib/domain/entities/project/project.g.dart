@@ -23,12 +23,10 @@ _$ProjectImpl _$$ProjectImplFromJson(Map<String, dynamic> json) =>
           const [],
       githubLink: json['githubLink'] as String?,
       appLink: json['appLink'] as String?,
-      projectStartDate: json['projectStartDate'] == null
-          ? null
-          : DateTime.parse(json['projectStartDate'] as String),
-      projectLaunchDate: json['projectLaunchDate'] == null
-          ? null
-          : DateTime.parse(json['projectLaunchDate'] as String),
+      projectStartDate:
+          const TimestampOrStringConverter().fromJson(json['projectStartDate']),
+      projectLaunchDate: const TimestampOrStringConverter()
+          .fromJson(json['projectLaunchDate']),
       isInProgress: json['isInProgress'] as bool? ?? false,
       projectOwner: json['projectOwner'] as String?,
       projectOwnerLogoUrl: json['projectOwnerLogoUrl'] as String?,
@@ -51,8 +49,10 @@ Map<String, dynamic> _$$ProjectImplToJson(_$ProjectImpl instance) =>
       'images': instance.images,
       'githubLink': instance.githubLink,
       'appLink': instance.appLink,
-      'projectStartDate': instance.projectStartDate?.toIso8601String(),
-      'projectLaunchDate': instance.projectLaunchDate?.toIso8601String(),
+      'projectStartDate':
+          const TimestampOrStringConverter().toJson(instance.projectStartDate),
+      'projectLaunchDate':
+          const TimestampOrStringConverter().toJson(instance.projectLaunchDate),
       'isInProgress': instance.isInProgress,
       'projectOwner': instance.projectOwner,
       'projectOwnerLogoUrl': instance.projectOwnerLogoUrl,
