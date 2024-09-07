@@ -53,7 +53,7 @@ class ProjectPreviewCard extends StatelessWidget {
                   clipper: MyClipper(radius: 70),
                   child: GlassContainer.clearGlass(
                     borderColor: Colors.transparent,
-                    color: isSelected ? Colors.grey.withOpacity(0.3) : Colors.white.withOpacity(0.3),
+                    color: Colors.white.withOpacity(isSelected ? 0.7 : 0.3),
                     height: 320,
                     elevation: 20,
                     borderRadius: const BorderRadius.only(
@@ -126,7 +126,7 @@ class ProjectPreviewCard extends StatelessWidget {
                   right: 0,
                   child: CircleAvatar(
                     radius: 35,
-                    backgroundColor: isSelected ? Colors.grey.withOpacity(0.3) : Colors.white.withOpacity(0.3),
+                    backgroundColor: Colors.white.withOpacity(isSelected ? 0.7 : 0.3),
                     backgroundImage: project.logoUrl == null ? null : NetworkImage(project.logoUrl!),
                   ),
                 ),
