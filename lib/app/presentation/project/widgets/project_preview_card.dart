@@ -88,14 +88,16 @@ class ProjectPreviewCard extends StatelessWidget {
                           ),
                           const SizedBox(height: 5),
                           Expanded(
-                            child: ImageOnCache(
-                              key: Key(project.images.first),
-                              imageUrl: project.images.first,
-                              fit: BoxFit.cover,
-                              boxDecoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                            ),
+                            child: project.images.isEmpty
+                                ? const SizedBox()
+                                : ImageOnCache(
+                                    key: Key(project.images.first),
+                                    imageUrl: project.images.first,
+                                    fit: BoxFit.cover,
+                                    boxDecoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                  ),
                           ),
                           Container(
                             padding: const EdgeInsets.symmetric(vertical: 8),
@@ -125,7 +127,7 @@ class ProjectPreviewCard extends StatelessWidget {
                   child: CircleAvatar(
                     radius: 35,
                     backgroundColor: isSelected ? Colors.grey.withOpacity(0.3) : Colors.white.withOpacity(0.3),
-                    backgroundImage: NetworkImage(project.logoUrl ?? ''),
+                    backgroundImage: project.logoUrl == null ? null : NetworkImage(project.logoUrl!),
                   ),
                 ),
               ],

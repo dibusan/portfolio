@@ -367,6 +367,7 @@ abstract class $ProjectStateCopyWith<$Res> {
       List<Project> projects,
       Project? selected});
 
+  $DeveloperCopyWith<$Res>? get developer;
   $ProjectCopyWith<$Res>? get selected;
 }
 
@@ -414,6 +415,20 @@ class _$ProjectStateCopyWithImpl<$Res, $Val extends ProjectState>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
+  $DeveloperCopyWith<$Res>? get developer {
+    if (_value.developer == null) {
+      return null;
+    }
+
+    return $DeveloperCopyWith<$Res>(_value.developer!, (value) {
+      return _then(_value.copyWith(developer: value) as $Val);
+    });
+  }
+
+  /// Create a copy of ProjectState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
   $ProjectCopyWith<$Res>? get selected {
     if (_value.selected == null) {
       return null;
@@ -439,6 +454,8 @@ abstract class _$$ProjectStateImplCopyWith<$Res>
       List<Project> projects,
       Project? selected});
 
+  @override
+  $DeveloperCopyWith<$Res>? get developer;
   @override
   $ProjectCopyWith<$Res>? get selected;
 }

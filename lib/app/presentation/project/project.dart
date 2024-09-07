@@ -45,7 +45,9 @@ class ProjectPage extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.all(16),
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
+                        const SizedBox(width: double.maxFinite),
                         ProjectLogo(imageUrl: project?.logoUrl),
                         const VSp8(),
                         Text(project?.title ?? "", style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
@@ -72,7 +74,7 @@ class ProjectPage extends StatelessWidget {
                     backgroundColor: Colors.white,
                   ),
                   const VSp10(),
-                  Text(
+                  const Text(
                     "Media example",
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                   ),

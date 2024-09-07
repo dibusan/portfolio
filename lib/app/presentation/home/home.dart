@@ -79,60 +79,63 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                 ),
-                Container(
-                  margin: const EdgeInsets.only(left: 300),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: ClipRRect(
-                          borderRadius: const BorderRadius.only(
-                            topRight: Radius.circular(20),
-                            bottomRight: Radius.circular(20),
-                          ),
-                          child: GlassContainer.clearGlass(
-                            borderColor: Colors.transparent,
-                            elevation: 40,
-                            color: Colors.white.withOpacity(0.2),
-                            child: Padding(
-                              padding: const EdgeInsets.only(left: 40, right: 20),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const HeaderAppBar(),
-                                  Expanded(
-                                    child: Row(
+                stateProjects.loading
+                    ? const Center(child: CircularProgressIndicator())
+                    : Container(
+                        margin: const EdgeInsets.only(left: 300),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: ClipRRect(
+                                borderRadius: const BorderRadius.only(
+                                  topRight: Radius.circular(20),
+                                  bottomRight: Radius.circular(20),
+                                ),
+                                child: GlassContainer.clearGlass(
+                                  borderColor: Colors.transparent,
+                                  elevation: 40,
+                                  color: Colors.white.withOpacity(0.2),
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(left: 40, right: 20),
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
+                                        const HeaderAppBar(),
                                         Expanded(
-                                          child: LayoutBuilder(
-                                            builder: (_, constrains) => DynamicHeightGridView(
-                                              itemCount: projects.length,
-                                              crossAxisCount: (constrains.maxWidth / 350).toInt(),
-                                              builder: (context, index) => ProjectPreviewCard(project: projects[index]),
-                                            ),
+                                          child: Row(
+                                            children: [
+                                              Expanded(
+                                                child: LayoutBuilder(
+                                                  builder: (_, constrains) => DynamicHeightGridView(
+                                                    itemCount: projects.length,
+                                                    crossAxisCount: (constrains.maxWidth / 350).toInt(),
+                                                    builder: (context, index) =>
+                                                        ProjectPreviewCard(project: projects[index]),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
                                           ),
-                                        ),
+                                        )
                                       ],
                                     ),
-                                  )
-                                ],
+                                  ),
+                                ),
                               ),
                             ),
-                          ),
+                            AnimatedContainer(
+                              constraints: BoxConstraints(minWidth: stateProjects.selected == null ? 0 : 350),
+                              width: stateProjects.selected == null ? 0 : size.width * 0.20,
+                              duration: const Duration(milliseconds: 200),
+                              child: Padding(
+                                padding: const EdgeInsets.only(top: 35, left: 15, right: 15),
+                                child: ProjectPage(project: stateProjects.selected),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                      AnimatedContainer(
-                        constraints: BoxConstraints(minWidth: stateProjects.selected == null ? 0 : 350),
-                        width: stateProjects.selected == null ? 0 : size.width * 0.20,
-                        duration: const Duration(milliseconds: 200),
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 35, left: 15, right: 15),
-                          child: ProjectPage(project: stateProjects.selected),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                FilteringSection(projects: stateProjects.projects),
+                stateProjects.loading ? const SizedBox() : FilteringSection(projects: stateProjects.projects),
               ],
             ),
           );

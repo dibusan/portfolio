@@ -1,6 +1,6 @@
 [
   {
-    "id": 1,
+    "id": "1",
     "title": "JukeAudio",
     "logoUrl": "https://cdn.prod.website-files.com/65026a74e1e0ef386dea70f2/65046543b137643501680d7b_logo.webp",
     "subtitle": "Smart Audio System",
@@ -32,7 +32,7 @@
     ]
   },
   {
-    "id": 2,
+    "id": "2",
     "title": "FinTrack",
     "logoUrl": "https://cdn-icons-png.flaticon.com/512/929/929432.png",
     "subtitle": "Personal Finance Management",
@@ -59,7 +59,7 @@
     ]
   },
   {
-    "id": 3,
+    "id": "3",
     "title": "EcoDrive",
     "logoUrl": "https://cdn-icons-png.flaticon.com/512/2917/2917991.png",
     "subtitle": "Sustainable Vehicle Tracking",
@@ -87,7 +87,7 @@
     ]
   },
   {
-    "id": 4,
+    "id": "4",
     "title": "HealthSync",
     "logoUrl": "https://cdn-icons-png.flaticon.com/512/2913/2913465.png",
     "subtitle": "Patient Health Monitoring",
@@ -114,7 +114,7 @@
     ]
   },
   {
-    "id": 5,
+    "id": "5",
     "title": "ShopEase",
     "logoUrl": "https://cdn-icons-png.flaticon.com/512/869/869869.png",
     "subtitle": "E-commerce Platform",
@@ -141,7 +141,7 @@
     ]
   },
   {
-    "id": 6,
+    "id": "6",
     "title": "Tourista",
     "logoUrl": "https://cdn-icons-png.flaticon.com/512/3564/3564679.png",
     "subtitle": "Travel Planning App",
@@ -169,7 +169,7 @@
     ]
   },
   {
-    "id": 7,
+    "id": "7",
     "title": "FitLife",
     "logoUrl": "https://cdn-icons-png.flaticon.com/512/992/992205.png",
     "subtitle": "Fitness and Wellness Tracker",
