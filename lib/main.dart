@@ -14,6 +14,11 @@ void main() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   FirebaseFirestore.instance.settings = const Settings(
     persistenceEnabled: true,
+    webExperimentalAutoDetectLongPolling: false,
+    webExperimentalForceLongPolling: true,
+    webExperimentalLongPollingOptions: WebExperimentalLongPollingOptions(
+      timeoutDuration: const Duration(seconds: 5),
+    ),
   );
   if (shouldUseFirestoreEmulator) {
     FirebaseFirestore.instance.useFirestoreEmulator('localhost', 8080);
