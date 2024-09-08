@@ -3,9 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:portfolio_eriel/app/bloc/filter/bloc.dart';
 import 'package:portfolio_eriel/app/bloc/filter/state.dart';
 import 'package:portfolio_eriel/app/shared/__.dart';
+import 'package:portfolio_eriel/domain/entities/__.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HeaderAppBar extends StatelessWidget {
-  const HeaderAppBar({super.key});
+  final Developer? developer;
+
+  const HeaderAppBar({super.key, this.developer});
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +17,7 @@ class HeaderAppBar extends StatelessWidget {
     return BlocBuilder<FilterBloc, FilterState>(
       builder: (context, state) {
         final bloc = BlocProvider.of<FilterBloc>(context);
-        return  Row(
+        return Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Container(
@@ -30,9 +34,9 @@ class HeaderAppBar extends StatelessWidget {
                     suffixIcon: state.filterGeneral.isEmpty
                         ? null
                         : IconButton(
-                      onPressed: () => bloc.generalController.clear(),
-                      icon: const Icon(Icons.clear),
-                    )),
+                            onPressed: () => bloc.generalController.clear(),
+                            icon: const Icon(Icons.clear),
+                          )),
               ),
             ),
             const Expanded(child: SizedBox()),
@@ -42,7 +46,13 @@ class HeaderAppBar extends StatelessWidget {
                 child: const Text("About me", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18))),
             const HSp16(),
             InkWell(
-              onTap: () {},
+              onTap: () {
+                final uri = Uri(scheme: 'tel', path: developer?.phoneNumber ?? "");
+                canLaunchUrl(uri).then((bool result) async {
+                  if (!result) return;
+                  await launchUrl(uri);
+                });
+              },
               borderRadius: BorderRadius.circular(50),
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),

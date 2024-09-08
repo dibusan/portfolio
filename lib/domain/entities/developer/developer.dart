@@ -1,8 +1,4 @@
-import 'dart:convert';
-
-import 'package:flutter/services.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:flutter/foundation.dart';
 
 part 'developer.freezed.dart';
 
@@ -18,6 +14,8 @@ class Developer with _$Developer {
     String? linkedInUrl,
     String? bannerUrl,
     String? smallBrandingBanner,
+    String? phoneNumber,
+    String? emailContact,
   }) = _Developer;
 
   factory Developer.fromJson(Map<String, Object?> json) => _$DeveloperFromJson(json);
@@ -26,6 +24,8 @@ class Developer with _$Developer {
     return const Developer(
       id: "1",
       name: "Eriel Marimon",
+      phoneNumber: '+1 786 428 8315',
+      emailContact: 'erieljr1@gmail.com',
       profileImageUrl:
           "https://media.licdn.com/dms/image/v2/D4E03AQGzQI0e7CZIBA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1718731199523?e=1729123200&v=beta&t=JnbTczVPLptPTPsM6ZZH4p-GGWKh1UpsSO-mnA5J47c",
       bannerUrl: "https://fastly.picsum.photos/id/311/1920/480.jpg?hmac=c8ubwob1rlvsf5HrZRx1L5yrIitznw_5TzjVRVKwqdc",

@@ -6,8 +6,8 @@ import 'package:portfolio_eriel/app/bloc/filter/bloc.dart';
 import 'package:portfolio_eriel/app/bloc/filter/event.dart';
 import 'package:portfolio_eriel/app/bloc/filter/state.dart';
 import 'package:portfolio_eriel/app/bloc/project/project_bloc.dart';
-import 'package:portfolio_eriel/app/presentation/home/filters/filters.dart';
 import 'package:portfolio_eriel/app/presentation/home/widgets/header.dart';
+import 'package:portfolio_eriel/app/presentation/home/leftBar/letf_bar.dart';
 import 'package:portfolio_eriel/app/presentation/project/project.dart';
 import 'package:portfolio_eriel/app/presentation/project/widgets/project_preview_card.dart';
 import 'package:portfolio_eriel/domain/entities/__.dart';
@@ -135,7 +135,12 @@ class _HomePageState extends State<HomePage> {
                           ],
                         ),
                       ),
-                stateProjects.loading ? const SizedBox() : FilteringSection(projects: stateProjects.projects),
+                stateProjects.loading
+                    ? const SizedBox()
+                    : LeftBarSection(
+                        projects: stateProjects.projects,
+                        developer: stateProjects.developer,
+                      ),
               ],
             ),
           );

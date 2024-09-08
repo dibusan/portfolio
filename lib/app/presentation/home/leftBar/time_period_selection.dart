@@ -16,7 +16,7 @@ class TimePeriodSelection extends StatelessWidget {
           children: [
             const Text(
               "Time period selection",
-              style: TextStyle(color: Colors.black45, fontWeight: FontWeight.bold, fontSize: 18),
+              style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18),
             ),
             const VSp10(),
             Wrap(
@@ -41,10 +41,11 @@ class TimePeriodSelection extends StatelessWidget {
       borderRadius: BorderRadius.circular(20),
       onTap: onTap,
       child: Card(
+          elevation: selected ? 5 : 0,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),
           ),
-          color: selected ? Colors.blue.shade200 : Colors.white,
+          color: selected ? Colors.white : Colors.grey.shade200,
           margin: const EdgeInsets.all(2),
           child: SizedBox(
             width: 72,

@@ -27,6 +27,8 @@ mixin _$Developer {
   String? get linkedInUrl => throw _privateConstructorUsedError;
   String? get bannerUrl => throw _privateConstructorUsedError;
   String? get smallBrandingBanner => throw _privateConstructorUsedError;
+  String? get phoneNumber => throw _privateConstructorUsedError;
+  String? get emailContact => throw _privateConstructorUsedError;
 
   /// Serializes this Developer to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -50,7 +52,9 @@ abstract class $DeveloperCopyWith<$Res> {
       String? githubUrl,
       String? linkedInUrl,
       String? bannerUrl,
-      String? smallBrandingBanner});
+      String? smallBrandingBanner,
+      String? phoneNumber,
+      String? emailContact});
 }
 
 /// @nodoc
@@ -75,6 +79,8 @@ class _$DeveloperCopyWithImpl<$Res, $Val extends Developer>
     Object? linkedInUrl = freezed,
     Object? bannerUrl = freezed,
     Object? smallBrandingBanner = freezed,
+    Object? phoneNumber = freezed,
+    Object? emailContact = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -105,6 +111,14 @@ class _$DeveloperCopyWithImpl<$Res, $Val extends Developer>
           ? _value.smallBrandingBanner
           : smallBrandingBanner // ignore: cast_nullable_to_non_nullable
               as String?,
+      phoneNumber: freezed == phoneNumber
+          ? _value.phoneNumber
+          : phoneNumber // ignore: cast_nullable_to_non_nullable
+              as String?,
+      emailContact: freezed == emailContact
+          ? _value.emailContact
+          : emailContact // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -124,7 +138,9 @@ abstract class _$$DeveloperImplCopyWith<$Res>
       String? githubUrl,
       String? linkedInUrl,
       String? bannerUrl,
-      String? smallBrandingBanner});
+      String? smallBrandingBanner,
+      String? phoneNumber,
+      String? emailContact});
 }
 
 /// @nodoc
@@ -147,6 +163,8 @@ class __$$DeveloperImplCopyWithImpl<$Res>
     Object? linkedInUrl = freezed,
     Object? bannerUrl = freezed,
     Object? smallBrandingBanner = freezed,
+    Object? phoneNumber = freezed,
+    Object? emailContact = freezed,
   }) {
     return _then(_$DeveloperImpl(
       id: null == id
@@ -177,6 +195,14 @@ class __$$DeveloperImplCopyWithImpl<$Res>
           ? _value.smallBrandingBanner
           : smallBrandingBanner // ignore: cast_nullable_to_non_nullable
               as String?,
+      phoneNumber: freezed == phoneNumber
+          ? _value.phoneNumber
+          : phoneNumber // ignore: cast_nullable_to_non_nullable
+              as String?,
+      emailContact: freezed == emailContact
+          ? _value.emailContact
+          : emailContact // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -191,7 +217,9 @@ class _$DeveloperImpl implements _Developer {
       this.githubUrl,
       this.linkedInUrl,
       this.bannerUrl,
-      this.smallBrandingBanner});
+      this.smallBrandingBanner,
+      this.phoneNumber,
+      this.emailContact});
 
   factory _$DeveloperImpl.fromJson(Map<String, dynamic> json) =>
       _$$DeveloperImplFromJson(json);
@@ -210,10 +238,14 @@ class _$DeveloperImpl implements _Developer {
   final String? bannerUrl;
   @override
   final String? smallBrandingBanner;
+  @override
+  final String? phoneNumber;
+  @override
+  final String? emailContact;
 
   @override
   String toString() {
-    return 'Developer(id: $id, name: $name, profileImageUrl: $profileImageUrl, githubUrl: $githubUrl, linkedInUrl: $linkedInUrl, bannerUrl: $bannerUrl, smallBrandingBanner: $smallBrandingBanner)';
+    return 'Developer(id: $id, name: $name, profileImageUrl: $profileImageUrl, githubUrl: $githubUrl, linkedInUrl: $linkedInUrl, bannerUrl: $bannerUrl, smallBrandingBanner: $smallBrandingBanner, phoneNumber: $phoneNumber, emailContact: $emailContact)';
   }
 
   @override
@@ -232,13 +264,26 @@ class _$DeveloperImpl implements _Developer {
             (identical(other.bannerUrl, bannerUrl) ||
                 other.bannerUrl == bannerUrl) &&
             (identical(other.smallBrandingBanner, smallBrandingBanner) ||
-                other.smallBrandingBanner == smallBrandingBanner));
+                other.smallBrandingBanner == smallBrandingBanner) &&
+            (identical(other.phoneNumber, phoneNumber) ||
+                other.phoneNumber == phoneNumber) &&
+            (identical(other.emailContact, emailContact) ||
+                other.emailContact == emailContact));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, profileImageUrl,
-      githubUrl, linkedInUrl, bannerUrl, smallBrandingBanner);
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      name,
+      profileImageUrl,
+      githubUrl,
+      linkedInUrl,
+      bannerUrl,
+      smallBrandingBanner,
+      phoneNumber,
+      emailContact);
 
   /// Create a copy of Developer
   /// with the given fields replaced by the non-null parameter values.
@@ -264,7 +309,9 @@ abstract class _Developer implements Developer {
       final String? githubUrl,
       final String? linkedInUrl,
       final String? bannerUrl,
-      final String? smallBrandingBanner}) = _$DeveloperImpl;
+      final String? smallBrandingBanner,
+      final String? phoneNumber,
+      final String? emailContact}) = _$DeveloperImpl;
 
   factory _Developer.fromJson(Map<String, dynamic> json) =
       _$DeveloperImpl.fromJson;
@@ -283,6 +330,10 @@ abstract class _Developer implements Developer {
   String? get bannerUrl;
   @override
   String? get smallBrandingBanner;
+  @override
+  String? get phoneNumber;
+  @override
+  String? get emailContact;
 
   /// Create a copy of Developer
   /// with the given fields replaced by the non-null parameter values.

@@ -22,8 +22,10 @@ class ProjectPage extends StatelessWidget {
     return SizedBox(
         height: MediaQuery.sizeOf(context).height,
         child: GlassContainer.clearGlass(
-          borderColor: Colors.transparent,
+          borderColor: Colors.white,
+          elevation: 50,
           borderRadius: const BorderRadius.only(topRight: Radius.circular(20), topLeft: Radius.circular(20)),
+          color: Colors.white.withOpacity(0.3),
           child: SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -31,14 +33,14 @@ class ProjectPage extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  const VSp24(),
+                  const VSp10(),
                   Align(
                     alignment: Alignment.topLeft,
                     child: IconButton(
                       onPressed: () {
                         BlocProvider.of<ProjectBloc>(context).add(const ProjectEventSelect(project: null));
                       },
-                      icon: const Icon(Icons.close),
+                      icon: const Icon(Icons.close, color: Colors.white),
                     ),
                   ),
                   // Logo -> Title -> Subtitles

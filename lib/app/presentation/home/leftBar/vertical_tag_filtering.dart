@@ -3,12 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:portfolio_eriel/app/bloc/filter/bloc.dart';
 import 'package:portfolio_eriel/app/bloc/filter/event.dart';
 import 'package:portfolio_eriel/app/bloc/filter/state.dart';
-import 'package:portfolio_eriel/app/presentation/home/filters/filters.dart';
-import 'package:portfolio_eriel/app/presentation/home/filters/search_bar.dart';
+import 'package:portfolio_eriel/app/presentation/home/leftBar/search_bar.dart';
 import 'package:portfolio_eriel/app/presentation/project/widgets/tech_tag_wrap.dart';
 import 'package:portfolio_eriel/app/shared/__.dart';
 import 'package:portfolio_eriel/domain/entities/__.dart';
-import 'package:portfolio_eriel/main.dart';
 
 class VerticalTagFiltering extends StatelessWidget {
   final List<Project> projects;
@@ -34,7 +32,7 @@ class VerticalTagFiltering extends StatelessWidget {
             children: [
               const Text(
                 "Filter by tech",
-                style: TextStyle(color: Colors.black45, fontWeight: FontWeight.bold, fontSize: 18),
+                style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18),
               ),
               const VSp8(),
               FilterSearchBar(filterTagController: bloc.filterTagController),

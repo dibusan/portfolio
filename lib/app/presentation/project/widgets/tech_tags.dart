@@ -22,6 +22,7 @@ class TechTag extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap ?? onRemoved,
+      borderRadius: BorderRadius.circular(50),
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
         constraints: const BoxConstraints(minWidth: 50),

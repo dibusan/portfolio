@@ -15,6 +15,8 @@ _$DeveloperImpl _$$DeveloperImplFromJson(Map<String, dynamic> json) =>
       linkedInUrl: json['linkedInUrl'] as String?,
       bannerUrl: json['bannerUrl'] as String?,
       smallBrandingBanner: json['smallBrandingBanner'] as String?,
+      phoneNumber: json['phoneNumber'] as String?,
+      emailContact: json['emailContact'] as String?,
     );
 
 Map<String, dynamic> _$$DeveloperImplToJson(_$DeveloperImpl instance) =>
@@ -26,4 +28,6 @@ Map<String, dynamic> _$$DeveloperImplToJson(_$DeveloperImpl instance) =>
       'linkedInUrl': instance.linkedInUrl,
       'bannerUrl': instance.bannerUrl,
       'smallBrandingBanner': instance.smallBrandingBanner,
+      'phoneNumber': instance.phoneNumber,
+      'emailContact': instance.emailContact,
     };

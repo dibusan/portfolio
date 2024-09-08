@@ -16,9 +16,9 @@ class MyClipper extends CustomClipper<Path> {
     var path = Path();
     path.moveTo(0, 0);
     path.lineTo(size.width - radius * 2, 0);
-    path.quadraticBezierTo(size.width - radius - 10, 0, size.width - radius - 10, radius / 2);
+    path.quadraticBezierTo(size.width - radius - 10, -10, size.width - radius - 10, radius / 2);
     path.quadraticBezierTo(size.width - radius - 6, radius + 6, size.width - radius / 2, radius + 10);
-    path.quadraticBezierTo(size.width, radius + 10, size.width, radius * 2);
+    path.quadraticBezierTo(size.width + 10, radius + 10, size.width, radius * 2);
     path.lineTo(size.width, size.height);
     path.lineTo(0, size.height);
     path.close();
@@ -53,7 +53,7 @@ class ProjectPreviewCard extends StatelessWidget {
                   clipper: MyClipper(radius: 70),
                   child: GlassContainer.clearGlass(
                     borderColor: Colors.transparent,
-                    color: Colors.white.withOpacity(isSelected ? 0.7 : 0.3),
+                    color: Colors.white.withOpacity(isSelected ? 0.8 : 0.3),
                     height: 320,
                     elevation: 20,
                     borderRadius: const BorderRadius.only(
@@ -127,7 +127,11 @@ class ProjectPreviewCard extends StatelessWidget {
                   child: CircleAvatar(
                     radius: 35,
                     backgroundColor: Colors.white.withOpacity(isSelected ? 0.7 : 0.3),
-                    backgroundImage: project.logoUrl == null ? null : NetworkImage(project.logoUrl!),
+                    child: CircleAvatar(
+                      radius: 30,
+                      backgroundColor: Colors.white.withOpacity(isSelected ? 0.7 : 0.3),
+                      backgroundImage: project.logoUrl == null ? null : NetworkImage(project.logoUrl!),
+                    ),
                   ),
                 ),
               ],
