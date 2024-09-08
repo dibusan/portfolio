@@ -111,7 +111,6 @@ class ProjectPage extends StatelessWidget {
                         ),
                       );
                     }),
-                  const SizedBox(width: 200, child: Divider()),
                   // Dates -> Client Info
                   // buildDatesAndClientInfo(),
                 ],

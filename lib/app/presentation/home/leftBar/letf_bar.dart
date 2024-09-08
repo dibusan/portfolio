@@ -61,11 +61,18 @@ class LeftBarSection extends StatelessWidget {
                   const VSp8(),
                   Text(
                     developer?.name ?? "",
-                    style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    style:const  TextStyle(fontSize: 24, fontWeight: FontWeight.w900, color: Color(0xff004E7B),shadows: [
+                      Shadow(
+                        offset: Offset(0.2, 0.2),
+                        blurRadius: 1.0,
+                        color: Color(0xff004E7B),
+                      ),
+                    ]),
                   ),
                   Text(
                     developer?.info ?? "",
-                    style:  TextStyle(fontSize: 16, fontWeight: FontWeight.bold,fontStyle: FontStyle.italic, color: scheme.primary),
+                    style: TextStyle(
+                        fontSize: 16,  fontStyle: FontStyle.italic, color: scheme.primary),
                   ),
                   const VSp24(),
                   Padding(
