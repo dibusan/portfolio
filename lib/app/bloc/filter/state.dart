@@ -1,5 +1,4 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:portfolio_eriel/domain/entities/__.dart';
 
 part 'state.freezed.dart';
 

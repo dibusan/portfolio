@@ -10,21 +10,25 @@ part 'project_state.dart';
 
 part 'project_bloc.freezed.dart';
 
+const String defaultDeveloper = 'eriel';
+
 class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
   ProjectBloc() : super(const ProjectState()) {
     on<ProjectEvent>((event, emit) async {
-      DeveloperInfo? developerInfo;
-      if (kDebugMode) {
-        List<Project> projects = await Project.loadFromJson();
-        developerInfo = DeveloperInfo(Developer.eriel(), projects);
-      } else {
-        developerInfo = await CloudFireStore.instance.getInfo('eriel');
+      DeveloperInfo? developerInfo = await CloudFireStore.instance.getInfo(defaultDeveloper);
+
+      if (kDebugMode || developerInfo == null) {
+        Developer developer = await Developer.loadFromJson(defaultDeveloper);
+
+        List<Project> projects = await Project.loadFromJson(developer.id);
+
+        developerInfo = DeveloperInfo(developer, projects);
       }
 
       emit(state.copyWith(
         loading: false,
-        developer: developerInfo?.developer,
-        projects: developerInfo?.projects ?? [],
+        developer: developerInfo.developer,
+        projects: developerInfo.projects,
       ));
     });
     on<ProjectEventSelect>((event, emit) {

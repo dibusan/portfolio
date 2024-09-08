@@ -1,6 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:portfolio_eriel/app/bloc/filter/state.dart';
-import 'package:portfolio_eriel/app/shared/__.dart';
 
 part 'event.freezed.dart';
 

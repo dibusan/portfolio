@@ -49,7 +49,7 @@ class LeftBarSection extends StatelessWidget {
               child: Column(
                 children: [
                   Container(
-                    margin: const EdgeInsets.only(top: 100),
+                    margin: const EdgeInsets.only(top: 60),
                     child: Center(
                       child: SizedBox(
                         width: width * 0.6,
@@ -63,7 +63,11 @@ class LeftBarSection extends StatelessWidget {
                     developer?.name ?? "",
                     style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
-                  const SizedBox(height: 35),
+                  Text(
+                    developer?.info ?? "",
+                    style:  TextStyle(fontSize: 16, fontWeight: FontWeight.bold,fontStyle: FontStyle.italic, color: scheme.primary),
+                  ),
+                  const VSp24(),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 30),
                     child: VerticalTagFiltering(projects: projects),

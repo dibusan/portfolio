@@ -1,13 +1,10 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:glass_kit/glass_kit.dart';
 import 'package:portfolio_eriel/app/bloc/project/project_bloc.dart';
-import 'package:portfolio_eriel/app/presentation/project/widgets/mini_info.dart';
 import 'package:portfolio_eriel/app/presentation/project/widgets/project_logo.dart';
 import 'package:portfolio_eriel/app/presentation/project/widgets/tech_tag_wrap.dart';
-import 'package:portfolio_eriel/app/presentation/project/widgets/tech_tags.dart';
 import 'package:portfolio_eriel/app/shared/__.dart';
 import 'package:portfolio_eriel/domain/entities/__.dart';
 

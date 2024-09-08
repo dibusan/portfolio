@@ -22,6 +22,7 @@ Developer _$DeveloperFromJson(Map<String, dynamic> json) {
 mixin _$Developer {
   String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
+  String? get info => throw _privateConstructorUsedError;
   String? get profileImageUrl => throw _privateConstructorUsedError;
   String? get githubUrl => throw _privateConstructorUsedError;
   String? get linkedInUrl => throw _privateConstructorUsedError;
@@ -48,6 +49,7 @@ abstract class $DeveloperCopyWith<$Res> {
   $Res call(
       {String id,
       String name,
+      String? info,
       String? profileImageUrl,
       String? githubUrl,
       String? linkedInUrl,
@@ -74,6 +76,7 @@ class _$DeveloperCopyWithImpl<$Res, $Val extends Developer>
   $Res call({
     Object? id = null,
     Object? name = null,
+    Object? info = freezed,
     Object? profileImageUrl = freezed,
     Object? githubUrl = freezed,
     Object? linkedInUrl = freezed,
@@ -91,6 +94,10 @@ class _$DeveloperCopyWithImpl<$Res, $Val extends Developer>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
+      info: freezed == info
+          ? _value.info
+          : info // ignore: cast_nullable_to_non_nullable
+              as String?,
       profileImageUrl: freezed == profileImageUrl
           ? _value.profileImageUrl
           : profileImageUrl // ignore: cast_nullable_to_non_nullable
@@ -134,6 +141,7 @@ abstract class _$$DeveloperImplCopyWith<$Res>
   $Res call(
       {String id,
       String name,
+      String? info,
       String? profileImageUrl,
       String? githubUrl,
       String? linkedInUrl,
@@ -158,6 +166,7 @@ class __$$DeveloperImplCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? name = null,
+    Object? info = freezed,
     Object? profileImageUrl = freezed,
     Object? githubUrl = freezed,
     Object? linkedInUrl = freezed,
@@ -175,6 +184,10 @@ class __$$DeveloperImplCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
+      info: freezed == info
+          ? _value.info
+          : info // ignore: cast_nullable_to_non_nullable
+              as String?,
       profileImageUrl: freezed == profileImageUrl
           ? _value.profileImageUrl
           : profileImageUrl // ignore: cast_nullable_to_non_nullable
@@ -213,6 +226,7 @@ class _$DeveloperImpl implements _Developer {
   const _$DeveloperImpl(
       {required this.id,
       required this.name,
+      this.info,
       this.profileImageUrl,
       this.githubUrl,
       this.linkedInUrl,
@@ -228,6 +242,8 @@ class _$DeveloperImpl implements _Developer {
   final String id;
   @override
   final String name;
+  @override
+  final String? info;
   @override
   final String? profileImageUrl;
   @override
@@ -245,7 +261,7 @@ class _$DeveloperImpl implements _Developer {
 
   @override
   String toString() {
-    return 'Developer(id: $id, name: $name, profileImageUrl: $profileImageUrl, githubUrl: $githubUrl, linkedInUrl: $linkedInUrl, bannerUrl: $bannerUrl, smallBrandingBanner: $smallBrandingBanner, phoneNumber: $phoneNumber, emailContact: $emailContact)';
+    return 'Developer(id: $id, name: $name, info: $info, profileImageUrl: $profileImageUrl, githubUrl: $githubUrl, linkedInUrl: $linkedInUrl, bannerUrl: $bannerUrl, smallBrandingBanner: $smallBrandingBanner, phoneNumber: $phoneNumber, emailContact: $emailContact)';
   }
 
   @override
@@ -255,6 +271,7 @@ class _$DeveloperImpl implements _Developer {
             other is _$DeveloperImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
+            (identical(other.info, info) || other.info == info) &&
             (identical(other.profileImageUrl, profileImageUrl) ||
                 other.profileImageUrl == profileImageUrl) &&
             (identical(other.githubUrl, githubUrl) ||
@@ -277,6 +294,7 @@ class _$DeveloperImpl implements _Developer {
       runtimeType,
       id,
       name,
+      info,
       profileImageUrl,
       githubUrl,
       linkedInUrl,
@@ -305,6 +323,7 @@ abstract class _Developer implements Developer {
   const factory _Developer(
       {required final String id,
       required final String name,
+      final String? info,
       final String? profileImageUrl,
       final String? githubUrl,
       final String? linkedInUrl,
@@ -320,6 +339,8 @@ abstract class _Developer implements Developer {
   String get id;
   @override
   String get name;
+  @override
+  String? get info;
   @override
   String? get profileImageUrl;
   @override

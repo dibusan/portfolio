@@ -34,8 +34,8 @@ class Project with _$Project {
     return projects.map((p) => p.techTags).toList().expand((element) => element).toSet().toList();
   }
 
-  static Future<List<Project>> loadFromJson() async {
-    final String jsonString = await rootBundle.loadString('assets/projects.json');
+  static Future<List<Project>> loadFromJson(developerId) async {
+    final String jsonString = await rootBundle.loadString('assets/projects/$developerId.json');
     final List<dynamic> jsonData = json.decode(jsonString);
 
     return jsonData.map((json) => Project.fromJson(json)).toList();

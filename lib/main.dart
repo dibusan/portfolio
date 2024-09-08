@@ -17,7 +17,7 @@ void main() async {
     webExperimentalAutoDetectLongPolling: false,
     webExperimentalForceLongPolling: true,
     webExperimentalLongPollingOptions: WebExperimentalLongPollingOptions(
-      timeoutDuration: const Duration(seconds: 5),
+      timeoutDuration:  Duration(seconds: 5),
     ),
   );
   if (shouldUseFirestoreEmulator) {

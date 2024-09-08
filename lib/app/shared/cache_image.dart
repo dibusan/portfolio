@@ -6,6 +6,7 @@ class ImageOnCache extends StatelessWidget {
   final BoxDecoration boxDecoration;
   final Size? size;
   final BoxFit fit;
+  final Widget? errorWidget;
 
   const ImageOnCache({
     super.key,
@@ -13,6 +14,7 @@ class ImageOnCache extends StatelessWidget {
     this.size,
     this.fit = BoxFit.contain,
     this.boxDecoration = const BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(20))),
+    this.errorWidget,
   });
 
   @override
@@ -40,7 +42,7 @@ class ImageOnCache extends StatelessWidget {
         width: size?.width,
         height: size?.height,
         decoration: boxDecoration,
-        child: const Center(
+        child:errorWidget?? const Center(
           child: Icon(Icons.error),
         ),
       ),

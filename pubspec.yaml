@@ -50,6 +50,7 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
-    - assets/projects.json
+    - assets/developers.json
     - assets/background.png
-
+    - assets/avatars/
+    - assets/projects/
