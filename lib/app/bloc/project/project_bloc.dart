@@ -10,10 +10,15 @@ part 'project_state.dart';
 
 part 'project_bloc.freezed.dart';
 
-const String defaultDeveloper = 'eriel';
-
 class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
+  String defaultDeveloper = 'eriel';
+
   ProjectBloc() : super(const ProjectState()) {
+    if (kIsWeb) {
+      final uri = Uri.base;
+      defaultDeveloper = uri.host;
+    }
+
     on<ProjectEvent>((event, emit) async {
       DeveloperInfo? developerInfo = await CloudFireStore.instance.getInfo(defaultDeveloper);
 

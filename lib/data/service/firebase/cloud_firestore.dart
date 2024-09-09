@@ -18,7 +18,7 @@ class CloudFireStore {
   static CloudFireStore get instance => _singleton;
 
   Future<Developer?> _developerInfo(String id) async {
-    final defaultDeveloper = Developer(id: "${DateTime.now()}", name: "Developer ($id)");
+    final defaultDeveloper = Developer(id: "${DateTime.now()}", name: "Developer");
     DocumentSnapshot<Map<String, dynamic>> doc = await collection.doc(id).get(const GetOptions(source: Source.server));
     if (!doc.exists) {
       await collection.doc(id).set(defaultDeveloper.toJson());

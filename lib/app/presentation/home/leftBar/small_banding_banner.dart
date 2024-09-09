@@ -16,7 +16,7 @@ class SmallBrandingBanner extends StatelessWidget {
       boxDecoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
       imageUrl: url ?? "",
       errorWidget: Image.asset(
-        'assets/avatars/${developer?.id ?? defaultDeveloper}.png',
+        'assets/avatars/${developer?.id ?? "_"}.png',
         fit: BoxFit.contain,
         errorBuilder: (_, __, ___) => const Center(
           child: Icon(Icons.error),
