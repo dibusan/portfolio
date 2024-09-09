@@ -47,7 +47,8 @@ class HeaderAppBar extends StatelessWidget {
             const HSp16(),
             InkWell(
               onTap: () {
-                final uri = Uri(scheme: 'tel', path: developer?.phoneNumber ?? "");
+                if (developer?.phoneNumber == null) return;
+                final uri = Uri(scheme: 'tel', path: developer!.phoneNumber);
                 canLaunchUrl(uri).then((bool result) async {
                   if (!result) return;
                   await launchUrl(uri);
