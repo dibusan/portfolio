@@ -35,10 +35,14 @@ class Project with _$Project {
   }
 
   static Future<List<Project>> loadFromJson(developerId) async {
-    final String jsonString = await rootBundle.loadString('assets/projects/$developerId.json');
-    final List<dynamic> jsonData = json.decode(jsonString);
+    try {
+      final String jsonString = await rootBundle.loadString('assets/projects/$developerId.json');
+      final List<dynamic> jsonData = json.decode(jsonString);
 
-    return jsonData.map((json) => Project.fromJson(json)).toList();
+      return jsonData.map((json) => Project.fromJson(json)).toList();
+    } catch (e) {
+      return [];
+    }
   }
 }
 

@@ -17,27 +17,27 @@ class CloudFireStore {
 
   static CloudFireStore get instance => _singleton;
 
-  Future<QueryDocumentSnapshot<Map<String, dynamic>>?> _projectCollection() async {
-    final projectRef = await collection.get();
-    return projectRef.docs.where((d) => d.id == 'Projects').firstOrNull;
-  }
-
   Future<Developer?> _developerInfo(String id) async {
-    final projectRef = await collection.get();
-    Map<String, dynamic>? doc = projectRef.docs.where((d) => d.id == id).firstOrNull?.data();
-    if (doc == null) return null;
-    return Developer.fromJson({"id": id, ...doc});
+    final defaultDeveloper = Developer(id: "${DateTime.now()}", name: "Developer ($id)");
+    DocumentSnapshot<Map<String, dynamic>> doc = await collection.doc(id).get(const GetOptions(source: Source.server));
+    if (!doc.exists) {
+      await collection.doc(id).set(defaultDeveloper.toJson());
+    }
+
+    return Developer.fromJson({"id": id, ...(doc.data() ?? defaultDeveloper.toJson())});
   }
 
   Future<DeveloperInfo?> getInfo(String developerId) async {
     Developer? developer = await _developerInfo(developerId);
     if (developer == null) return null;
 
-    final doc = await _projectCollection();
-    if (doc == null) return null;
+    DocumentReference doc = collection.doc("Projects");
 
-    final subCollection = doc.reference.collection(developerId);
+    final subCollection = doc.collection(developerId);
     final subCollectionDocs = await subCollection.get();
+    if (subCollectionDocs.docs.isEmpty) {
+      subCollection.add(Project(id: "${DateTime.now()}", title: "Example Project Data").toJson());
+    }
 
     List<Project> projects = subCollectionDocs.docs.map((doc) {
       return Project.fromJson({
