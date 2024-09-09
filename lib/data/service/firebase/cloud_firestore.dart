@@ -18,13 +18,19 @@ class CloudFireStore {
   static CloudFireStore get instance => _singleton;
 
   Future<Developer?> _developerInfo(String id) async {
-    final defaultDeveloper = Developer(id: "${DateTime.now()}", name: "Developer");
+    Developer? defaultDeveloper;
     DocumentSnapshot<Map<String, dynamic>> doc = await collection.doc(id).get(const GetOptions(source: Source.server));
     if (!doc.exists) {
+      defaultDeveloper = Developer(
+        id: "${DateTime.now()}",
+        name: "Developer",
+        info: id,
+        profileImageUrl: "https://picsum.photos/200/200?id=1",
+      );
       await collection.doc(id).set(defaultDeveloper.toJson());
     }
 
-    return Developer.fromJson({"id": id, ...(doc.data() ?? defaultDeveloper.toJson())});
+    return Developer.fromJson({"id": id, ...?(defaultDeveloper?.toJson() ?? doc.data())});
   }
 
   Future<DeveloperInfo?> getInfo(String developerId) async {
@@ -35,16 +41,32 @@ class CloudFireStore {
 
     final subCollection = doc.collection(developerId);
     final subCollectionDocs = await subCollection.get();
+    List<Project> projects = [];
     if (subCollectionDocs.docs.isEmpty) {
-      subCollection.add(Project(id: "${DateTime.now()}", title: "Example Project Data").toJson());
+      projects.add(
+        Project(
+          id: "${DateTime.now()}",
+          title: "Example Project Data",
+          subtitle: "Remove this or update info",
+          description: "This is an example description",
+          images: ["https://picsum.photos/600/300?id=1"],
+          techTags: ['Python', "Flutter"],
+          industries: ['Industries'],
+          logoUrl: "https://picsum.photos/200/200?id=1",
+          projectType: ProjectType.freelance,
+          projectStartDate: DateTime.now(),
+          projectLaunchDate: DateTime.now(),
+        ),
+      );
+      subCollection.add(projects.first.toJson());
+    } else {
+      projects = subCollectionDocs.docs.map((doc) {
+        return Project.fromJson({
+          "id": doc.id,
+          ...doc.data(),
+        });
+      }).toList();
     }
-
-    List<Project> projects = subCollectionDocs.docs.map((doc) {
-      return Project.fromJson({
-        "id": doc.id,
-        ...doc.data(),
-      });
-    }).toList();
 
     return DeveloperInfo(developer, projects);
   }

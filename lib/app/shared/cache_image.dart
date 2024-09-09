@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:glass_kit/glass_kit.dart';
 
 class ImageOnCache extends StatelessWidget {
   final String imageUrl;
@@ -42,9 +43,11 @@ class ImageOnCache extends StatelessWidget {
         width: size?.width,
         height: size?.height,
         decoration: boxDecoration,
-        child:errorWidget?? const Center(
-          child: Icon(Icons.error),
-        ),
+        child: errorWidget ??
+            GlassContainer.clearGlass(
+              borderRadius: boxDecoration.borderRadius?.resolve(TextDirection.ltr),
+              borderColor: Colors.white,
+            ),
       ),
     );
   }
