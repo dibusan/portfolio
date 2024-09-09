@@ -1,6 +1,18 @@
 [
   {
-    "id": "eriel",
+    "id": "dibusan.github.io",
+    "name": "Eriel Jr",
+    "info": "Ex Meta Developer",
+    "phoneNumber": "+1 786 428 8315",
+    "emailContact": "erieljr1@gmail.com",
+    "profileImageUrl": null,
+    "bannerUrl": "https://fastly.picsum.photos/id/311/1920/480.jpg?hmac=c8ubwob1rlvsf5HrZRx1L5yrIitznw_5TzjVRVKwqdc",
+    "githubUrl": "https://github.com/dibusan",
+    "linkedInUrl": "https://www.linkedin.com/in/eriel-marimon-393593bb",
+    "smallBrandingBanner": "https://fastly.picsum.photos/id/839/228/85.jpg?hmac=h3IkIz8u57tIxLe5_64XD4i0zkU0AJoJAv-sSV6AHNM"
+  },
+  {
+    "id": "localhost",
     "name": "Eriel Marimon",
     "info": "Ex Meta Developer",
     "phoneNumber": "+1 786 428 8315",

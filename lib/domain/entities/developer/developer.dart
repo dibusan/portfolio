@@ -24,8 +24,8 @@ class Developer with _$Developer {
 
   factory Developer.fromJson(Map<String, Object?> json) => _$DeveloperFromJson(json);
 
-  static Future<Developer> loadFromJson(developerId) async {
-    const defaultDeveloper = Developer(id: "developer", name: "Developer");
+  static Future<Developer> loadFromJson(String developerId) async {
+    Developer defaultDeveloper = Developer(id: developerId, name: "Developer", info: developerId);
     try {
       final String jsonString = await rootBundle.loadString('assets/developers.json');
       final List<dynamic> jsonData = json.decode(jsonString);
