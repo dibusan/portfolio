@@ -20,9 +20,9 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
     }
 
     on<ProjectEvent>((event, emit) async {
-      DeveloperInfo? developerInfo = await CloudFireStore.instance.getInfo(defaultDeveloper);
+      DeveloperInfo developerInfo = await CloudFireStore.instance.getInfo(defaultDeveloper);
 
-      if (developerInfo == null) {
+      if (kDebugMode) {
         Developer developer = await Developer.loadFromJson(defaultDeveloper);
 
         List<Project> projects = await Project.loadFromJson(developer.id);
