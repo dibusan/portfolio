@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:glass_kit/glass_kit.dart';
 import 'package:portfolio_eriel/app/bloc/project/project_bloc.dart';
+import 'package:portfolio_eriel/app/presentation/project/dialog/project_dialog.dart';
 import 'package:portfolio_eriel/app/presentation/project/widgets/tech_tags.dart';
 import 'package:portfolio_eriel/app/shared/__.dart';
 import 'package:portfolio_eriel/domain/entities/__.dart';
@@ -40,9 +41,20 @@ class ProjectPreviewCard extends StatelessWidget {
       builder: (context, state) {
         bool isSelected = state.selected?.id == project.id;
         return InkWell(
-          onTap: () => BlocProvider.of<ProjectBloc>(context).add(
-            ProjectEventSelect(project: isSelected ? null : project),
-          ),
+          onTap: () {
+            showDialog(
+              barrierColor: Colors.transparent,
+              traversalEdgeBehavior: TraversalEdgeBehavior.parentScope,
+              context: context,
+              barrierDismissible: true,
+              useRootNavigator: true,
+              useSafeArea: true,
+              builder: (_) => ProjectDialog(project: project),
+            );
+            // BlocProvider.of<ProjectBloc>(context).add(
+            //   ProjectEventSelect(project: isSelected ? null : project),
+            // );
+          },
           borderRadius: BorderRadius.circular(20),
           child: Container(
             margin: const EdgeInsets.all(5),

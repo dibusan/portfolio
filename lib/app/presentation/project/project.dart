@@ -10,114 +10,129 @@ import 'package:portfolio_eriel/domain/entities/__.dart';
 
 class ProjectPage extends StatelessWidget {
   final Project? project;
+  final Function()? onCloseTab;
+  final BorderRadius? borderRadius;
 
-  const ProjectPage({super.key, this.project});
+  const ProjectPage({super.key, this.project, this.onCloseTab, this.borderRadius});
 
   @override
   Widget build(BuildContext context) {
-    // Figma Flutter Generator Frame34Widget - FRAME - VERTICAL
-    return SizedBox(
-        height: MediaQuery.sizeOf(context).height,
-        child: GlassContainer.clearGlass(
-          borderColor: Colors.white,
-          elevation: 50,
-          borderRadius: const BorderRadius.only(topRight: Radius.circular(20), topLeft: Radius.circular(20)),
-          color: Colors.white.withOpacity(0.3),
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  const VSp10(),
-                  Align(
-                    alignment: Alignment.topLeft,
+    return Material(
+      type: MaterialType.transparency,
+      child: SizedBox(
+          height: MediaQuery.sizeOf(context).height,
+          child: GlassContainer.clearGlass(
+            borderColor: Colors.white,
+            elevation: 50,
+            borderRadius: borderRadius ?? const BorderRadius.only(topRight: Radius.circular(20), topLeft: Radius.circular(20)),
+            color: Colors.white.withOpacity(0.3),
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: Column(
+              children: [
+                const VSp10(),
+                Align(
+                  alignment: onCloseTab == null ? Alignment.topLeft : Alignment.topRight,
+                  child: Container(
+                    decoration:  BoxDecoration(
+                      color: Colors.grey.withOpacity(0.5),
+                      shape: BoxShape.circle,
+                    ),
                     child: IconButton(
-                      onPressed: () {
-                        BlocProvider.of<ProjectBloc>(context).add(const ProjectEventSelect(project: null));
-                      },
+                      onPressed: onCloseTab ??
+                          () {
+                            BlocProvider.of<ProjectBloc>(context).add(const ProjectEventSelect(project: null));
+                          },
                       icon: const Icon(Icons.close, color: Colors.white),
                     ),
                   ),
-                  // Logo -> Title -> Subtitles
-                  Container(
-                    padding: const EdgeInsets.all(16),
+                ),
+                Expanded(
+                  child: SingleChildScrollView(
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        const SizedBox(width: double.maxFinite),
-                        ProjectLogo(imageUrl: project?.logoUrl),
-                        const VSp8(),
-                        Text(project?.title ?? "", style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
-                        Text(
-                          project?.subtitle ?? "",
-                          style: const TextStyle(fontSize: 16),
+                        // Logo -> Title -> Subtitles
+                        Container(
+                          padding: const EdgeInsets.all(16),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              const SizedBox(width: double.maxFinite),
+                              ProjectLogo(imageUrl: project?.logoUrl),
+                              const VSp8(),
+                              Text(project?.title ?? "", style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+                              Text(
+                                project?.subtitle ?? "",
+                                style: const TextStyle(fontSize: 16),
+                              ),
+                              const VSp8(),
+                              Text(
+                                project?.description ?? "",
+                                textAlign: TextAlign.left,
+                              ),
+                            ],
+                          ),
+                        ),
+                        const VSp10(),
+                        const Text(
+                          "Tech Stack",
+                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                         ),
                         const VSp8(),
-                        Text(
-                          project?.description ?? "",
-                          textAlign: TextAlign.left,
+                        TechTagsWrap(
+                          techTags: project?.techTags ?? [],
+                          backgroundColor: Colors.white,
                         ),
+                        const VSp10(),
+                        const Text(
+                          "Media example",
+                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                        ),
+                        const VSp8(),
+                        // Images
+                        if (project?.images != null)
+                          LayoutBuilder(builder: (context, constrains) {
+                            return Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 5),
+                              child: CarouselSlider(
+                                options: CarouselOptions(
+                                  height: 300.0,
+                                  autoPlay: true,
+                                ),
+                                items: project?.images.map((i) {
+                                  final dec = BoxDecoration(
+                                    color: const Color.fromRGBO(255, 255, 255, 1),
+                                    borderRadius: BorderRadius.circular(20),
+                                  );
+                                  return Builder(
+                                    builder: (BuildContext context) {
+                                      return Container(
+                                        width: constrains.maxWidth * 0.8,
+                                        margin: const EdgeInsets.symmetric(horizontal: 5.0),
+                                        decoration: dec,
+                                        child: ImageOnCache(
+                                          imageUrl: i,
+                                          boxDecoration: dec,
+                                          fit: BoxFit.cover,
+                                        ),
+                                      );
+                                    },
+                                  );
+                                }).toList(),
+                              ),
+                            );
+                          }),
+                        // Dates -> Client Info
+                        // buildDatesAndClientInfo(),
                       ],
                     ),
                   ),
-                  const VSp10(),
-                  const Text(
-                    "Tech Stack",
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-                  ),
-                  const VSp8(),
-                  TechTagsWrap(
-                    techTags: project?.techTags ?? [],
-                    backgroundColor: Colors.white,
-                  ),
-                  const VSp10(),
-                  const Text(
-                    "Media example",
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-                  ),
-                  const VSp8(),
-                  // Images
-                  if (project?.images != null)
-                    LayoutBuilder(builder: (context, constrains) {
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 5),
-                        child: CarouselSlider(
-                          options: CarouselOptions(
-                            height: 300.0,
-                            autoPlay: true,
-                          ),
-                          items: project?.images.map((i) {
-                            final dec = BoxDecoration(
-                              color: const Color.fromRGBO(255, 255, 255, 1),
-                              borderRadius: BorderRadius.circular(20),
-                            );
-                            return Builder(
-                              builder: (BuildContext context) {
-                                return Container(
-                                  width: constrains.maxWidth * 0.8,
-                                  margin: const EdgeInsets.symmetric(horizontal: 5.0),
-                                  decoration: dec,
-                                  child: ImageOnCache(
-                                    imageUrl: i,
-                                    boxDecoration: dec,
-                                    fit: BoxFit.cover,
-                                  ),
-                                );
-                              },
-                            );
-                          }).toList(),
-                        ),
-                      );
-                    }),
-                  // Dates -> Client Info
-                  // buildDatesAndClientInfo(),
-                ],
-              ),
+                ),
+              ],
             ),
-          ),
-        ));
+          )),
+    );
   }
 
   Widget buildDatesAndClientInfo() {
