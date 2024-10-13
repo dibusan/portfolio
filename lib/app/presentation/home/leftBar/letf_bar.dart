@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:portfolio_eriel/app/bloc/security/security_bloc.dart';
 import 'package:portfolio_eriel/app/presentation/home/leftBar/small_banding_banner.dart';
 import 'package:portfolio_eriel/app/presentation/home/leftBar/time_period_selection.dart';
 import 'package:portfolio_eriel/app/presentation/home/leftBar/vertical_tag_filtering.dart';
@@ -50,18 +52,34 @@ class LeftBarSection extends StatelessWidget {
                 children: [
                   Container(
                     margin: const EdgeInsets.only(top: 60),
-                    child: Center(
-                      child: SizedBox(
-                        width: width * 0.6,
-                        height: width * 0.6,
-                        child: SmallBrandingBanner(developer: developer),
-                      ),
+                    child: BlocBuilder<SecurityBloc, SecurityState>(
+                      builder: (context, state) {
+                        return Center(
+                          child: Stack(
+                            children: [
+                              SizedBox(
+                                width: width * 0.6,
+                                height: width * 0.6,
+                                child: SmallBrandingBanner(developer: developer),
+                              ),
+                              if (state.isAuth)
+                                Positioned(
+                                  right: 0,
+                                  bottom: 0,
+                                  child: CircleAvatar(
+                                    child: IconButton(onPressed: () {}, icon: const Icon(Icons.add)),
+                                  ),
+                                )
+                            ],
+                          ),
+                        );
+                      },
                     ),
                   ),
                   const VSp8(),
                   Text(
                     developer?.name ?? "",
-                    style:const  TextStyle(fontSize: 24, fontWeight: FontWeight.w900, color: Color(0xff004E7B),shadows: [
+                    style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w900, color: Color(0xff004E7B), shadows: [
                       Shadow(
                         offset: Offset(0.2, 0.2),
                         blurRadius: 1.0,
@@ -71,8 +89,7 @@ class LeftBarSection extends StatelessWidget {
                   ),
                   Text(
                     developer?.info ?? "",
-                    style: TextStyle(
-                        fontSize: 16,  fontStyle: FontStyle.italic, color: scheme.primary),
+                    style: TextStyle(fontSize: 16, fontStyle: FontStyle.italic, color: scheme.primary),
                   ),
                   const VSp24(),
                   Padding(

@@ -18,6 +18,7 @@ _$DeveloperImpl _$$DeveloperImplFromJson(Map<String, dynamic> json) =>
       smallBrandingBanner: json['smallBrandingBanner'] as String?,
       phoneNumber: json['phoneNumber'] as String?,
       emailContact: json['emailContact'] as String?,
+      password: json['password'] as String?,
     );
 
 Map<String, dynamic> _$$DeveloperImplToJson(_$DeveloperImpl instance) =>
@@ -32,4 +33,5 @@ Map<String, dynamic> _$$DeveloperImplToJson(_$DeveloperImpl instance) =>
       'smallBrandingBanner': instance.smallBrandingBanner,
       'phoneNumber': instance.phoneNumber,
       'emailContact': instance.emailContact,
+      'password': instance.password,
     };

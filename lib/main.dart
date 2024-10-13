@@ -2,10 +2,13 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:portfolio_eriel/app/bloc/filter/bloc.dart';
+import 'package:portfolio_eriel/app/bloc/filter/event.dart';
 import 'package:portfolio_eriel/app/bloc/project/project_bloc.dart';
-import 'package:portfolio_eriel/app/presentation/home/home.dart';
+import 'package:portfolio_eriel/app/bloc/security/security_bloc.dart';
+import 'package:portfolio_eriel/app/navigator.dart';
 import 'package:portfolio_eriel/firebase_options.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_web_plugins/url_strategy.dart' show usePathUrlStrategy;
 
 bool shouldUseFirestoreEmulator = false;
 
@@ -17,7 +20,7 @@ void main() async {
     webExperimentalAutoDetectLongPolling: false,
     webExperimentalForceLongPolling: true,
     webExperimentalLongPollingOptions: WebExperimentalLongPollingOptions(
-      timeoutDuration:  Duration(seconds: 5),
+      timeoutDuration: Duration(seconds: 5),
     ),
   );
   if (shouldUseFirestoreEmulator) {
@@ -26,7 +29,8 @@ void main() async {
 
   runApp(MultiBlocProvider(providers: [
     BlocProvider(create: (_) => ProjectBloc()..add(const ProjectEventStarted())),
-    BlocProvider(create: (_) => FilterBloc()),
+    BlocProvider(create: (_) => FilterBloc()..add(const FilterEventInit())),
+    BlocProvider(create: (_) => SecurityBloc()),
   ], child: const MyApp()));
 }
 
@@ -36,34 +40,35 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
+      routerConfig: router,
       title: 'Portfolio',
       theme: ThemeData(
-          useMaterial3: true,
-          colorScheme: ColorScheme.fromSeed(
-            seedColor: const Color(0xff004E7B),
-            secondary: const Color(0xffE33C3C),
-            primary: const Color(0xff6694AF),
+        useMaterial3: true,
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: const Color(0xff004E7B),
+          secondary: const Color(0xffE33C3C),
+          primary: const Color(0xff6694AF),
+        ),
+        inputDecorationTheme: InputDecorationTheme(
+          fillColor: Colors.white.withOpacity(0.3),
+          filled: true,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(20),
+            borderSide: const BorderSide(color: Colors.white, width: 2),
           ),
-          inputDecorationTheme: InputDecorationTheme(
-            fillColor: Colors.white.withOpacity(0.3),
-            filled: true,
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(20),
-              borderSide: const BorderSide(color: Colors.white, width: 2),
-            ),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(20),
-              borderSide: const BorderSide(color: Colors.white, width: 2),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(20),
-              borderSide: const BorderSide(color: Colors.white, width: 2),
-            ),
-            hoverColor: Colors.transparent,
-            isDense: true,
-          )),
-      home: const HomePage(),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(20),
+            borderSide: const BorderSide(color: Colors.white, width: 2),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(20),
+            borderSide: const BorderSide(color: Colors.white, width: 2),
+          ),
+          hoverColor: Colors.transparent,
+          isDense: true,
+        ),
+      ),
     );
   }
 }

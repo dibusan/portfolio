@@ -20,6 +20,7 @@ class Developer with _$Developer {
     String? smallBrandingBanner,
     String? phoneNumber,
     String? emailContact,
+    String? password,
   }) = _Developer;
 
   factory Developer.fromJson(Map<String, Object?> json) => _$DeveloperFromJson(json);

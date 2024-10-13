@@ -30,6 +30,7 @@ mixin _$Developer {
   String? get smallBrandingBanner => throw _privateConstructorUsedError;
   String? get phoneNumber => throw _privateConstructorUsedError;
   String? get emailContact => throw _privateConstructorUsedError;
+  String? get password => throw _privateConstructorUsedError;
 
   /// Serializes this Developer to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -56,7 +57,8 @@ abstract class $DeveloperCopyWith<$Res> {
       String? bannerUrl,
       String? smallBrandingBanner,
       String? phoneNumber,
-      String? emailContact});
+      String? emailContact,
+      String? password});
 }
 
 /// @nodoc
@@ -84,6 +86,7 @@ class _$DeveloperCopyWithImpl<$Res, $Val extends Developer>
     Object? smallBrandingBanner = freezed,
     Object? phoneNumber = freezed,
     Object? emailContact = freezed,
+    Object? password = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -126,6 +129,10 @@ class _$DeveloperCopyWithImpl<$Res, $Val extends Developer>
           ? _value.emailContact
           : emailContact // ignore: cast_nullable_to_non_nullable
               as String?,
+      password: freezed == password
+          ? _value.password
+          : password // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -148,7 +155,8 @@ abstract class _$$DeveloperImplCopyWith<$Res>
       String? bannerUrl,
       String? smallBrandingBanner,
       String? phoneNumber,
-      String? emailContact});
+      String? emailContact,
+      String? password});
 }
 
 /// @nodoc
@@ -174,6 +182,7 @@ class __$$DeveloperImplCopyWithImpl<$Res>
     Object? smallBrandingBanner = freezed,
     Object? phoneNumber = freezed,
     Object? emailContact = freezed,
+    Object? password = freezed,
   }) {
     return _then(_$DeveloperImpl(
       id: null == id
@@ -216,6 +225,10 @@ class __$$DeveloperImplCopyWithImpl<$Res>
           ? _value.emailContact
           : emailContact // ignore: cast_nullable_to_non_nullable
               as String?,
+      password: freezed == password
+          ? _value.password
+          : password // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -233,7 +246,8 @@ class _$DeveloperImpl implements _Developer {
       this.bannerUrl,
       this.smallBrandingBanner,
       this.phoneNumber,
-      this.emailContact});
+      this.emailContact,
+      this.password});
 
   factory _$DeveloperImpl.fromJson(Map<String, dynamic> json) =>
       _$$DeveloperImplFromJson(json);
@@ -258,10 +272,12 @@ class _$DeveloperImpl implements _Developer {
   final String? phoneNumber;
   @override
   final String? emailContact;
+  @override
+  final String? password;
 
   @override
   String toString() {
-    return 'Developer(id: $id, name: $name, info: $info, profileImageUrl: $profileImageUrl, githubUrl: $githubUrl, linkedInUrl: $linkedInUrl, bannerUrl: $bannerUrl, smallBrandingBanner: $smallBrandingBanner, phoneNumber: $phoneNumber, emailContact: $emailContact)';
+    return 'Developer(id: $id, name: $name, info: $info, profileImageUrl: $profileImageUrl, githubUrl: $githubUrl, linkedInUrl: $linkedInUrl, bannerUrl: $bannerUrl, smallBrandingBanner: $smallBrandingBanner, phoneNumber: $phoneNumber, emailContact: $emailContact, password: $password)';
   }
 
   @override
@@ -285,7 +301,9 @@ class _$DeveloperImpl implements _Developer {
             (identical(other.phoneNumber, phoneNumber) ||
                 other.phoneNumber == phoneNumber) &&
             (identical(other.emailContact, emailContact) ||
-                other.emailContact == emailContact));
+                other.emailContact == emailContact) &&
+            (identical(other.password, password) ||
+                other.password == password));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -301,7 +319,8 @@ class _$DeveloperImpl implements _Developer {
       bannerUrl,
       smallBrandingBanner,
       phoneNumber,
-      emailContact);
+      emailContact,
+      password);
 
   /// Create a copy of Developer
   /// with the given fields replaced by the non-null parameter values.
@@ -330,7 +349,8 @@ abstract class _Developer implements Developer {
       final String? bannerUrl,
       final String? smallBrandingBanner,
       final String? phoneNumber,
-      final String? emailContact}) = _$DeveloperImpl;
+      final String? emailContact,
+      final String? password}) = _$DeveloperImpl;
 
   factory _Developer.fromJson(Map<String, dynamic> json) =
       _$DeveloperImpl.fromJson;
@@ -355,6 +375,8 @@ abstract class _Developer implements Developer {
   String? get phoneNumber;
   @override
   String? get emailContact;
+  @override
+  String? get password;
 
   /// Create a copy of Developer
   /// with the given fields replaced by the non-null parameter values.
