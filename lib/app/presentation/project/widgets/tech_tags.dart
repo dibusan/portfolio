@@ -68,9 +68,7 @@ class TechTag extends StatelessWidget {
                     controller: fieldTextEditingController,
                     focusNode: focusNode,
                     onFieldSubmitted: (String value) {
-                      if (submittedController != null) {
-                        submittedController!(value);
-                      }
+                      submittedController?.call(value);
                     },
                     style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
                     decoration: InputDecoration(
@@ -85,7 +83,7 @@ class TechTag extends StatelessWidget {
                     child: Material(
                       color: Colors.transparent,
                       child: Container(
-                        width: 200,
+                        width: 150,
                         decoration: BoxDecoration(
                           color: Colors.white.withOpacity(0.9),
                           borderRadius: BorderRadius.circular(12),
@@ -100,9 +98,7 @@ class TechTag extends StatelessWidget {
                             return InkWell(
                               onTap: () {
                                 onSelected(option);
-                                if (submittedController != null) {
-                                  submittedController!(option);
-                                }
+                                submittedController?.call(option);
                               },
                               child: Container(
                                 padding: const EdgeInsets.all(10),

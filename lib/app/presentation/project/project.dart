@@ -29,7 +29,7 @@ class _ProjectPageState extends State<ProjectPage> {
 
   @override
   void initState() {
-    localProject = widget.project;
+    localProject = widget.project ?? const Project(id: '0', title: '');
     _name = TextEditingController(text: localProject?.title);
     _subtitle = TextEditingController(text: localProject?.subtitle);
     _description = TextEditingController(text: localProject?.description);
@@ -72,22 +72,14 @@ class _ProjectPageState extends State<ProjectPage> {
                                       try {
                                         Map<String, dynamic> jsonData = {
                                           "id": DateTime.now().microsecondsSinceEpoch.toString(),
+                                          ...localProject!.toJson(),
+                                          "title": _name.text,
+                                          "subtitle": _subtitle.text,
+                                          "description": _description.text
                                         };
-                                        if (localProject == null) {
-                                          jsonData = {...jsonData, "title": _name.text, "subtitle": _subtitle.text, "description": _description.text};
-                                        } else {
-                                          jsonData = {
-                                            ...jsonData,
-                                            ...localProject!.toJson(),
-                                            "title": _name.text,
-                                            "subtitle": _subtitle.text,
-                                            "description": _description.text
-                                          };
-                                        }
-                                        print(jsonData);
                                         Project p = Project.fromJson(jsonData);
 
-                                        BlocProvider.of<ProjectBloc>(context).add(ProjectEventUpdate(projectId: localProject?.id, project: p));
+                                        BlocProvider.of<ProjectBloc>(context).add(ProjectEventUpdate(projectId: widget.project?.id, project: p));
                                       } catch (e) {
                                         print(e);
                                       }
@@ -161,10 +153,20 @@ class _ProjectPageState extends State<ProjectPage> {
                             TechTagsWrap(
                               techTags: localProject?.techTags ?? [],
                               backgroundColor: Colors.white,
-                              onAdd: (value) {
-                                print("On Add, $value");
-                                setState(() => localProject = localProject?.copyWith(techTags: [...(localProject?.techTags ?? []), value]));
-                              },
+                              onRemove: isAuth
+                                  ? (value) {
+                                      List<String> newList = (localProject?.techTags ?? []).where((e) => e != value).toList();
+
+                                      setState(() => localProject = localProject?.copyWith(techTags: newList));
+                                    }
+                                  : null,
+                              onAdd: isAuth
+                                  ? (value) {
+                                      print("object, $value");
+                                      List<String> newList = (localProject?.techTags ?? []).where((e) => e != value).toList();
+                                      setState(() => localProject = localProject?.copyWith(techTags: [...newList, value]));
+                                    }
+                                  : null,
                             ),
                             const VSp10(),
                             const Text(
