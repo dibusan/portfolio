@@ -4,6 +4,7 @@ import 'package:portfolio_eriel/app/bloc/security/security_bloc.dart';
 import 'package:portfolio_eriel/app/presentation/home/leftBar/small_banding_banner.dart';
 import 'package:portfolio_eriel/app/presentation/home/leftBar/time_period_selection.dart';
 import 'package:portfolio_eriel/app/presentation/home/leftBar/vertical_tag_filtering.dart';
+import 'package:portfolio_eriel/app/presentation/project/dialog/project_dialog.dart';
 import 'package:portfolio_eriel/app/shared/spacers.dart';
 import 'package:portfolio_eriel/domain/entities/__.dart';
 
@@ -67,7 +68,7 @@ class LeftBarSection extends StatelessWidget {
                                   right: 0,
                                   bottom: 0,
                                   child: CircleAvatar(
-                                    child: IconButton(onPressed: () {}, icon: const Icon(Icons.add)),
+                                    child: IconButton(onPressed: () => ProjectDialog.show(context, project: null), icon: const Icon(Icons.add)),
                                   ),
                                 )
                             ],

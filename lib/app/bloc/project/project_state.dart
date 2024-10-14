@@ -4,6 +4,7 @@ part of 'project_bloc.dart';
 class ProjectState with _$ProjectState {
   const factory ProjectState({
     @Default(true) bool loading,
+    @Default(false) bool requesting,
     Developer? developer,
     @Default([]) List<Project> projects,
     Project? selected,

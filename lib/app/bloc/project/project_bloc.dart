@@ -19,16 +19,33 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
       defaultDeveloper = uri.host;
     }
 
-    on<ProjectEvent>((event, emit) async {
+    on<ProjectEventStarted>((event, emit) async {
       DeveloperInfo developerInfo = await CloudFireStore.instance.getInfo(defaultDeveloper);
       emit(state.copyWith(
         loading: false,
+        requesting: false,
         developer: developerInfo.developer,
         projects: developerInfo.projects,
       ));
     });
     on<ProjectEventSelect>((event, emit) {
       emit(state.copyWith(selected: event.project));
+    });
+    on<ProjectEventUpdate>((event, emit) async {
+      if (state.developer == null) return;
+      emit(state.copyWith(requesting: true));
+      if (event.projectId == null) {
+        add(ProjectEventCreate(project: event.project));
+        return;
+      }
+      await CloudFireStore.instance.updateProject(state.developer!.id, event.projectId!, event.project.toJson());
+      add(const ProjectEventStarted());
+    });
+    on<ProjectEventCreate>((event, emit) async {
+      if (state.developer == null) return;
+      emit(state.copyWith(requesting: true));
+      await CloudFireStore.instance.createProject(state.developer!.id, event.project);
+      add(const ProjectEventStarted());
     });
   }
 }

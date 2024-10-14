@@ -366,7 +366,7 @@ class __$$SecurityStateImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$SecurityStateImpl implements _SecurityState {
-  const _$SecurityStateImpl({this.loading = false, this.isAuth = false});
+  const _$SecurityStateImpl({this.loading = false, this.isAuth = true});
 
   @override
   @JsonKey()

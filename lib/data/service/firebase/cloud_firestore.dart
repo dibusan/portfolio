@@ -44,12 +44,37 @@ class CloudFireStore {
     } else {
       projects = subCollectionDocs.docs.map((doc) {
         return Project.fromJson({
-          "id": doc.id,
           ...doc.data(),
+          "id": doc.id,
         });
       }).toList();
     }
 
     return DeveloperInfo(developer, projects);
+  }
+
+  Future<Project?> updateProject(String developerId, String projectId, Map<String, dynamic> updatedData) async {
+    try {
+      DocumentReference projectDoc = collection.doc("Projects").collection(developerId).doc(projectId);
+      DocumentSnapshot projectSnapshot = await projectDoc.get();
+      if (!projectSnapshot.exists) return null;
+      await projectDoc.update(updatedData);
+      projectSnapshot = await projectDoc.get();
+      return Project.fromJson(projectSnapshot.data() as Map<String, dynamic>);
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<Project?> createProject(String developerId, Project project) async {
+    try {
+      DocumentReference developerDoc = collection.doc("Projects");
+      CollectionReference projectsSubCollection = developerDoc.collection(developerId);
+      DocumentReference newProjectDoc = await projectsSubCollection.add(project.toJson());
+      DocumentSnapshot newProjectSnapshot = await newProjectDoc.get();
+      return Project.fromJson(newProjectSnapshot.data() as Map<String, dynamic>);
+    } catch (e) {
+      return null;
+    }
   }
 }

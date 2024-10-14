@@ -8,7 +8,6 @@ import 'package:portfolio_eriel/app/bloc/security/security_bloc.dart';
 import 'package:portfolio_eriel/app/navigator.dart';
 import 'package:portfolio_eriel/firebase_options.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter_web_plugins/url_strategy.dart' show usePathUrlStrategy;
 
 bool shouldUseFirestoreEmulator = false;
 

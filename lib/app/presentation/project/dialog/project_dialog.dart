@@ -4,9 +4,19 @@ import 'package:portfolio_eriel/app/presentation/project/project.dart';
 import 'package:portfolio_eriel/domain/entities/__.dart';
 
 class ProjectDialog extends StatelessWidget {
-  final Project project;
+  final Project? project;
 
-  const ProjectDialog({super.key, required this.project});
+  const ProjectDialog({super.key, this.project});
+
+  static show(BuildContext context, {Project? project}) => showDialog(
+        barrierColor: Colors.transparent,
+        traversalEdgeBehavior: TraversalEdgeBehavior.parentScope,
+        context: context,
+        barrierDismissible: true,
+        useRootNavigator: true,
+        useSafeArea: true,
+        builder: (_) => ProjectDialog(project: project),
+      );
 
   @override
   Widget build(BuildContext context) {

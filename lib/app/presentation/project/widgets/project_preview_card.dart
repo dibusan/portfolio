@@ -42,15 +42,8 @@ class ProjectPreviewCard extends StatelessWidget {
         bool isSelected = state.selected?.id == project.id;
         return InkWell(
           onTap: () {
-            showDialog(
-              barrierColor: Colors.transparent,
-              traversalEdgeBehavior: TraversalEdgeBehavior.parentScope,
-              context: context,
-              barrierDismissible: true,
-              useRootNavigator: true,
-              useSafeArea: true,
-              builder: (_) => ProjectDialog(project: project),
-            );
+            ProjectDialog.show(context,project: project);
+
             // BlocProvider.of<ProjectBloc>(context).add(
             //   ProjectEventSelect(project: isSelected ? null : project),
             // );

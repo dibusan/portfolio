@@ -20,18 +20,27 @@ mixin _$ProjectEvent {
   TResult when<TResult extends Object?>({
     required TResult Function() started,
     required TResult Function(Project? project) selectProject,
+    required TResult Function(String? projectId, Project project) updateProject,
+    required TResult Function(String projectId) deleteProject,
+    required TResult Function(Project project) createProject,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
     TResult? Function(Project? project)? selectProject,
+    TResult? Function(String? projectId, Project project)? updateProject,
+    TResult? Function(String projectId)? deleteProject,
+    TResult? Function(Project project)? createProject,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
     TResult Function(Project? project)? selectProject,
+    TResult Function(String? projectId, Project project)? updateProject,
+    TResult Function(String projectId)? deleteProject,
+    TResult Function(Project project)? createProject,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -39,18 +48,27 @@ mixin _$ProjectEvent {
   TResult map<TResult extends Object?>({
     required TResult Function(ProjectEventStarted value) started,
     required TResult Function(ProjectEventSelect value) selectProject,
+    required TResult Function(ProjectEventUpdate value) updateProject,
+    required TResult Function(ProjectEventDelete value) deleteProject,
+    required TResult Function(ProjectEventCreate value) createProject,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(ProjectEventStarted value)? started,
     TResult? Function(ProjectEventSelect value)? selectProject,
+    TResult? Function(ProjectEventUpdate value)? updateProject,
+    TResult? Function(ProjectEventDelete value)? deleteProject,
+    TResult? Function(ProjectEventCreate value)? createProject,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(ProjectEventStarted value)? started,
     TResult Function(ProjectEventSelect value)? selectProject,
+    TResult Function(ProjectEventUpdate value)? updateProject,
+    TResult Function(ProjectEventDelete value)? deleteProject,
+    TResult Function(ProjectEventCreate value)? createProject,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -129,6 +147,9 @@ class _$ProjectEventStartedImpl
   TResult when<TResult extends Object?>({
     required TResult Function() started,
     required TResult Function(Project? project) selectProject,
+    required TResult Function(String? projectId, Project project) updateProject,
+    required TResult Function(String projectId) deleteProject,
+    required TResult Function(Project project) createProject,
   }) {
     return started();
   }
@@ -138,6 +159,9 @@ class _$ProjectEventStartedImpl
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
     TResult? Function(Project? project)? selectProject,
+    TResult? Function(String? projectId, Project project)? updateProject,
+    TResult? Function(String projectId)? deleteProject,
+    TResult? Function(Project project)? createProject,
   }) {
     return started?.call();
   }
@@ -147,6 +171,9 @@ class _$ProjectEventStartedImpl
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
     TResult Function(Project? project)? selectProject,
+    TResult Function(String? projectId, Project project)? updateProject,
+    TResult Function(String projectId)? deleteProject,
+    TResult Function(Project project)? createProject,
     required TResult orElse(),
   }) {
     if (started != null) {
@@ -160,6 +187,9 @@ class _$ProjectEventStartedImpl
   TResult map<TResult extends Object?>({
     required TResult Function(ProjectEventStarted value) started,
     required TResult Function(ProjectEventSelect value) selectProject,
+    required TResult Function(ProjectEventUpdate value) updateProject,
+    required TResult Function(ProjectEventDelete value) deleteProject,
+    required TResult Function(ProjectEventCreate value) createProject,
   }) {
     return started(this);
   }
@@ -169,6 +199,9 @@ class _$ProjectEventStartedImpl
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(ProjectEventStarted value)? started,
     TResult? Function(ProjectEventSelect value)? selectProject,
+    TResult? Function(ProjectEventUpdate value)? updateProject,
+    TResult? Function(ProjectEventDelete value)? deleteProject,
+    TResult? Function(ProjectEventCreate value)? createProject,
   }) {
     return started?.call(this);
   }
@@ -178,6 +211,9 @@ class _$ProjectEventStartedImpl
   TResult maybeMap<TResult extends Object?>({
     TResult Function(ProjectEventStarted value)? started,
     TResult Function(ProjectEventSelect value)? selectProject,
+    TResult Function(ProjectEventUpdate value)? updateProject,
+    TResult Function(ProjectEventDelete value)? deleteProject,
+    TResult Function(ProjectEventCreate value)? createProject,
     required TResult orElse(),
   }) {
     if (started != null) {
@@ -288,6 +324,9 @@ class _$ProjectEventSelectImpl
   TResult when<TResult extends Object?>({
     required TResult Function() started,
     required TResult Function(Project? project) selectProject,
+    required TResult Function(String? projectId, Project project) updateProject,
+    required TResult Function(String projectId) deleteProject,
+    required TResult Function(Project project) createProject,
   }) {
     return selectProject(project);
   }
@@ -297,6 +336,9 @@ class _$ProjectEventSelectImpl
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
     TResult? Function(Project? project)? selectProject,
+    TResult? Function(String? projectId, Project project)? updateProject,
+    TResult? Function(String projectId)? deleteProject,
+    TResult? Function(Project project)? createProject,
   }) {
     return selectProject?.call(project);
   }
@@ -306,6 +348,9 @@ class _$ProjectEventSelectImpl
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
     TResult Function(Project? project)? selectProject,
+    TResult Function(String? projectId, Project project)? updateProject,
+    TResult Function(String projectId)? deleteProject,
+    TResult Function(Project project)? createProject,
     required TResult orElse(),
   }) {
     if (selectProject != null) {
@@ -319,6 +364,9 @@ class _$ProjectEventSelectImpl
   TResult map<TResult extends Object?>({
     required TResult Function(ProjectEventStarted value) started,
     required TResult Function(ProjectEventSelect value) selectProject,
+    required TResult Function(ProjectEventUpdate value) updateProject,
+    required TResult Function(ProjectEventDelete value) deleteProject,
+    required TResult Function(ProjectEventCreate value) createProject,
   }) {
     return selectProject(this);
   }
@@ -328,6 +376,9 @@ class _$ProjectEventSelectImpl
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(ProjectEventStarted value)? started,
     TResult? Function(ProjectEventSelect value)? selectProject,
+    TResult? Function(ProjectEventUpdate value)? updateProject,
+    TResult? Function(ProjectEventDelete value)? deleteProject,
+    TResult? Function(ProjectEventCreate value)? createProject,
   }) {
     return selectProject?.call(this);
   }
@@ -337,6 +388,9 @@ class _$ProjectEventSelectImpl
   TResult maybeMap<TResult extends Object?>({
     TResult Function(ProjectEventStarted value)? started,
     TResult Function(ProjectEventSelect value)? selectProject,
+    TResult Function(ProjectEventUpdate value)? updateProject,
+    TResult Function(ProjectEventDelete value)? deleteProject,
+    TResult Function(ProjectEventCreate value)? createProject,
     required TResult orElse(),
   }) {
     if (selectProject != null) {
@@ -360,8 +414,556 @@ abstract class ProjectEventSelect implements ProjectEvent {
 }
 
 /// @nodoc
+abstract class _$$ProjectEventUpdateImplCopyWith<$Res> {
+  factory _$$ProjectEventUpdateImplCopyWith(_$ProjectEventUpdateImpl value,
+          $Res Function(_$ProjectEventUpdateImpl) then) =
+      __$$ProjectEventUpdateImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String? projectId, Project project});
+
+  $ProjectCopyWith<$Res> get project;
+}
+
+/// @nodoc
+class __$$ProjectEventUpdateImplCopyWithImpl<$Res>
+    extends _$ProjectEventCopyWithImpl<$Res, _$ProjectEventUpdateImpl>
+    implements _$$ProjectEventUpdateImplCopyWith<$Res> {
+  __$$ProjectEventUpdateImplCopyWithImpl(_$ProjectEventUpdateImpl _value,
+      $Res Function(_$ProjectEventUpdateImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of ProjectEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? projectId = freezed,
+    Object? project = null,
+  }) {
+    return _then(_$ProjectEventUpdateImpl(
+      projectId: freezed == projectId
+          ? _value.projectId
+          : projectId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      project: null == project
+          ? _value.project
+          : project // ignore: cast_nullable_to_non_nullable
+              as Project,
+    ));
+  }
+
+  /// Create a copy of ProjectEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ProjectCopyWith<$Res> get project {
+    return $ProjectCopyWith<$Res>(_value.project, (value) {
+      return _then(_value.copyWith(project: value));
+    });
+  }
+}
+
+/// @nodoc
+
+class _$ProjectEventUpdateImpl
+    with DiagnosticableTreeMixin
+    implements ProjectEventUpdate {
+  const _$ProjectEventUpdateImpl({this.projectId, required this.project});
+
+  @override
+  final String? projectId;
+  @override
+  final Project project;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'ProjectEvent.updateProject(projectId: $projectId, project: $project)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'ProjectEvent.updateProject'))
+      ..add(DiagnosticsProperty('projectId', projectId))
+      ..add(DiagnosticsProperty('project', project));
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$ProjectEventUpdateImpl &&
+            (identical(other.projectId, projectId) ||
+                other.projectId == projectId) &&
+            (identical(other.project, project) || other.project == project));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, projectId, project);
+
+  /// Create a copy of ProjectEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ProjectEventUpdateImplCopyWith<_$ProjectEventUpdateImpl> get copyWith =>
+      __$$ProjectEventUpdateImplCopyWithImpl<_$ProjectEventUpdateImpl>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() started,
+    required TResult Function(Project? project) selectProject,
+    required TResult Function(String? projectId, Project project) updateProject,
+    required TResult Function(String projectId) deleteProject,
+    required TResult Function(Project project) createProject,
+  }) {
+    return updateProject(projectId, project);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? started,
+    TResult? Function(Project? project)? selectProject,
+    TResult? Function(String? projectId, Project project)? updateProject,
+    TResult? Function(String projectId)? deleteProject,
+    TResult? Function(Project project)? createProject,
+  }) {
+    return updateProject?.call(projectId, project);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? started,
+    TResult Function(Project? project)? selectProject,
+    TResult Function(String? projectId, Project project)? updateProject,
+    TResult Function(String projectId)? deleteProject,
+    TResult Function(Project project)? createProject,
+    required TResult orElse(),
+  }) {
+    if (updateProject != null) {
+      return updateProject(projectId, project);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(ProjectEventStarted value) started,
+    required TResult Function(ProjectEventSelect value) selectProject,
+    required TResult Function(ProjectEventUpdate value) updateProject,
+    required TResult Function(ProjectEventDelete value) deleteProject,
+    required TResult Function(ProjectEventCreate value) createProject,
+  }) {
+    return updateProject(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(ProjectEventStarted value)? started,
+    TResult? Function(ProjectEventSelect value)? selectProject,
+    TResult? Function(ProjectEventUpdate value)? updateProject,
+    TResult? Function(ProjectEventDelete value)? deleteProject,
+    TResult? Function(ProjectEventCreate value)? createProject,
+  }) {
+    return updateProject?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(ProjectEventStarted value)? started,
+    TResult Function(ProjectEventSelect value)? selectProject,
+    TResult Function(ProjectEventUpdate value)? updateProject,
+    TResult Function(ProjectEventDelete value)? deleteProject,
+    TResult Function(ProjectEventCreate value)? createProject,
+    required TResult orElse(),
+  }) {
+    if (updateProject != null) {
+      return updateProject(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class ProjectEventUpdate implements ProjectEvent {
+  const factory ProjectEventUpdate(
+      {final String? projectId,
+      required final Project project}) = _$ProjectEventUpdateImpl;
+
+  String? get projectId;
+  Project get project;
+
+  /// Create a copy of ProjectEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$ProjectEventUpdateImplCopyWith<_$ProjectEventUpdateImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$ProjectEventDeleteImplCopyWith<$Res> {
+  factory _$$ProjectEventDeleteImplCopyWith(_$ProjectEventDeleteImpl value,
+          $Res Function(_$ProjectEventDeleteImpl) then) =
+      __$$ProjectEventDeleteImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String projectId});
+}
+
+/// @nodoc
+class __$$ProjectEventDeleteImplCopyWithImpl<$Res>
+    extends _$ProjectEventCopyWithImpl<$Res, _$ProjectEventDeleteImpl>
+    implements _$$ProjectEventDeleteImplCopyWith<$Res> {
+  __$$ProjectEventDeleteImplCopyWithImpl(_$ProjectEventDeleteImpl _value,
+      $Res Function(_$ProjectEventDeleteImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of ProjectEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? projectId = null,
+  }) {
+    return _then(_$ProjectEventDeleteImpl(
+      projectId: null == projectId
+          ? _value.projectId
+          : projectId // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$ProjectEventDeleteImpl
+    with DiagnosticableTreeMixin
+    implements ProjectEventDelete {
+  const _$ProjectEventDeleteImpl({required this.projectId});
+
+  @override
+  final String projectId;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'ProjectEvent.deleteProject(projectId: $projectId)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'ProjectEvent.deleteProject'))
+      ..add(DiagnosticsProperty('projectId', projectId));
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$ProjectEventDeleteImpl &&
+            (identical(other.projectId, projectId) ||
+                other.projectId == projectId));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, projectId);
+
+  /// Create a copy of ProjectEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ProjectEventDeleteImplCopyWith<_$ProjectEventDeleteImpl> get copyWith =>
+      __$$ProjectEventDeleteImplCopyWithImpl<_$ProjectEventDeleteImpl>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() started,
+    required TResult Function(Project? project) selectProject,
+    required TResult Function(String? projectId, Project project) updateProject,
+    required TResult Function(String projectId) deleteProject,
+    required TResult Function(Project project) createProject,
+  }) {
+    return deleteProject(projectId);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? started,
+    TResult? Function(Project? project)? selectProject,
+    TResult? Function(String? projectId, Project project)? updateProject,
+    TResult? Function(String projectId)? deleteProject,
+    TResult? Function(Project project)? createProject,
+  }) {
+    return deleteProject?.call(projectId);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? started,
+    TResult Function(Project? project)? selectProject,
+    TResult Function(String? projectId, Project project)? updateProject,
+    TResult Function(String projectId)? deleteProject,
+    TResult Function(Project project)? createProject,
+    required TResult orElse(),
+  }) {
+    if (deleteProject != null) {
+      return deleteProject(projectId);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(ProjectEventStarted value) started,
+    required TResult Function(ProjectEventSelect value) selectProject,
+    required TResult Function(ProjectEventUpdate value) updateProject,
+    required TResult Function(ProjectEventDelete value) deleteProject,
+    required TResult Function(ProjectEventCreate value) createProject,
+  }) {
+    return deleteProject(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(ProjectEventStarted value)? started,
+    TResult? Function(ProjectEventSelect value)? selectProject,
+    TResult? Function(ProjectEventUpdate value)? updateProject,
+    TResult? Function(ProjectEventDelete value)? deleteProject,
+    TResult? Function(ProjectEventCreate value)? createProject,
+  }) {
+    return deleteProject?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(ProjectEventStarted value)? started,
+    TResult Function(ProjectEventSelect value)? selectProject,
+    TResult Function(ProjectEventUpdate value)? updateProject,
+    TResult Function(ProjectEventDelete value)? deleteProject,
+    TResult Function(ProjectEventCreate value)? createProject,
+    required TResult orElse(),
+  }) {
+    if (deleteProject != null) {
+      return deleteProject(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class ProjectEventDelete implements ProjectEvent {
+  const factory ProjectEventDelete({required final String projectId}) =
+      _$ProjectEventDeleteImpl;
+
+  String get projectId;
+
+  /// Create a copy of ProjectEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$ProjectEventDeleteImplCopyWith<_$ProjectEventDeleteImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$ProjectEventCreateImplCopyWith<$Res> {
+  factory _$$ProjectEventCreateImplCopyWith(_$ProjectEventCreateImpl value,
+          $Res Function(_$ProjectEventCreateImpl) then) =
+      __$$ProjectEventCreateImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({Project project});
+
+  $ProjectCopyWith<$Res> get project;
+}
+
+/// @nodoc
+class __$$ProjectEventCreateImplCopyWithImpl<$Res>
+    extends _$ProjectEventCopyWithImpl<$Res, _$ProjectEventCreateImpl>
+    implements _$$ProjectEventCreateImplCopyWith<$Res> {
+  __$$ProjectEventCreateImplCopyWithImpl(_$ProjectEventCreateImpl _value,
+      $Res Function(_$ProjectEventCreateImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of ProjectEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? project = null,
+  }) {
+    return _then(_$ProjectEventCreateImpl(
+      project: null == project
+          ? _value.project
+          : project // ignore: cast_nullable_to_non_nullable
+              as Project,
+    ));
+  }
+
+  /// Create a copy of ProjectEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ProjectCopyWith<$Res> get project {
+    return $ProjectCopyWith<$Res>(_value.project, (value) {
+      return _then(_value.copyWith(project: value));
+    });
+  }
+}
+
+/// @nodoc
+
+class _$ProjectEventCreateImpl
+    with DiagnosticableTreeMixin
+    implements ProjectEventCreate {
+  const _$ProjectEventCreateImpl({required this.project});
+
+  @override
+  final Project project;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'ProjectEvent.createProject(project: $project)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'ProjectEvent.createProject'))
+      ..add(DiagnosticsProperty('project', project));
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$ProjectEventCreateImpl &&
+            (identical(other.project, project) || other.project == project));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, project);
+
+  /// Create a copy of ProjectEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ProjectEventCreateImplCopyWith<_$ProjectEventCreateImpl> get copyWith =>
+      __$$ProjectEventCreateImplCopyWithImpl<_$ProjectEventCreateImpl>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() started,
+    required TResult Function(Project? project) selectProject,
+    required TResult Function(String? projectId, Project project) updateProject,
+    required TResult Function(String projectId) deleteProject,
+    required TResult Function(Project project) createProject,
+  }) {
+    return createProject(project);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? started,
+    TResult? Function(Project? project)? selectProject,
+    TResult? Function(String? projectId, Project project)? updateProject,
+    TResult? Function(String projectId)? deleteProject,
+    TResult? Function(Project project)? createProject,
+  }) {
+    return createProject?.call(project);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? started,
+    TResult Function(Project? project)? selectProject,
+    TResult Function(String? projectId, Project project)? updateProject,
+    TResult Function(String projectId)? deleteProject,
+    TResult Function(Project project)? createProject,
+    required TResult orElse(),
+  }) {
+    if (createProject != null) {
+      return createProject(project);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(ProjectEventStarted value) started,
+    required TResult Function(ProjectEventSelect value) selectProject,
+    required TResult Function(ProjectEventUpdate value) updateProject,
+    required TResult Function(ProjectEventDelete value) deleteProject,
+    required TResult Function(ProjectEventCreate value) createProject,
+  }) {
+    return createProject(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(ProjectEventStarted value)? started,
+    TResult? Function(ProjectEventSelect value)? selectProject,
+    TResult? Function(ProjectEventUpdate value)? updateProject,
+    TResult? Function(ProjectEventDelete value)? deleteProject,
+    TResult? Function(ProjectEventCreate value)? createProject,
+  }) {
+    return createProject?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(ProjectEventStarted value)? started,
+    TResult Function(ProjectEventSelect value)? selectProject,
+    TResult Function(ProjectEventUpdate value)? updateProject,
+    TResult Function(ProjectEventDelete value)? deleteProject,
+    TResult Function(ProjectEventCreate value)? createProject,
+    required TResult orElse(),
+  }) {
+    if (createProject != null) {
+      return createProject(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class ProjectEventCreate implements ProjectEvent {
+  const factory ProjectEventCreate({required final Project project}) =
+      _$ProjectEventCreateImpl;
+
+  Project get project;
+
+  /// Create a copy of ProjectEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$ProjectEventCreateImplCopyWith<_$ProjectEventCreateImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
 mixin _$ProjectState {
   bool get loading => throw _privateConstructorUsedError;
+  bool get requesting => throw _privateConstructorUsedError;
   Developer? get developer => throw _privateConstructorUsedError;
   List<Project> get projects => throw _privateConstructorUsedError;
   Project? get selected => throw _privateConstructorUsedError;
@@ -381,6 +983,7 @@ abstract class $ProjectStateCopyWith<$Res> {
   @useResult
   $Res call(
       {bool loading,
+      bool requesting,
       Developer? developer,
       List<Project> projects,
       Project? selected});
@@ -405,6 +1008,7 @@ class _$ProjectStateCopyWithImpl<$Res, $Val extends ProjectState>
   @override
   $Res call({
     Object? loading = null,
+    Object? requesting = null,
     Object? developer = freezed,
     Object? projects = null,
     Object? selected = freezed,
@@ -413,6 +1017,10 @@ class _$ProjectStateCopyWithImpl<$Res, $Val extends ProjectState>
       loading: null == loading
           ? _value.loading
           : loading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      requesting: null == requesting
+          ? _value.requesting
+          : requesting // ignore: cast_nullable_to_non_nullable
               as bool,
       developer: freezed == developer
           ? _value.developer
@@ -468,6 +1076,7 @@ abstract class _$$ProjectStateImplCopyWith<$Res>
   @useResult
   $Res call(
       {bool loading,
+      bool requesting,
       Developer? developer,
       List<Project> projects,
       Project? selected});
@@ -492,6 +1101,7 @@ class __$$ProjectStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? loading = null,
+    Object? requesting = null,
     Object? developer = freezed,
     Object? projects = null,
     Object? selected = freezed,
@@ -500,6 +1110,10 @@ class __$$ProjectStateImplCopyWithImpl<$Res>
       loading: null == loading
           ? _value.loading
           : loading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      requesting: null == requesting
+          ? _value.requesting
+          : requesting // ignore: cast_nullable_to_non_nullable
               as bool,
       developer: freezed == developer
           ? _value.developer
@@ -522,6 +1136,7 @@ class __$$ProjectStateImplCopyWithImpl<$Res>
 class _$ProjectStateImpl with DiagnosticableTreeMixin implements _ProjectState {
   const _$ProjectStateImpl(
       {this.loading = true,
+      this.requesting = false,
       this.developer,
       final List<Project> projects = const [],
       this.selected})
@@ -530,6 +1145,9 @@ class _$ProjectStateImpl with DiagnosticableTreeMixin implements _ProjectState {
   @override
   @JsonKey()
   final bool loading;
+  @override
+  @JsonKey()
+  final bool requesting;
   @override
   final Developer? developer;
   final List<Project> _projects;
@@ -546,7 +1164,7 @@ class _$ProjectStateImpl with DiagnosticableTreeMixin implements _ProjectState {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ProjectState(loading: $loading, developer: $developer, projects: $projects, selected: $selected)';
+    return 'ProjectState(loading: $loading, requesting: $requesting, developer: $developer, projects: $projects, selected: $selected)';
   }
 
   @override
@@ -555,6 +1173,7 @@ class _$ProjectStateImpl with DiagnosticableTreeMixin implements _ProjectState {
     properties
       ..add(DiagnosticsProperty('type', 'ProjectState'))
       ..add(DiagnosticsProperty('loading', loading))
+      ..add(DiagnosticsProperty('requesting', requesting))
       ..add(DiagnosticsProperty('developer', developer))
       ..add(DiagnosticsProperty('projects', projects))
       ..add(DiagnosticsProperty('selected', selected));
@@ -566,6 +1185,8 @@ class _$ProjectStateImpl with DiagnosticableTreeMixin implements _ProjectState {
         (other.runtimeType == runtimeType &&
             other is _$ProjectStateImpl &&
             (identical(other.loading, loading) || other.loading == loading) &&
+            (identical(other.requesting, requesting) ||
+                other.requesting == requesting) &&
             (identical(other.developer, developer) ||
                 other.developer == developer) &&
             const DeepCollectionEquality().equals(other._projects, _projects) &&
@@ -574,7 +1195,7 @@ class _$ProjectStateImpl with DiagnosticableTreeMixin implements _ProjectState {
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, loading, developer,
+  int get hashCode => Object.hash(runtimeType, loading, requesting, developer,
       const DeepCollectionEquality().hash(_projects), selected);
 
   /// Create a copy of ProjectState
@@ -589,12 +1210,15 @@ class _$ProjectStateImpl with DiagnosticableTreeMixin implements _ProjectState {
 abstract class _ProjectState implements ProjectState {
   const factory _ProjectState(
       {final bool loading,
+      final bool requesting,
       final Developer? developer,
       final List<Project> projects,
       final Project? selected}) = _$ProjectStateImpl;
 
   @override
   bool get loading;
+  @override
+  bool get requesting;
   @override
   Developer? get developer;
   @override
