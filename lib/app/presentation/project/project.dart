@@ -95,7 +95,7 @@ class _ProjectPageState extends State<ProjectPage> {
                       crossAxisAlignment: CrossAxisAlignment.end,
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        if (widget.project != null) ...[
+                        if (widget.project != null && isAuth) ...[
                           CircleAvatar(
                             backgroundColor: Colors.red.shade100,
                             child: IconButton(
