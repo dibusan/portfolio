@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:glass_kit/glass_kit.dart';
@@ -6,6 +8,15 @@ import 'package:portfolio_eriel/app/presentation/project/dialog/project_dialog.d
 import 'package:portfolio_eriel/app/presentation/project/widgets/tech_tags.dart';
 import 'package:portfolio_eriel/app/shared/__.dart';
 import 'package:portfolio_eriel/domain/entities/__.dart';
+
+class MyCustomScrollBehavior extends MaterialScrollBehavior {
+  // Override behavior methods and getters like dragDevices
+  @override
+  Set<PointerDeviceKind> get dragDevices => {
+        PointerDeviceKind.touch,
+        PointerDeviceKind.mouse,
+      };
+}
 
 class MyClipper extends CustomClipper<Path> {
   final double radius;
@@ -42,7 +53,7 @@ class ProjectPreviewCard extends StatelessWidget {
         bool isSelected = state.selected?.id == project.id;
         return InkWell(
           onTap: () {
-            ProjectDialog.show(context,project: project);
+            ProjectDialog.show(context, project: project);
 
             // BlocProvider.of<ProjectBloc>(context).add(
             //   ProjectEventSelect(project: isSelected ? null : project),
@@ -107,18 +118,21 @@ class ProjectPreviewCard extends StatelessWidget {
                           Container(
                             padding: const EdgeInsets.symmetric(vertical: 8),
                             height: 50,
-                            child: ListView.separated(
-                              physics: const BouncingScrollPhysics(),
-                              separatorBuilder: (_, i) => const SizedBox(
-                                width: 4,
+                            child: ScrollConfiguration(
+                              behavior: MyCustomScrollBehavior(),
+                              child: ListView.separated(
+                                physics: const BouncingScrollPhysics(),
+                                separatorBuilder: (_, i) => const SizedBox(
+                                  width: 4,
+                                ),
+                                scrollDirection: Axis.horizontal,
+                                itemBuilder: (_, i) => TechTag(
+                                  name: project.techTags[i],
+                                  borderColor: Colors.black87,
+                                  textColor: Colors.black87,
+                                ),
+                                itemCount: project.techTags.length,
                               ),
-                              scrollDirection: Axis.horizontal,
-                              itemBuilder: (_, i) => TechTag(
-                                name: project.techTags[i],
-                                borderColor: Colors.black87,
-                                textColor: Colors.black87,
-                              ),
-                              itemCount: project.techTags.length,
                             ),
                           )
                         ],
