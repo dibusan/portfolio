@@ -7,6 +7,7 @@ class ProjectState with _$ProjectState {
     @Default(false) bool requesting,
     Developer? developer,
     @Default([]) List<Project> projects,
+    @Default([]) List<String> tempFileUploaded,
     Project? selected,
   }) = _ProjectState;
 }

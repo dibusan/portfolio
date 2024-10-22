@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:glass_kit/glass_kit.dart';
 import 'package:portfolio_eriel/app/bloc/project/project_bloc.dart';
 import 'package:portfolio_eriel/app/bloc/security/security_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:portfolio_eriel/app/presentation/project/dialog/field.dart';
 import 'package:portfolio_eriel/app/presentation/project/widgets/project_logo.dart';
 import 'package:portfolio_eriel/app/presentation/project/widgets/tech_tag_wrap.dart';
@@ -22,18 +23,40 @@ class ProjectPage extends StatefulWidget {
 }
 
 class _ProjectPageState extends State<ProjectPage> {
-  late Project? localProject;
+  late Project localProject;
   late TextEditingController _name;
   late TextEditingController _subtitle;
   late TextEditingController _description;
 
   @override
   void initState() {
-    localProject = widget.project ?? const Project(id: '0', title: '');
-    _name = TextEditingController(text: localProject?.title);
-    _subtitle = TextEditingController(text: localProject?.subtitle);
-    _description = TextEditingController(text: localProject?.description);
+    localProject = widget.project ?? const Project(id: 'new', title: '');
+    _name = TextEditingController(text: localProject.title);
+    _subtitle = TextEditingController(text: localProject.subtitle);
+    _description = TextEditingController(text: localProject.description);
     super.initState();
+  }
+
+  _save() {
+    try {
+      Map<String, dynamic> jsonData = {
+        "id": DateTime.now().microsecondsSinceEpoch.toString(),
+        ...localProject.toJson(),
+        "title": _name.text,
+        "subtitle": _subtitle.text,
+        "description": _description.text
+      };
+      Project p = Project.fromJson(jsonData);
+      BlocProvider.of<ProjectBloc>(context).add(ProjectEventUpdate(projectId: widget.project?.id, project: p));
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+  }
+
+  _delete() {
+    if (widget.project != null) {
+      BlocProvider.of<ProjectBloc>(context).add(ProjectEventDelete(projectId: widget.project!.id, onDelete: () => context.pop()));
+    }
   }
 
   @override
@@ -42,7 +65,7 @@ class _ProjectPageState extends State<ProjectPage> {
 
     return BlocBuilder<ProjectBloc, ProjectState>(
       buildWhen: (oldState, newState) {
-        return oldState.requesting != newState.requesting;
+        return oldState.requesting != newState.requesting || oldState.selected != newState.selected;
       },
       builder: (context, projectState) {
         return Material(
@@ -57,48 +80,51 @@ class _ProjectPageState extends State<ProjectPage> {
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: Column(
                   children: [
-                    const VSp10(),
+                    Container(
+                      height: 10,
+                      padding: const EdgeInsets.only(bottom: 5),
+                      child: projectState.requesting || projectState.loading
+                          ? ClipRRect(
+                              borderRadius: BorderRadius.circular(20),
+                              child: const LinearProgressIndicator(),
+                            )
+                          : null,
+                    ),
                     Row(
                       mainAxisSize: MainAxisSize.max,
                       crossAxisAlignment: CrossAxisAlignment.end,
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        if (isAuth)
+                        if (widget.project != null) ...[
                           CircleAvatar(
+                            backgroundColor: Colors.red.shade100,
                             child: IconButton(
-                              onPressed: projectState.requesting
-                                  ? null
-                                  : () {
-                                      try {
-                                        Map<String, dynamic> jsonData = {
-                                          "id": DateTime.now().microsecondsSinceEpoch.toString(),
-                                          ...localProject!.toJson(),
-                                          "title": _name.text,
-                                          "subtitle": _subtitle.text,
-                                          "description": _description.text
-                                        };
-                                        Project p = Project.fromJson(jsonData);
-
-                                        BlocProvider.of<ProjectBloc>(context).add(ProjectEventUpdate(projectId: widget.project?.id, project: p));
-                                      } catch (e) {
-                                        print(e);
-                                      }
-                                    },
-                              icon: projectState.requesting ? const CircularProgressIndicator() : const Icon(Icons.save, color: Colors.green),
+                              onPressed: projectState.requesting ? null : _delete,
+                              icon: Icon(Icons.delete, color: projectState.requesting ? Colors.grey : Colors.red),
                             ),
                           ),
-                        const HSp16(),
-                        Container(
-                          decoration: BoxDecoration(
-                            color: Colors.grey.withOpacity(0.5),
-                            shape: BoxShape.circle,
+                          const Expanded(child: SizedBox()),
+                        ],
+                        if (isAuth) ...[
+                          CircleAvatar(
+                            backgroundColor: Colors.green.shade100,
+                            child: IconButton(
+                              onPressed: projectState.requesting ? null : _save,
+                              icon: Icon(Icons.save, color: projectState.requesting ? Colors.grey : Colors.green),
+                            ),
                           ),
+                        ],
+                        const HSp16(),
+                        CircleAvatar(
+                          backgroundColor: Colors.white,
                           child: IconButton(
-                            onPressed: widget.onCloseTab ??
-                                () {
-                                  BlocProvider.of<ProjectBloc>(context).add(const ProjectEventSelect(project: null));
-                                },
-                            icon: const Icon(Icons.close, color: Colors.white),
+                            onPressed: projectState.requesting
+                                ? null
+                                : widget.onCloseTab ??
+                                    () {
+                                      BlocProvider.of<ProjectBloc>(context).add(const ProjectEventSelect(project: null));
+                                    },
+                            icon: Icon(Icons.close, color: projectState.requesting ? Colors.grey : Colors.black),
                           ),
                         ),
                       ],
@@ -116,12 +142,23 @@ class _ProjectPageState extends State<ProjectPage> {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: <Widget>[
                                   const SizedBox(width: double.maxFinite),
-                                  ProjectLogo(imageUrl: widget.project?.logoUrl),
+                                  ProjectLogo(
+                                    imageUrl: localProject.logoUrl,
+                                    onEdit: isAuth
+                                        ? () async {
+                                            BlocProvider.of<ProjectBloc>(context).add(ProjectEventUploadFile(
+                                                project: localProject,
+                                                onResult: (value) {
+                                                  setState(() => localProject = localProject.copyWith(logoUrl: value));
+                                                }));
+                                          }
+                                        : null,
+                                  ),
                                   const VSp8(),
                                   MyFieldWithText(
                                     width: 300,
                                     controller: _name,
-                                    text: localProject?.title ?? "",
+                                    text: localProject.title ?? "",
                                     inputDecoration: const InputDecoration(labelText: "Title"),
                                     textStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                                   ),
@@ -129,14 +166,14 @@ class _ProjectPageState extends State<ProjectPage> {
                                   MyFieldWithText(
                                     width: 300,
                                     controller: _subtitle,
-                                    text: localProject?.subtitle ?? "",
+                                    text: localProject.subtitle ?? "",
                                     inputDecoration: const InputDecoration(labelText: "Subtitle"),
                                     textStyle: const TextStyle(fontSize: 16),
                                   ),
                                   const VSp8(),
                                   MyFieldWithText(
                                     controller: _description,
-                                    text: localProject?.description ?? "",
+                                    text: localProject.description ?? "",
                                     inputDecoration: const InputDecoration(labelText: "Description"),
                                     textStyle: const TextStyle(fontSize: 16),
                                     maxLines: 3,
@@ -151,20 +188,19 @@ class _ProjectPageState extends State<ProjectPage> {
                             ),
                             const VSp8(),
                             TechTagsWrap(
-                              techTags: localProject?.techTags ?? [],
+                              techTags: localProject.techTags,
                               backgroundColor: Colors.white,
                               onRemove: isAuth
                                   ? (value) {
-                                      List<String> newList = (localProject?.techTags ?? []).where((e) => e != value).toList();
+                                      List<String> newList = localProject.techTags.where((e) => e != value).toList();
 
-                                      setState(() => localProject = localProject?.copyWith(techTags: newList));
+                                      setState(() => localProject = localProject.copyWith(techTags: newList));
                                     }
                                   : null,
                               onAdd: isAuth
                                   ? (value) {
-                                      print("object, $value");
-                                      List<String> newList = (localProject?.techTags ?? []).where((e) => e != value).toList();
-                                      setState(() => localProject = localProject?.copyWith(techTags: [...newList, value]));
+                                      List<String> newList = localProject.techTags.where((e) => e != value).toList();
+                                      setState(() => localProject = localProject.copyWith(techTags: [...newList, value]));
                                     }
                                   : null,
                             ),
