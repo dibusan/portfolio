@@ -158,7 +158,9 @@ class __$$SecurityCheckPasswordEventImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$SecurityCheckPasswordEventImpl implements SecurityCheckPasswordEvent {
+class _$SecurityCheckPasswordEventImpl
+    with DiagnosticableTreeMixin
+    implements SecurityCheckPasswordEvent {
   const _$SecurityCheckPasswordEventImpl(
       {required this.password, required this.developer});
 
@@ -168,8 +170,17 @@ class _$SecurityCheckPasswordEventImpl implements SecurityCheckPasswordEvent {
   final Developer developer;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'SecurityEvent.checkPassword(password: $password, developer: $developer)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'SecurityEvent.checkPassword'))
+      ..add(DiagnosticsProperty('password', password))
+      ..add(DiagnosticsProperty('developer', developer));
   }
 
   @override
@@ -365,8 +376,10 @@ class __$$SecurityStateImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$SecurityStateImpl implements _SecurityState {
-  const _$SecurityStateImpl({this.loading = false, this.isAuth = true});
+class _$SecurityStateImpl
+    with DiagnosticableTreeMixin
+    implements _SecurityState {
+  const _$SecurityStateImpl({this.loading = false, this.isAuth = kDebugMode});
 
   @override
   @JsonKey()
@@ -376,8 +389,17 @@ class _$SecurityStateImpl implements _SecurityState {
   final bool isAuth;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'SecurityState(loading: $loading, isAuth: $isAuth)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'SecurityState'))
+      ..add(DiagnosticsProperty('loading', loading))
+      ..add(DiagnosticsProperty('isAuth', isAuth));
   }
 
   @override
