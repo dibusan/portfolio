@@ -57,10 +57,8 @@ class _HomePageState extends State<HomePage> {
           if (stateFilters.dateFilter?.title != 'All') {
             projects = projects
                 .where((element) =>
-                    (element.projectStartDate != null &&
-                        stateFilters.dateFilter!.date.isAfter(element.projectStartDate!)) &&
-                    (element.projectLaunchDate != null &&
-                        stateFilters.dateFilter!.date.isBefore(element.projectLaunchDate!)))
+                    (element.projectStartDate != null && stateFilters.dateFilter!.date.isAfter(element.projectStartDate!)) &&
+                    (element.projectLaunchDate != null && stateFilters.dateFilter!.date.isBefore(element.projectLaunchDate!)))
                 .toList();
           }
           final size = MediaQuery.of(context).size;
@@ -106,11 +104,13 @@ class _HomePageState extends State<HomePage> {
                                             children: [
                                               Expanded(
                                                 child: LayoutBuilder(
-                                                  builder: (_, constrains) => DynamicHeightGridView(
-                                                    itemCount: projects.length,
-                                                    crossAxisCount: (constrains.maxWidth / 350).toInt(),
-                                                    builder: (context, index) =>
-                                                        ProjectPreviewCard(project: projects[index]),
+                                                  builder: (_, constrains) => ScrollConfiguration(
+                                                    behavior: MyCustomScrollBehavior(),
+                                                    child: DynamicHeightGridView(
+                                                      itemCount: projects.length,
+                                                      crossAxisCount: (constrains.maxWidth / 350).toInt(),
+                                                      builder: (context, index) => ProjectPreviewCard(project: projects[index]),
+                                                    ),
                                                   ),
                                                 ),
                                               ),

@@ -5,6 +5,7 @@ import 'package:portfolio_eriel/app/presentation/home/leftBar/small_banding_bann
 import 'package:portfolio_eriel/app/presentation/home/leftBar/time_period_selection.dart';
 import 'package:portfolio_eriel/app/presentation/home/leftBar/vertical_tag_filtering.dart';
 import 'package:portfolio_eriel/app/presentation/project/dialog/project_dialog.dart';
+import 'package:portfolio_eriel/app/presentation/project/widgets/project_preview_card.dart';
 import 'package:portfolio_eriel/app/shared/spacers.dart';
 import 'package:portfolio_eriel/domain/entities/__.dart';
 
@@ -48,57 +49,60 @@ class LeftBarSection extends StatelessWidget {
             ),
             width: width,
             height: double.maxFinite,
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  Container(
-                    margin: const EdgeInsets.only(top: 60),
-                    child: BlocBuilder<SecurityBloc, SecurityState>(
-                      builder: (context, state) {
-                        return Center(
-                          child: Stack(
-                            children: [
-                              SizedBox(
-                                width: width * 0.6,
-                                height: width * 0.6,
-                                child: SmallBrandingBanner(developer: developer),
-                              ),
-                              if (state.isAuth)
-                                Positioned(
-                                  right: 0,
-                                  bottom: 0,
-                                  child: CircleAvatar(
-                                    child: IconButton(onPressed: () => ProjectDialog.show(context, project: null), icon: const Icon(Icons.add)),
-                                  ),
-                                )
-                            ],
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                  const VSp8(),
-                  Text(
-                    developer?.name ?? "",
-                    style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w900, color: Color(0xff004E7B), shadows: [
-                      Shadow(
-                        offset: Offset(0.2, 0.2),
-                        blurRadius: 1.0,
-                        color: Color(0xff004E7B),
+            child: ScrollConfiguration(
+              behavior: MyCustomScrollBehavior(),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.only(top: 60),
+                      child: BlocBuilder<SecurityBloc, SecurityState>(
+                        builder: (context, state) {
+                          return Center(
+                            child: Stack(
+                              children: [
+                                SizedBox(
+                                  width: width * 0.6,
+                                  height: width * 0.6,
+                                  child: SmallBrandingBanner(developer: developer),
+                                ),
+                                if (state.isAuth)
+                                  Positioned(
+                                    right: 0,
+                                    bottom: 0,
+                                    child: CircleAvatar(
+                                      child: IconButton(onPressed: () => ProjectDialog.show(context, project: null), icon: const Icon(Icons.add)),
+                                    ),
+                                  )
+                              ],
+                            ),
+                          );
+                        },
                       ),
-                    ]),
-                  ),
-                  Text(
-                    developer?.info ?? "",
-                    style: TextStyle(fontSize: 16, fontStyle: FontStyle.italic, color: scheme.primary),
-                  ),
-                  const VSp24(),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 30),
-                    child: VerticalTagFiltering(projects: projects),
-                  ),
-                  const VSp24(),
-                ],
+                    ),
+                    const VSp8(),
+                    Text(
+                      developer?.name ?? "",
+                      style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w900, color: Color(0xff004E7B), shadows: [
+                        Shadow(
+                          offset: Offset(0.2, 0.2),
+                          blurRadius: 1.0,
+                          color: Color(0xff004E7B),
+                        ),
+                      ]),
+                    ),
+                    Text(
+                      developer?.info ?? "",
+                      style: TextStyle(fontSize: 16, fontStyle: FontStyle.italic, color: scheme.primary),
+                    ),
+                    const VSp24(),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 30),
+                      child: VerticalTagFiltering(projects: projects),
+                    ),
+                    const VSp24(),
+                  ],
+                ),
               ),
             ),
           ),
