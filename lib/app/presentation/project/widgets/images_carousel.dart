@@ -101,7 +101,7 @@ class ImagesCarousel extends StatelessWidget {
                               fit: BoxFit.cover,
                             ),
                             ...infoWidget(i),
-                            if (onDelete != null) removeWidget(i)
+                            if (onDelete != null && enable) removeWidget(i)
                           ],
                         ),
                       );

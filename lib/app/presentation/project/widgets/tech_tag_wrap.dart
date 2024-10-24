@@ -14,7 +14,7 @@ class TechTagsWrap extends StatefulWidget {
   final Color? textColor;
   final Color? backgroundColor;
 
-  TechTagsWrap({
+  const TechTagsWrap({
     super.key,
     this.techTags,
     this.onTab,

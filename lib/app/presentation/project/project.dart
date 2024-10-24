@@ -305,7 +305,7 @@ class _ProjectPageState extends State<ProjectPage> {
 
                             if (allImages.isNotEmpty)
                               ImagesCarousel(
-                                enable: !projectState.requesting,
+                                enable: !projectState.requesting && isAuth,
                                 allImages: allImages,
                                 remotes: widget.project?.images ?? [],
                                 locals: localProject.images,
