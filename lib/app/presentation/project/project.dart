@@ -324,7 +324,7 @@ class _ProjectPageState extends State<ProjectPage> {
                                   child: ToLink(
                                     enable: !projectState.requesting,
                                     title: "Github",
-                                    assetsIcon: '/images/github.png',
+                                    leading: Image.asset('/images/github.png'),
                                     uri: localProject.githubLink == null && !isAuth ? null : Uri.tryParse(localProject.githubLink ?? ""),
                                     onTextChange: isAuth ? (value) => localProject = localProject.copyWith(githubLink: value) : null,
                                   ),
@@ -333,7 +333,7 @@ class _ProjectPageState extends State<ProjectPage> {
                                   child: ToLink(
                                     enable: !projectState.requesting,
                                     title: "Application",
-                                    assetsIcon: '/images/application.png',
+                                    leading: Image.asset('/images/application.png'),
                                     uri: localProject.appLink == null && !isAuth ? null : Uri.tryParse(localProject.appLink ?? ""),
                                     onTextChange: isAuth ? (value) => localProject = localProject.copyWith(appLink: value) : null,
                                   ),

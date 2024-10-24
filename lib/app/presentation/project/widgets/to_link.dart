@@ -5,10 +5,10 @@ class ToLink extends StatefulWidget {
   final Function(String? value)? onTextChange;
   final Uri? uri;
   final String title;
-  final String? assetsIcon;
+  final Widget? leading;
   final bool enable;
 
-  const ToLink({super.key, this.uri, this.title = "", this.assetsIcon, this.onTextChange, this.enable = true});
+  const ToLink({super.key, this.uri, this.title = "", this.leading, this.onTextChange, this.enable = true});
 
   @override
   State<ToLink> createState() => _ToLinkState();
@@ -28,7 +28,7 @@ class _ToLinkState extends State<ToLink> {
     return widget.uri == null
         ? const SizedBox()
         : ListTile(
-            leading: widget.assetsIcon == null ? null : Image.asset(widget.assetsIcon!),
+            leading: widget.leading,
             title: Text(widget.title, style: const TextStyle(fontWeight: FontWeight.bold)),
             titleAlignment: ListTileTitleAlignment.threeLine,
             subtitle: Align(
