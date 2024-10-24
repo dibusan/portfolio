@@ -13,11 +13,11 @@ import 'package:portfolio_eriel/app/shared/__.dart';
 import 'package:portfolio_eriel/domain/entities/__.dart';
 
 class ProjectPage extends StatefulWidget {
-  final Project? project;
+  Project? project;
   final Function()? onCloseTab;
   final BorderRadius? borderRadius;
 
-  const ProjectPage({super.key, this.project, this.onCloseTab, this.borderRadius});
+  ProjectPage({super.key, this.project, this.onCloseTab, this.borderRadius});
 
   @override
   State<ProjectPage> createState() => _ProjectPageState();
@@ -49,7 +49,15 @@ class _ProjectPageState extends State<ProjectPage> {
         "description": _description.text
       };
       Project p = Project.fromJson(jsonData);
-      BlocProvider.of<ProjectBloc>(context).add(ProjectEventUpdate(projectId: widget.project?.id, project: p));
+      BlocProvider.of<ProjectBloc>(context).add(ProjectEventUpdate(
+          projectId: widget.project?.id,
+          project: p,
+          onDone: (Project project) {
+            setState(() {
+              localProject = project;
+              widget.project = project;
+            });
+          }));
     } catch (e) {
       debugPrint(e.toString());
     }
@@ -148,7 +156,7 @@ class _ProjectPageState extends State<ProjectPage> {
                       child: SingleChildScrollView(
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
                             // Logo -> Title -> Subtitles
                             Container(
@@ -201,15 +209,10 @@ class _ProjectPageState extends State<ProjectPage> {
                               ),
                             ),
                             const VSp10(),
-                            Row(
-                              children: [
-                                const Text(
-                                  "Tech Stack",
-                                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-                                ),
-                                if (isAuth) ...[
-                                  const HSp16(),
-                                  SizedBox(
+
+                            isAuth
+                                ? Container(
+                                    margin: const EdgeInsets.symmetric(vertical: 10),
                                     width: 150,
                                     child: SearchTags(
                                       submitted: (value) {
@@ -219,11 +222,12 @@ class _ProjectPageState extends State<ProjectPage> {
                                       },
                                     ),
                                   )
-                                ]
-                              ],
-                            ),
+                                : const Text(
+                                    "Tech Stack",
+                                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                                  ),
 
-                            const VSp8(),
+                            const VSp10(),
                             TechTagsWrap(
                               techTags: localProject.techTags,
                               backgroundColor: Colors.white,
@@ -237,8 +241,12 @@ class _ProjectPageState extends State<ProjectPage> {
                             ),
                             const VSp10(),
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
+                                if (isAuth) ...const [
+                                  SizedBox(width: 48),
+                                  HSp16(),
+                                ],
                                 const Text(
                                   "Media example",
                                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
@@ -256,7 +264,7 @@ class _ProjectPageState extends State<ProjectPage> {
                                               }));
                                         },
                                         icon: const Icon(Icons.add)),
-                                  )
+                                  ),
                                 ]
                               ],
                             ),
@@ -268,14 +276,12 @@ class _ProjectPageState extends State<ProjectPage> {
                                 return Padding(
                                   padding: const EdgeInsets.symmetric(horizontal: 5),
                                   child: CarouselSlider(
-                                    options: CarouselOptions(
-                                      height: 300.0,
-                                      autoPlay: true,
-                                    ),
+                                    options: CarouselOptions(height: 300.0, autoPlay: true, viewportFraction: 0.6),
                                     items: allImages.map((i) {
                                       final dec = BoxDecoration(
                                         color: const Color.fromRGBO(255, 255, 255, 1),
                                         borderRadius: BorderRadius.circular(20),
+                                        border: Border.all(color: Colors.white, width: 2),
                                       );
                                       return Builder(
                                         builder: (BuildContext context) {

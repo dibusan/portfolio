@@ -48,8 +48,10 @@ class _SearchTagsState extends State<SearchTags> {
             _focusNode.requestFocus();
           },
           style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+          textAlign: TextAlign.center,
           decoration: InputDecoration(
-            hintText: "Type new Tag",
+            hintText: "Tech Stack",
+            alignLabelWithHint: true,
             hintStyle: TextStyle(color: Colors.grey.withOpacity(0.6)),
           ),
         );

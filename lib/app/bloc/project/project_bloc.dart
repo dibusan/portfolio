@@ -53,6 +53,7 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
       if (event.projectId == null) return add(ProjectEventCreate(project: event.project));
       Project? project = await CloudFireStore.instance.updateProject(state.developer!.id, event.projectId!, event.project.toJson());
       if (project == null) return add(const ProjectEventClose());
+      event.onDone?.call(project);
       emit(state.copyWith(tempFileUploaded: []));
       add(const ProjectEventStarted());
     });

@@ -29,6 +29,7 @@ class _SecurityPage extends StatelessWidget {
   _SecurityPage({super.key, required this.bloc, required this.state});
 
   final TextEditingController controller = TextEditingController(text: '');
+  final FocusNode focusNode = FocusNode();
 
   _submit(value, {Developer? developer}) {
     if (developer == null) return;
@@ -91,6 +92,8 @@ class _SecurityPage extends StatelessWidget {
                                 child: Center(
                                   child: TextFormField(
                                     obscureText: true,
+                                    autofocus: true,
+                                    canRequestFocus: true,
                                     controller: controller,
                                     onFieldSubmitted: state.loading ? null : (value) => _submit(value, developer: projectState.developer),
                                     onSaved: state.loading ? null : (value) => _submit(value, developer: projectState.developer),

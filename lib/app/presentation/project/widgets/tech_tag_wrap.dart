@@ -72,11 +72,16 @@ class TechTagsWrap extends StatelessWidget {
           );
         }
 
-        return Wrap(
-          alignment: WrapAlignment.start,
-          spacing: 8.0, // gap between adjacent chips
-          runSpacing: 4.0, // gap between lines
-          children: tagWidgets,
+        return SizedBox(
+          width: double.maxFinite,
+          child: Wrap(
+            crossAxisAlignment: WrapCrossAlignment.center,
+            runAlignment: WrapAlignment.center,
+            alignment: WrapAlignment.center,
+            spacing: 8.0, // gap between adjacent chips
+            runSpacing: 4.0, // gap between lines
+            children: tagWidgets,
+          ),
         );
       },
     );

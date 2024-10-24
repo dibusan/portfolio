@@ -20,7 +20,9 @@ mixin _$ProjectEvent {
   TResult when<TResult extends Object?>({
     required TResult Function() started,
     required TResult Function(Project? project) selectProject,
-    required TResult Function(String? projectId, Project project) updateProject,
+    required TResult Function(String? projectId, Project project,
+            dynamic Function(Project)? onDone)
+        updateProject,
     required TResult Function(String projectId, dynamic Function()? onDelete)
         deleteProject,
     required TResult Function(Project project) createProject,
@@ -34,7 +36,9 @@ mixin _$ProjectEvent {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
     TResult? Function(Project? project)? selectProject,
-    TResult? Function(String? projectId, Project project)? updateProject,
+    TResult? Function(String? projectId, Project project,
+            dynamic Function(Project)? onDone)?
+        updateProject,
     TResult? Function(String projectId, dynamic Function()? onDelete)?
         deleteProject,
     TResult? Function(Project project)? createProject,
@@ -48,7 +52,9 @@ mixin _$ProjectEvent {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
     TResult Function(Project? project)? selectProject,
-    TResult Function(String? projectId, Project project)? updateProject,
+    TResult Function(String? projectId, Project project,
+            dynamic Function(Project)? onDone)?
+        updateProject,
     TResult Function(String projectId, dynamic Function()? onDelete)?
         deleteProject,
     TResult Function(Project project)? createProject,
@@ -168,7 +174,9 @@ class _$ProjectEventStartedImpl
   TResult when<TResult extends Object?>({
     required TResult Function() started,
     required TResult Function(Project? project) selectProject,
-    required TResult Function(String? projectId, Project project) updateProject,
+    required TResult Function(String? projectId, Project project,
+            dynamic Function(Project)? onDone)
+        updateProject,
     required TResult Function(String projectId, dynamic Function()? onDelete)
         deleteProject,
     required TResult Function(Project project) createProject,
@@ -185,7 +193,9 @@ class _$ProjectEventStartedImpl
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
     TResult? Function(Project? project)? selectProject,
-    TResult? Function(String? projectId, Project project)? updateProject,
+    TResult? Function(String? projectId, Project project,
+            dynamic Function(Project)? onDone)?
+        updateProject,
     TResult? Function(String projectId, dynamic Function()? onDelete)?
         deleteProject,
     TResult? Function(Project project)? createProject,
@@ -202,7 +212,9 @@ class _$ProjectEventStartedImpl
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
     TResult Function(Project? project)? selectProject,
-    TResult Function(String? projectId, Project project)? updateProject,
+    TResult Function(String? projectId, Project project,
+            dynamic Function(Project)? onDone)?
+        updateProject,
     TResult Function(String projectId, dynamic Function()? onDelete)?
         deleteProject,
     TResult Function(Project project)? createProject,
@@ -366,7 +378,9 @@ class _$ProjectEventSelectImpl
   TResult when<TResult extends Object?>({
     required TResult Function() started,
     required TResult Function(Project? project) selectProject,
-    required TResult Function(String? projectId, Project project) updateProject,
+    required TResult Function(String? projectId, Project project,
+            dynamic Function(Project)? onDone)
+        updateProject,
     required TResult Function(String projectId, dynamic Function()? onDelete)
         deleteProject,
     required TResult Function(Project project) createProject,
@@ -383,7 +397,9 @@ class _$ProjectEventSelectImpl
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
     TResult? Function(Project? project)? selectProject,
-    TResult? Function(String? projectId, Project project)? updateProject,
+    TResult? Function(String? projectId, Project project,
+            dynamic Function(Project)? onDone)?
+        updateProject,
     TResult? Function(String projectId, dynamic Function()? onDelete)?
         deleteProject,
     TResult? Function(Project project)? createProject,
@@ -400,7 +416,9 @@ class _$ProjectEventSelectImpl
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
     TResult Function(Project? project)? selectProject,
-    TResult Function(String? projectId, Project project)? updateProject,
+    TResult Function(String? projectId, Project project,
+            dynamic Function(Project)? onDone)?
+        updateProject,
     TResult Function(String projectId, dynamic Function()? onDelete)?
         deleteProject,
     TResult Function(Project project)? createProject,
@@ -482,7 +500,8 @@ abstract class _$$ProjectEventUpdateImplCopyWith<$Res> {
           $Res Function(_$ProjectEventUpdateImpl) then) =
       __$$ProjectEventUpdateImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({String? projectId, Project project});
+  $Res call(
+      {String? projectId, Project project, dynamic Function(Project)? onDone});
 
   $ProjectCopyWith<$Res> get project;
 }
@@ -502,6 +521,7 @@ class __$$ProjectEventUpdateImplCopyWithImpl<$Res>
   $Res call({
     Object? projectId = freezed,
     Object? project = null,
+    Object? onDone = freezed,
   }) {
     return _then(_$ProjectEventUpdateImpl(
       projectId: freezed == projectId
@@ -512,6 +532,10 @@ class __$$ProjectEventUpdateImplCopyWithImpl<$Res>
           ? _value.project
           : project // ignore: cast_nullable_to_non_nullable
               as Project,
+      onDone: freezed == onDone
+          ? _value.onDone
+          : onDone // ignore: cast_nullable_to_non_nullable
+              as dynamic Function(Project)?,
     ));
   }
 
@@ -531,16 +555,19 @@ class __$$ProjectEventUpdateImplCopyWithImpl<$Res>
 class _$ProjectEventUpdateImpl
     with DiagnosticableTreeMixin
     implements ProjectEventUpdate {
-  const _$ProjectEventUpdateImpl({this.projectId, required this.project});
+  const _$ProjectEventUpdateImpl(
+      {this.projectId, required this.project, this.onDone});
 
   @override
   final String? projectId;
   @override
   final Project project;
+  @override
+  final dynamic Function(Project)? onDone;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ProjectEvent.updateProject(projectId: $projectId, project: $project)';
+    return 'ProjectEvent.updateProject(projectId: $projectId, project: $project, onDone: $onDone)';
   }
 
   @override
@@ -549,7 +576,8 @@ class _$ProjectEventUpdateImpl
     properties
       ..add(DiagnosticsProperty('type', 'ProjectEvent.updateProject'))
       ..add(DiagnosticsProperty('projectId', projectId))
-      ..add(DiagnosticsProperty('project', project));
+      ..add(DiagnosticsProperty('project', project))
+      ..add(DiagnosticsProperty('onDone', onDone));
   }
 
   @override
@@ -559,11 +587,12 @@ class _$ProjectEventUpdateImpl
             other is _$ProjectEventUpdateImpl &&
             (identical(other.projectId, projectId) ||
                 other.projectId == projectId) &&
-            (identical(other.project, project) || other.project == project));
+            (identical(other.project, project) || other.project == project) &&
+            (identical(other.onDone, onDone) || other.onDone == onDone));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, projectId, project);
+  int get hashCode => Object.hash(runtimeType, projectId, project, onDone);
 
   /// Create a copy of ProjectEvent
   /// with the given fields replaced by the non-null parameter values.
@@ -579,7 +608,9 @@ class _$ProjectEventUpdateImpl
   TResult when<TResult extends Object?>({
     required TResult Function() started,
     required TResult Function(Project? project) selectProject,
-    required TResult Function(String? projectId, Project project) updateProject,
+    required TResult Function(String? projectId, Project project,
+            dynamic Function(Project)? onDone)
+        updateProject,
     required TResult Function(String projectId, dynamic Function()? onDelete)
         deleteProject,
     required TResult Function(Project project) createProject,
@@ -588,7 +619,7 @@ class _$ProjectEventUpdateImpl
         uploadFile,
     required TResult Function(List<String> removeTempFile) closeEvent,
   }) {
-    return updateProject(projectId, project);
+    return updateProject(projectId, project, onDone);
   }
 
   @override
@@ -596,7 +627,9 @@ class _$ProjectEventUpdateImpl
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
     TResult? Function(Project? project)? selectProject,
-    TResult? Function(String? projectId, Project project)? updateProject,
+    TResult? Function(String? projectId, Project project,
+            dynamic Function(Project)? onDone)?
+        updateProject,
     TResult? Function(String projectId, dynamic Function()? onDelete)?
         deleteProject,
     TResult? Function(Project project)? createProject,
@@ -605,7 +638,7 @@ class _$ProjectEventUpdateImpl
         uploadFile,
     TResult? Function(List<String> removeTempFile)? closeEvent,
   }) {
-    return updateProject?.call(projectId, project);
+    return updateProject?.call(projectId, project, onDone);
   }
 
   @override
@@ -613,7 +646,9 @@ class _$ProjectEventUpdateImpl
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
     TResult Function(Project? project)? selectProject,
-    TResult Function(String? projectId, Project project)? updateProject,
+    TResult Function(String? projectId, Project project,
+            dynamic Function(Project)? onDone)?
+        updateProject,
     TResult Function(String projectId, dynamic Function()? onDelete)?
         deleteProject,
     TResult Function(Project project)? createProject,
@@ -624,7 +659,7 @@ class _$ProjectEventUpdateImpl
     required TResult orElse(),
   }) {
     if (updateProject != null) {
-      return updateProject(projectId, project);
+      return updateProject(projectId, project, onDone);
     }
     return orElse();
   }
@@ -679,10 +714,12 @@ class _$ProjectEventUpdateImpl
 abstract class ProjectEventUpdate implements ProjectEvent {
   const factory ProjectEventUpdate(
       {final String? projectId,
-      required final Project project}) = _$ProjectEventUpdateImpl;
+      required final Project project,
+      final dynamic Function(Project)? onDone}) = _$ProjectEventUpdateImpl;
 
   String? get projectId;
   Project get project;
+  dynamic Function(Project)? get onDone;
 
   /// Create a copy of ProjectEvent
   /// with the given fields replaced by the non-null parameter values.
@@ -783,7 +820,9 @@ class _$ProjectEventDeleteImpl
   TResult when<TResult extends Object?>({
     required TResult Function() started,
     required TResult Function(Project? project) selectProject,
-    required TResult Function(String? projectId, Project project) updateProject,
+    required TResult Function(String? projectId, Project project,
+            dynamic Function(Project)? onDone)
+        updateProject,
     required TResult Function(String projectId, dynamic Function()? onDelete)
         deleteProject,
     required TResult Function(Project project) createProject,
@@ -800,7 +839,9 @@ class _$ProjectEventDeleteImpl
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
     TResult? Function(Project? project)? selectProject,
-    TResult? Function(String? projectId, Project project)? updateProject,
+    TResult? Function(String? projectId, Project project,
+            dynamic Function(Project)? onDone)?
+        updateProject,
     TResult? Function(String projectId, dynamic Function()? onDelete)?
         deleteProject,
     TResult? Function(Project project)? createProject,
@@ -817,7 +858,9 @@ class _$ProjectEventDeleteImpl
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
     TResult Function(Project? project)? selectProject,
-    TResult Function(String? projectId, Project project)? updateProject,
+    TResult Function(String? projectId, Project project,
+            dynamic Function(Project)? onDone)?
+        updateProject,
     TResult Function(String projectId, dynamic Function()? onDelete)?
         deleteProject,
     TResult Function(Project project)? createProject,
@@ -988,7 +1031,9 @@ class _$ProjectEventCreateImpl
   TResult when<TResult extends Object?>({
     required TResult Function() started,
     required TResult Function(Project? project) selectProject,
-    required TResult Function(String? projectId, Project project) updateProject,
+    required TResult Function(String? projectId, Project project,
+            dynamic Function(Project)? onDone)
+        updateProject,
     required TResult Function(String projectId, dynamic Function()? onDelete)
         deleteProject,
     required TResult Function(Project project) createProject,
@@ -1005,7 +1050,9 @@ class _$ProjectEventCreateImpl
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
     TResult? Function(Project? project)? selectProject,
-    TResult? Function(String? projectId, Project project)? updateProject,
+    TResult? Function(String? projectId, Project project,
+            dynamic Function(Project)? onDone)?
+        updateProject,
     TResult? Function(String projectId, dynamic Function()? onDelete)?
         deleteProject,
     TResult? Function(Project project)? createProject,
@@ -1022,7 +1069,9 @@ class _$ProjectEventCreateImpl
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
     TResult Function(Project? project)? selectProject,
-    TResult Function(String? projectId, Project project)? updateProject,
+    TResult Function(String? projectId, Project project,
+            dynamic Function(Project)? onDone)?
+        updateProject,
     TResult Function(String projectId, dynamic Function()? onDelete)?
         deleteProject,
     TResult Function(Project project)? createProject,
@@ -1222,7 +1271,9 @@ class _$ProjectEventUploadFileImpl
   TResult when<TResult extends Object?>({
     required TResult Function() started,
     required TResult Function(Project? project) selectProject,
-    required TResult Function(String? projectId, Project project) updateProject,
+    required TResult Function(String? projectId, Project project,
+            dynamic Function(Project)? onDone)
+        updateProject,
     required TResult Function(String projectId, dynamic Function()? onDelete)
         deleteProject,
     required TResult Function(Project project) createProject,
@@ -1239,7 +1290,9 @@ class _$ProjectEventUploadFileImpl
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
     TResult? Function(Project? project)? selectProject,
-    TResult? Function(String? projectId, Project project)? updateProject,
+    TResult? Function(String? projectId, Project project,
+            dynamic Function(Project)? onDone)?
+        updateProject,
     TResult? Function(String projectId, dynamic Function()? onDelete)?
         deleteProject,
     TResult? Function(Project project)? createProject,
@@ -1256,7 +1309,9 @@ class _$ProjectEventUploadFileImpl
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
     TResult Function(Project? project)? selectProject,
-    TResult Function(String? projectId, Project project)? updateProject,
+    TResult Function(String? projectId, Project project,
+            dynamic Function(Project)? onDone)?
+        updateProject,
     TResult Function(String projectId, dynamic Function()? onDelete)?
         deleteProject,
     TResult Function(Project project)? createProject,
@@ -1426,7 +1481,9 @@ class _$ProjectEventCloseImpl
   TResult when<TResult extends Object?>({
     required TResult Function() started,
     required TResult Function(Project? project) selectProject,
-    required TResult Function(String? projectId, Project project) updateProject,
+    required TResult Function(String? projectId, Project project,
+            dynamic Function(Project)? onDone)
+        updateProject,
     required TResult Function(String projectId, dynamic Function()? onDelete)
         deleteProject,
     required TResult Function(Project project) createProject,
@@ -1443,7 +1500,9 @@ class _$ProjectEventCloseImpl
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
     TResult? Function(Project? project)? selectProject,
-    TResult? Function(String? projectId, Project project)? updateProject,
+    TResult? Function(String? projectId, Project project,
+            dynamic Function(Project)? onDone)?
+        updateProject,
     TResult? Function(String projectId, dynamic Function()? onDelete)?
         deleteProject,
     TResult? Function(Project project)? createProject,
@@ -1460,7 +1519,9 @@ class _$ProjectEventCloseImpl
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
     TResult Function(Project? project)? selectProject,
-    TResult Function(String? projectId, Project project)? updateProject,
+    TResult Function(String? projectId, Project project,
+            dynamic Function(Project)? onDone)?
+        updateProject,
     TResult Function(String projectId, dynamic Function()? onDelete)?
         deleteProject,
     TResult Function(Project project)? createProject,
