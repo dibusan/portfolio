@@ -12,7 +12,6 @@ class TechTagsWrap extends StatelessWidget {
   final Color? borderColor;
   final Color? textColor;
   final Color? backgroundColor;
-  final Function(String value)? onAdd;
 
   TechTagsWrap({
     super.key,
@@ -23,7 +22,6 @@ class TechTagsWrap extends StatelessWidget {
     this.borderColor,
     this.backgroundColor,
     this.textColor,
-    this.onAdd,
   });
 
   final TextEditingController techC = TextEditingController();
@@ -72,18 +70,6 @@ class TechTagsWrap extends StatelessWidget {
               },
             ),
           );
-        }
-
-        if (onAdd != null) {
-          tagWidgets.add(TechTag(
-            name: "Text",
-            controller: techC,
-            suggestions: Project.allTechTags(projects: BlocProvider.of<ProjectBloc>(context).state.projects),
-            submittedController: (value) {
-              onAdd?.call(value);
-              techC.clear();
-            },
-          ));
         }
 
         return Wrap(

@@ -64,17 +64,27 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
     });
     on<ProjectEventUploadFile>((event, emit) async {
       emit(state.copyWith(requesting: true));
-      FilePickerResult? result = await FilePicker.platform.pickFiles(type: FileType.image);
+      FilePickerResult? result = await FilePicker.platform.pickFiles(type: FileType.image, allowMultiple: event.multiple);
       if (result == null) return add(const ProjectEventClose());
-      Uint8List? bytes = result.files.single.bytes;
-      String? name = result.files.single.name;
-      if (bytes == null || state.developer == null) return add(const ProjectEventClose());
-      final (String?, Exception?) uploadResult = await FireStoreService.uploadFile(
-          developer: state.developer!, project: event.project, bytes: bytes, fileName: name, bucket: StorageBuckets.logos);
-      if (uploadResult.$1 == null) return add(const ProjectEventClose());
+      List<String> uploadedFiles = [];
 
-      emit(state.copyWith(tempFileUploaded: [...state.tempFileUploaded, uploadResult.$1!]));
-      event.onResult?.call(uploadResult.$1);
+      for (var file in result.files) {
+        Uint8List? bytes = file.bytes;
+        String? name = file.name;
+        if (bytes == null || state.developer == null) continue;
+        final (String?, Exception?) uploadResult = await FireStoreService.uploadFile(
+          developer: state.developer!,
+          project: event.project,
+          bytes: bytes,
+          fileName: name,
+          bucket: event.multiple ? StorageBuckets.images : StorageBuckets.logos,
+        );
+        if (uploadResult.$1 == null) continue;
+        uploadedFiles.add(uploadResult.$1!);
+      }
+
+      emit(state.copyWith(tempFileUploaded: [...state.tempFileUploaded,...uploadedFiles]));
+      event.onResult?.call(uploadedFiles);
       return add(const ProjectEventClose());
     });
   }

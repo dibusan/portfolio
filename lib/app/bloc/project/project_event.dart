@@ -12,7 +12,8 @@ class ProjectEvent with _$ProjectEvent {
 
   const factory ProjectEvent.createProject({required Project project}) = ProjectEventCreate;
 
-  const factory ProjectEvent.uploadFile({Function(String? url)? onResult, Project? project}) = ProjectEventUploadFile;
+  const factory ProjectEvent.uploadFile({Function(@Default([]) List<String> url)? onResult, @Default(false) bool multiple, Project? project}) =
+      ProjectEventUploadFile;
 
   const factory ProjectEvent.closeEvent({@Default([]) List<String> removeTempFile}) = ProjectEventClose;
 }

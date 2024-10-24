@@ -52,6 +52,7 @@ class LeftBarSection extends StatelessWidget {
             child: ScrollConfiguration(
               behavior: MyCustomScrollBehavior(),
               child: SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
                 child: Column(
                   children: [
                     Container(

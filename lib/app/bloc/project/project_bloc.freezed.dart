@@ -24,8 +24,8 @@ mixin _$ProjectEvent {
     required TResult Function(String projectId, dynamic Function()? onDelete)
         deleteProject,
     required TResult Function(Project project) createProject,
-    required TResult Function(
-            dynamic Function(String?)? onResult, Project? project)
+    required TResult Function(dynamic Function(List<String>)? onResult,
+            bool multiple, Project? project)
         uploadFile,
     required TResult Function(List<String> removeTempFile) closeEvent,
   }) =>
@@ -38,7 +38,8 @@ mixin _$ProjectEvent {
     TResult? Function(String projectId, dynamic Function()? onDelete)?
         deleteProject,
     TResult? Function(Project project)? createProject,
-    TResult? Function(dynamic Function(String?)? onResult, Project? project)?
+    TResult? Function(dynamic Function(List<String>)? onResult, bool multiple,
+            Project? project)?
         uploadFile,
     TResult? Function(List<String> removeTempFile)? closeEvent,
   }) =>
@@ -51,7 +52,8 @@ mixin _$ProjectEvent {
     TResult Function(String projectId, dynamic Function()? onDelete)?
         deleteProject,
     TResult Function(Project project)? createProject,
-    TResult Function(dynamic Function(String?)? onResult, Project? project)?
+    TResult Function(dynamic Function(List<String>)? onResult, bool multiple,
+            Project? project)?
         uploadFile,
     TResult Function(List<String> removeTempFile)? closeEvent,
     required TResult orElse(),
@@ -170,8 +172,8 @@ class _$ProjectEventStartedImpl
     required TResult Function(String projectId, dynamic Function()? onDelete)
         deleteProject,
     required TResult Function(Project project) createProject,
-    required TResult Function(
-            dynamic Function(String?)? onResult, Project? project)
+    required TResult Function(dynamic Function(List<String>)? onResult,
+            bool multiple, Project? project)
         uploadFile,
     required TResult Function(List<String> removeTempFile) closeEvent,
   }) {
@@ -187,7 +189,8 @@ class _$ProjectEventStartedImpl
     TResult? Function(String projectId, dynamic Function()? onDelete)?
         deleteProject,
     TResult? Function(Project project)? createProject,
-    TResult? Function(dynamic Function(String?)? onResult, Project? project)?
+    TResult? Function(dynamic Function(List<String>)? onResult, bool multiple,
+            Project? project)?
         uploadFile,
     TResult? Function(List<String> removeTempFile)? closeEvent,
   }) {
@@ -203,7 +206,8 @@ class _$ProjectEventStartedImpl
     TResult Function(String projectId, dynamic Function()? onDelete)?
         deleteProject,
     TResult Function(Project project)? createProject,
-    TResult Function(dynamic Function(String?)? onResult, Project? project)?
+    TResult Function(dynamic Function(List<String>)? onResult, bool multiple,
+            Project? project)?
         uploadFile,
     TResult Function(List<String> removeTempFile)? closeEvent,
     required TResult orElse(),
@@ -366,8 +370,8 @@ class _$ProjectEventSelectImpl
     required TResult Function(String projectId, dynamic Function()? onDelete)
         deleteProject,
     required TResult Function(Project project) createProject,
-    required TResult Function(
-            dynamic Function(String?)? onResult, Project? project)
+    required TResult Function(dynamic Function(List<String>)? onResult,
+            bool multiple, Project? project)
         uploadFile,
     required TResult Function(List<String> removeTempFile) closeEvent,
   }) {
@@ -383,7 +387,8 @@ class _$ProjectEventSelectImpl
     TResult? Function(String projectId, dynamic Function()? onDelete)?
         deleteProject,
     TResult? Function(Project project)? createProject,
-    TResult? Function(dynamic Function(String?)? onResult, Project? project)?
+    TResult? Function(dynamic Function(List<String>)? onResult, bool multiple,
+            Project? project)?
         uploadFile,
     TResult? Function(List<String> removeTempFile)? closeEvent,
   }) {
@@ -399,7 +404,8 @@ class _$ProjectEventSelectImpl
     TResult Function(String projectId, dynamic Function()? onDelete)?
         deleteProject,
     TResult Function(Project project)? createProject,
-    TResult Function(dynamic Function(String?)? onResult, Project? project)?
+    TResult Function(dynamic Function(List<String>)? onResult, bool multiple,
+            Project? project)?
         uploadFile,
     TResult Function(List<String> removeTempFile)? closeEvent,
     required TResult orElse(),
@@ -577,8 +583,8 @@ class _$ProjectEventUpdateImpl
     required TResult Function(String projectId, dynamic Function()? onDelete)
         deleteProject,
     required TResult Function(Project project) createProject,
-    required TResult Function(
-            dynamic Function(String?)? onResult, Project? project)
+    required TResult Function(dynamic Function(List<String>)? onResult,
+            bool multiple, Project? project)
         uploadFile,
     required TResult Function(List<String> removeTempFile) closeEvent,
   }) {
@@ -594,7 +600,8 @@ class _$ProjectEventUpdateImpl
     TResult? Function(String projectId, dynamic Function()? onDelete)?
         deleteProject,
     TResult? Function(Project project)? createProject,
-    TResult? Function(dynamic Function(String?)? onResult, Project? project)?
+    TResult? Function(dynamic Function(List<String>)? onResult, bool multiple,
+            Project? project)?
         uploadFile,
     TResult? Function(List<String> removeTempFile)? closeEvent,
   }) {
@@ -610,7 +617,8 @@ class _$ProjectEventUpdateImpl
     TResult Function(String projectId, dynamic Function()? onDelete)?
         deleteProject,
     TResult Function(Project project)? createProject,
-    TResult Function(dynamic Function(String?)? onResult, Project? project)?
+    TResult Function(dynamic Function(List<String>)? onResult, bool multiple,
+            Project? project)?
         uploadFile,
     TResult Function(List<String> removeTempFile)? closeEvent,
     required TResult orElse(),
@@ -779,8 +787,8 @@ class _$ProjectEventDeleteImpl
     required TResult Function(String projectId, dynamic Function()? onDelete)
         deleteProject,
     required TResult Function(Project project) createProject,
-    required TResult Function(
-            dynamic Function(String?)? onResult, Project? project)
+    required TResult Function(dynamic Function(List<String>)? onResult,
+            bool multiple, Project? project)
         uploadFile,
     required TResult Function(List<String> removeTempFile) closeEvent,
   }) {
@@ -796,7 +804,8 @@ class _$ProjectEventDeleteImpl
     TResult? Function(String projectId, dynamic Function()? onDelete)?
         deleteProject,
     TResult? Function(Project project)? createProject,
-    TResult? Function(dynamic Function(String?)? onResult, Project? project)?
+    TResult? Function(dynamic Function(List<String>)? onResult, bool multiple,
+            Project? project)?
         uploadFile,
     TResult? Function(List<String> removeTempFile)? closeEvent,
   }) {
@@ -812,7 +821,8 @@ class _$ProjectEventDeleteImpl
     TResult Function(String projectId, dynamic Function()? onDelete)?
         deleteProject,
     TResult Function(Project project)? createProject,
-    TResult Function(dynamic Function(String?)? onResult, Project? project)?
+    TResult Function(dynamic Function(List<String>)? onResult, bool multiple,
+            Project? project)?
         uploadFile,
     TResult Function(List<String> removeTempFile)? closeEvent,
     required TResult orElse(),
@@ -982,8 +992,8 @@ class _$ProjectEventCreateImpl
     required TResult Function(String projectId, dynamic Function()? onDelete)
         deleteProject,
     required TResult Function(Project project) createProject,
-    required TResult Function(
-            dynamic Function(String?)? onResult, Project? project)
+    required TResult Function(dynamic Function(List<String>)? onResult,
+            bool multiple, Project? project)
         uploadFile,
     required TResult Function(List<String> removeTempFile) closeEvent,
   }) {
@@ -999,7 +1009,8 @@ class _$ProjectEventCreateImpl
     TResult? Function(String projectId, dynamic Function()? onDelete)?
         deleteProject,
     TResult? Function(Project project)? createProject,
-    TResult? Function(dynamic Function(String?)? onResult, Project? project)?
+    TResult? Function(dynamic Function(List<String>)? onResult, bool multiple,
+            Project? project)?
         uploadFile,
     TResult? Function(List<String> removeTempFile)? closeEvent,
   }) {
@@ -1015,7 +1026,8 @@ class _$ProjectEventCreateImpl
     TResult Function(String projectId, dynamic Function()? onDelete)?
         deleteProject,
     TResult Function(Project project)? createProject,
-    TResult Function(dynamic Function(String?)? onResult, Project? project)?
+    TResult Function(dynamic Function(List<String>)? onResult, bool multiple,
+            Project? project)?
         uploadFile,
     TResult Function(List<String> removeTempFile)? closeEvent,
     required TResult orElse(),
@@ -1093,7 +1105,10 @@ abstract class _$$ProjectEventUploadFileImplCopyWith<$Res> {
           $Res Function(_$ProjectEventUploadFileImpl) then) =
       __$$ProjectEventUploadFileImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({dynamic Function(String?)? onResult, Project? project});
+  $Res call(
+      {dynamic Function(List<String>)? onResult,
+      bool multiple,
+      Project? project});
 
   $ProjectCopyWith<$Res>? get project;
 }
@@ -1113,13 +1128,18 @@ class __$$ProjectEventUploadFileImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? onResult = freezed,
+    Object? multiple = null,
     Object? project = freezed,
   }) {
     return _then(_$ProjectEventUploadFileImpl(
       onResult: freezed == onResult
           ? _value.onResult
           : onResult // ignore: cast_nullable_to_non_nullable
-              as dynamic Function(String?)?,
+              as dynamic Function(List<String>)?,
+      multiple: null == multiple
+          ? _value.multiple
+          : multiple // ignore: cast_nullable_to_non_nullable
+              as bool,
       project: freezed == project
           ? _value.project
           : project // ignore: cast_nullable_to_non_nullable
@@ -1147,16 +1167,20 @@ class __$$ProjectEventUploadFileImplCopyWithImpl<$Res>
 class _$ProjectEventUploadFileImpl
     with DiagnosticableTreeMixin
     implements ProjectEventUploadFile {
-  const _$ProjectEventUploadFileImpl({this.onResult, this.project});
+  const _$ProjectEventUploadFileImpl(
+      {this.onResult, this.multiple = false, this.project});
 
   @override
-  final dynamic Function(String?)? onResult;
+  final dynamic Function(List<String>)? onResult;
+  @override
+  @JsonKey()
+  final bool multiple;
   @override
   final Project? project;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ProjectEvent.uploadFile(onResult: $onResult, project: $project)';
+    return 'ProjectEvent.uploadFile(onResult: $onResult, multiple: $multiple, project: $project)';
   }
 
   @override
@@ -1165,6 +1189,7 @@ class _$ProjectEventUploadFileImpl
     properties
       ..add(DiagnosticsProperty('type', 'ProjectEvent.uploadFile'))
       ..add(DiagnosticsProperty('onResult', onResult))
+      ..add(DiagnosticsProperty('multiple', multiple))
       ..add(DiagnosticsProperty('project', project));
   }
 
@@ -1175,11 +1200,13 @@ class _$ProjectEventUploadFileImpl
             other is _$ProjectEventUploadFileImpl &&
             (identical(other.onResult, onResult) ||
                 other.onResult == onResult) &&
+            (identical(other.multiple, multiple) ||
+                other.multiple == multiple) &&
             (identical(other.project, project) || other.project == project));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, onResult, project);
+  int get hashCode => Object.hash(runtimeType, onResult, multiple, project);
 
   /// Create a copy of ProjectEvent
   /// with the given fields replaced by the non-null parameter values.
@@ -1199,12 +1226,12 @@ class _$ProjectEventUploadFileImpl
     required TResult Function(String projectId, dynamic Function()? onDelete)
         deleteProject,
     required TResult Function(Project project) createProject,
-    required TResult Function(
-            dynamic Function(String?)? onResult, Project? project)
+    required TResult Function(dynamic Function(List<String>)? onResult,
+            bool multiple, Project? project)
         uploadFile,
     required TResult Function(List<String> removeTempFile) closeEvent,
   }) {
-    return uploadFile(onResult, project);
+    return uploadFile(onResult, multiple, project);
   }
 
   @override
@@ -1216,11 +1243,12 @@ class _$ProjectEventUploadFileImpl
     TResult? Function(String projectId, dynamic Function()? onDelete)?
         deleteProject,
     TResult? Function(Project project)? createProject,
-    TResult? Function(dynamic Function(String?)? onResult, Project? project)?
+    TResult? Function(dynamic Function(List<String>)? onResult, bool multiple,
+            Project? project)?
         uploadFile,
     TResult? Function(List<String> removeTempFile)? closeEvent,
   }) {
-    return uploadFile?.call(onResult, project);
+    return uploadFile?.call(onResult, multiple, project);
   }
 
   @override
@@ -1232,13 +1260,14 @@ class _$ProjectEventUploadFileImpl
     TResult Function(String projectId, dynamic Function()? onDelete)?
         deleteProject,
     TResult Function(Project project)? createProject,
-    TResult Function(dynamic Function(String?)? onResult, Project? project)?
+    TResult Function(dynamic Function(List<String>)? onResult, bool multiple,
+            Project? project)?
         uploadFile,
     TResult Function(List<String> removeTempFile)? closeEvent,
     required TResult orElse(),
   }) {
     if (uploadFile != null) {
-      return uploadFile(onResult, project);
+      return uploadFile(onResult, multiple, project);
     }
     return orElse();
   }
@@ -1292,10 +1321,12 @@ class _$ProjectEventUploadFileImpl
 
 abstract class ProjectEventUploadFile implements ProjectEvent {
   const factory ProjectEventUploadFile(
-      {final dynamic Function(String?)? onResult,
+      {final dynamic Function(List<String>)? onResult,
+      final bool multiple,
       final Project? project}) = _$ProjectEventUploadFileImpl;
 
-  dynamic Function(String?)? get onResult;
+  dynamic Function(List<String>)? get onResult;
+  bool get multiple;
   Project? get project;
 
   /// Create a copy of ProjectEvent
@@ -1399,8 +1430,8 @@ class _$ProjectEventCloseImpl
     required TResult Function(String projectId, dynamic Function()? onDelete)
         deleteProject,
     required TResult Function(Project project) createProject,
-    required TResult Function(
-            dynamic Function(String?)? onResult, Project? project)
+    required TResult Function(dynamic Function(List<String>)? onResult,
+            bool multiple, Project? project)
         uploadFile,
     required TResult Function(List<String> removeTempFile) closeEvent,
   }) {
@@ -1416,7 +1447,8 @@ class _$ProjectEventCloseImpl
     TResult? Function(String projectId, dynamic Function()? onDelete)?
         deleteProject,
     TResult? Function(Project project)? createProject,
-    TResult? Function(dynamic Function(String?)? onResult, Project? project)?
+    TResult? Function(dynamic Function(List<String>)? onResult, bool multiple,
+            Project? project)?
         uploadFile,
     TResult? Function(List<String> removeTempFile)? closeEvent,
   }) {
@@ -1432,7 +1464,8 @@ class _$ProjectEventCloseImpl
     TResult Function(String projectId, dynamic Function()? onDelete)?
         deleteProject,
     TResult Function(Project project)? createProject,
-    TResult Function(dynamic Function(String?)? onResult, Project? project)?
+    TResult Function(dynamic Function(List<String>)? onResult, bool multiple,
+            Project? project)?
         uploadFile,
     TResult Function(List<String> removeTempFile)? closeEvent,
     required TResult orElse(),

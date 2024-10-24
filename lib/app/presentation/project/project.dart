@@ -8,6 +8,7 @@ import 'package:go_router/go_router.dart';
 import 'package:portfolio_eriel/app/presentation/project/dialog/field.dart';
 import 'package:portfolio_eriel/app/presentation/project/widgets/project_logo.dart';
 import 'package:portfolio_eriel/app/presentation/project/widgets/tech_tag_wrap.dart';
+import 'package:portfolio_eriel/app/presentation/project/widgets/tech_tags.dart';
 import 'package:portfolio_eriel/app/shared/__.dart';
 import 'package:portfolio_eriel/domain/entities/__.dart';
 
@@ -27,6 +28,7 @@ class _ProjectPageState extends State<ProjectPage> {
   late TextEditingController _name;
   late TextEditingController _subtitle;
   late TextEditingController _description;
+  final TextEditingController _techTag = TextEditingController();
 
   @override
   void initState() {
@@ -96,11 +98,15 @@ class _ProjectPageState extends State<ProjectPage> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         if (widget.project != null && isAuth) ...[
-                          CircleAvatar(
-                            backgroundColor: Colors.red.shade100,
-                            child: IconButton(
-                              onPressed: projectState.requesting ? null : _delete,
-                              icon: Icon(Icons.delete, color: projectState.requesting ? Colors.grey : Colors.red),
+                          InkWell(
+                            onLongPress: projectState.requesting ? null : _delete,
+                            borderRadius: BorderRadius.circular(50),
+                            child: Tooltip(
+                              message: "remove is long press",
+                              child: CircleAvatar(
+                                backgroundColor: Colors.red.shade100,
+                                child: Icon(Icons.remove_circle, color: projectState.requesting ? Colors.grey : Colors.red),
+                              ),
                             ),
                           ),
                           const Expanded(child: SizedBox()),
@@ -144,13 +150,17 @@ class _ProjectPageState extends State<ProjectPage> {
                                   const SizedBox(width: double.maxFinite),
                                   ProjectLogo(
                                     imageUrl: localProject.logoUrl,
-                                    onEdit: isAuth
+                                    onEdit: isAuth && !projectState.requesting
                                         ? () async {
-                                            BlocProvider.of<ProjectBloc>(context).add(ProjectEventUploadFile(
+                                            BlocProvider.of<ProjectBloc>(context).add(
+                                              ProjectEventUploadFile(
                                                 project: localProject,
+                                                multiple: false,
                                                 onResult: (value) {
-                                                  setState(() => localProject = localProject.copyWith(logoUrl: value));
-                                                }));
+                                                  if (value.isNotEmpty) setState(() => localProject = localProject.copyWith(logoUrl: value.first));
+                                                },
+                                              ),
+                                            );
                                           }
                                         : null,
                                   ),
@@ -182,10 +192,28 @@ class _ProjectPageState extends State<ProjectPage> {
                               ),
                             ),
                             const VSp10(),
-                            const Text(
-                              "Tech Stack",
-                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                            Row(
+                              children: [
+                                const Text(
+                                  "Tech Stack",
+                                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                                ),
+                                if (isAuth) ...[
+                                  const HSp16(),
+                                  SizedBox(
+                                    width: 150,
+                                    child: SearchTags(
+                                      submitted: (value) {
+                                        _techTag.clear();
+                                        List<String> newList = localProject.techTags.where((e) => e != value).toList();
+                                        setState(() => localProject = localProject.copyWith(techTags: [...newList, value]));
+                                      },
+                                    ),
+                                  )
+                                ]
+                              ],
                             ),
+
                             const VSp8(),
                             TechTagsWrap(
                               techTags: localProject.techTags,
@@ -197,21 +225,35 @@ class _ProjectPageState extends State<ProjectPage> {
                                       setState(() => localProject = localProject.copyWith(techTags: newList));
                                     }
                                   : null,
-                              onAdd: isAuth
-                                  ? (value) {
-                                      List<String> newList = localProject.techTags.where((e) => e != value).toList();
-                                      setState(() => localProject = localProject.copyWith(techTags: [...newList, value]));
-                                    }
-                                  : null,
                             ),
                             const VSp10(),
-                            const Text(
-                              "Media example",
-                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  "Media example",
+                                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                                ),
+                                if (isAuth) ...[
+                                  const HSp16(),
+                                  CircleAvatar(
+                                    child: IconButton(
+                                        onPressed: () {
+                                          BlocProvider.of<ProjectBloc>(context).add(ProjectEventUploadFile(
+                                              project: localProject,
+                                              multiple: true,
+                                              onResult: (value) {
+                                                setState(() => localProject = localProject.copyWith(images: [...localProject.images, ...value]));
+                                              }));
+                                        },
+                                        icon: const Icon(Icons.add)),
+                                  )
+                                ]
+                              ],
                             ),
                             const VSp8(),
                             // Images
-                            if (widget.project?.images != null)
+                            if (localProject.images.isNotEmpty)
                               LayoutBuilder(builder: (context, constrains) {
                                 return Padding(
                                   padding: const EdgeInsets.symmetric(horizontal: 5),
@@ -220,7 +262,7 @@ class _ProjectPageState extends State<ProjectPage> {
                                       height: 300.0,
                                       autoPlay: true,
                                     ),
-                                    items: widget.project?.images.map((i) {
+                                    items: localProject.images.map((i) {
                                       final dec = BoxDecoration(
                                         color: const Color.fromRGBO(255, 255, 255, 1),
                                         borderRadius: BorderRadius.circular(20),
@@ -231,10 +273,41 @@ class _ProjectPageState extends State<ProjectPage> {
                                             width: constrains.maxWidth * 0.8,
                                             margin: const EdgeInsets.symmetric(horizontal: 5.0),
                                             decoration: dec,
-                                            child: ImageOnCache(
-                                              imageUrl: i,
-                                              boxDecoration: dec,
-                                              fit: BoxFit.cover,
+                                            child: Stack(
+                                              children: [
+                                                ImageOnCache(
+                                                  imageUrl: i,
+                                                  boxDecoration: dec,
+                                                  fit: BoxFit.cover,
+                                                ),
+                                                if (!(widget.project?.images.contains(i) ?? false))
+                                                  Container(
+                                                    width: double.maxFinite,
+                                                    height: double.maxFinite,
+                                                    decoration: BoxDecoration(
+                                                      color: Colors.grey.withOpacity(0.4),
+                                                      borderRadius: const BorderRadius.all(Radius.circular(20)),
+                                                    ),
+                                                  ),
+                                                Positioned(
+                                                  right: 10,
+                                                  top: 10,
+                                                  child: CircleAvatar(
+                                                    radius: 16,
+
+                                                    backgroundColor: Colors.grey.withOpacity(0.8),
+                                                    child: IconButton(
+                                                      onPressed: () {
+                                                        BlocProvider.of<ProjectBloc>(context).add(ProjectEventClose(removeTempFile: [i]));
+                                                        setState(() => localProject =
+                                                            localProject.copyWith(images: localProject.images.where((e) => e != i).toList()));
+                                                      },
+                                                      icon: const Icon(Icons.remove_circle),
+                                                      iconSize: 16,
+                                                    ),
+                                                  ),
+                                                )
+                                              ],
                                             ),
                                           );
                                         },
