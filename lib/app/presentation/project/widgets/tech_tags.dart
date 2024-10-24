@@ -4,11 +4,14 @@ import 'package:portfolio_eriel/app/bloc/project/project_bloc.dart';
 import 'package:portfolio_eriel/domain/entities/project/project.dart';
 
 class SearchTags extends StatefulWidget {
+  final String hintText;
   final Function(String value)? submitted;
+  final List<String>? suggestions;
   final Function(TextEditingController controller, FocusNode focusNode)? onBuild;
   final bool enable;
+  final double maxHeigth;
 
-  const SearchTags({super.key, this.submitted, this.onBuild, this.enable = true});
+  const SearchTags({super.key, this.submitted, this.onBuild, this.enable = true, this.suggestions, required this.hintText, this.maxHeigth = 150});
 
   @override
   State<SearchTags> createState() => _SearchTagsState();
@@ -20,7 +23,7 @@ class _SearchTagsState extends State<SearchTags> {
 
   @override
   Widget build(BuildContext context) {
-    final List<String> suggestions = Project.allTechTags(projects: BlocProvider.of<ProjectBloc>(context).state.projects);
+    final List<String> suggestions = widget.suggestions ?? Project.allTechTags(projects: BlocProvider.of<ProjectBloc>(context).state.projects);
 
     return Autocomplete<String>(
       onSelected: (value) {
@@ -49,10 +52,10 @@ class _SearchTagsState extends State<SearchTags> {
             onFieldSubmitted.call();
             _focusNode.requestFocus();
           },
-          style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+          style: const TextStyle(fontWeight: FontWeight.bold),
           textAlign: TextAlign.center,
           decoration: InputDecoration(
-            hintText: "Tech Stack",
+            hintText: widget.hintText,
             alignLabelWithHint: true,
             hintStyle: TextStyle(color: Colors.grey.withOpacity(0.6)),
           ),
@@ -65,6 +68,7 @@ class _SearchTagsState extends State<SearchTags> {
             color: Colors.transparent,
             child: Container(
               width: 150,
+              height: widget.maxHeigth,
               decoration: BoxDecoration(
                 color: Colors.white.withOpacity(0.9),
                 borderRadius: BorderRadius.circular(12),

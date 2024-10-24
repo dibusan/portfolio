@@ -7,6 +7,7 @@ import 'package:reorderables/reorderables.dart';
 
 class TechTagsWrap extends StatefulWidget {
   final List<String>? techTags;
+  final String keyWrap;
   final Function(int toIndex, int fromIndex)? techTagsOrder;
   final Function(String)? onTab;
   final Function(String)? onRemove;
@@ -16,6 +17,7 @@ class TechTagsWrap extends StatefulWidget {
 
   const TechTagsWrap({
     super.key,
+    required this.keyWrap,
     this.techTags,
     this.onTab,
     this.onRemove,
@@ -30,6 +32,8 @@ class TechTagsWrap extends StatefulWidget {
 }
 
 class _TechTagsWrapState extends State<TechTagsWrap> {
+  final ScrollController scrollController = ScrollController();
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ProjectBloc, ProjectState>(
@@ -38,29 +42,37 @@ class _TechTagsWrapState extends State<TechTagsWrap> {
 
         return SizedBox(
           width: double.maxFinite,
-          child: ReorderableWrap(
-            enableReorder: widget.techTagsOrder != null,
-            crossAxisAlignment: WrapCrossAlignment.center,
-            runAlignment: WrapAlignment.center,
-            alignment: WrapAlignment.center,
-            spacing: 8.0,
-            runSpacing: 4.0,
-            onReorder: (int oldIndex, int newIndex) {
-              if (widget.techTags == null) return;
-              widget.techTagsOrder?.call(newIndex, oldIndex);
-            },
-            children: tags
-                .map(
-                  (t) => TechTag(
-                    name: t,
-                    textColor: widget.textColor,
-                    borderColor: widget.borderColor,
-                    backgroundColor: widget.backgroundColor,
-                    onTap: widget.onTab == null ? null : () => widget.onTab!.call(t),
-                    onRemoved: widget.onRemove == null ? null : () => widget.onRemove!.call(t),
-                  ),
-                )
-                .toList(),
+          child: PrimaryScrollController(
+            controller: scrollController,
+            child: ReorderableWrap(
+              key: ValueKey(widget.keyWrap),
+              enableReorder: widget.techTagsOrder != null,
+              crossAxisAlignment: WrapCrossAlignment.center,
+              runAlignment: WrapAlignment.center,
+              alignment: WrapAlignment.center,
+              spacing: 8.0,
+              runSpacing: 4.0,
+              onReorder: (int oldIndex, int newIndex) {
+                if (widget.techTags == null) return;
+                widget.techTagsOrder?.call(newIndex, oldIndex);
+              },
+              children: tags
+                  .map(
+                    (t) => ReorderableWidget(
+                      reorderable: true,
+                      key: Key("${widget.key.toString()}-$t"),
+                      child: TechTag(
+                        name: t,
+                        textColor: widget.textColor,
+                        borderColor: widget.borderColor,
+                        backgroundColor: widget.backgroundColor,
+                        onTap: widget.onTab == null ? null : () => widget.onTab!.call(t),
+                        onRemoved: widget.onRemove == null ? null : () => widget.onRemove!.call(t),
+                      ),
+                    ),
+                  )
+                  .toList(),
+            ),
           ),
         );
       },

@@ -34,6 +34,10 @@ class Project with _$Project {
     return projects.map((p) => p.techTags).toList().expand((element) => element).toSet().toList();
   }
 
+  static List<String> allIndustriesTags({List<Project> projects = const []}) {
+    return projects.map((p) => p.industries).toList().expand((element) => element).toSet().toList();
+  }
+
   static Future<List<Project>> loadFromJson(developerId) async {
     try {
       final String jsonString = await rootBundle.loadString('assets/projects/$developerId.json');

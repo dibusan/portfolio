@@ -27,9 +27,9 @@ class ProjectPage extends StatefulWidget {
 class _ProjectPageState extends State<ProjectPage> {
   late Project localProject;
   late TextEditingController _name;
+  late TextEditingController _projectOwner;
   late TextEditingController _subtitle;
   late TextEditingController _description;
-  final TextEditingController _techTag = TextEditingController();
 
   @override
   void initState() {
@@ -37,6 +37,7 @@ class _ProjectPageState extends State<ProjectPage> {
     _name = TextEditingController(text: localProject.title);
     _subtitle = TextEditingController(text: localProject.subtitle);
     _description = TextEditingController(text: localProject.description);
+    _projectOwner = TextEditingController(text: localProject.projectOwner);
     super.initState();
   }
 
@@ -47,7 +48,8 @@ class _ProjectPageState extends State<ProjectPage> {
         ...localProject.toJson(),
         "title": _name.text,
         "subtitle": _subtitle.text,
-        "description": _description.text
+        "description": _description.text,
+        "projectOwner": _projectOwner.text,
       };
       Project p = Project.fromJson(jsonData);
       BlocProvider.of<ProjectBloc>(context).add(ProjectEventUpdate(
@@ -184,36 +186,37 @@ class _ProjectPageState extends State<ProjectPage> {
                                         ),
                                         const HSp16(),
                                         SizedBox(
-                                            width: 300,
-                                            height: 90,
-                                            child: Column(
-                                              children: [
-                                                Expanded(
-                                                  child: Center(
-                                                    child: MyFieldWithText(
-                                                      enable: !projectState.requesting,
-                                                      controller: _name,
-                                                      text: localProject.title ?? "",
-                                                      inputDecoration: const InputDecoration(labelText: "Title"),
-                                                      textStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 26),
-                                                    ),
+                                          width: 300,
+                                          height: 90,
+                                          child: Column(
+                                            children: [
+                                              Expanded(
+                                                child: Center(
+                                                  child: MyFieldWithText(
+                                                    enable: !projectState.requesting,
+                                                    controller: _name,
+                                                    text: localProject.title ?? "",
+                                                    inputDecoration: const InputDecoration(labelText: "Title"),
+                                                    textStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 26),
                                                   ),
                                                 ),
-                                                const VSp10(),
-                                                Expanded(
-                                                  child: Align(
-                                                    alignment: isAuth ? Alignment.center : Alignment.topCenter,
-                                                    child: MyFieldWithText(
-                                                      enable: !projectState.requesting,
-                                                      controller: _subtitle,
-                                                      text: localProject.subtitle ?? "",
-                                                      inputDecoration: const InputDecoration(labelText: "Subtitle"),
-                                                      textStyle: const TextStyle(fontSize: 16),
-                                                    ),
+                                              ),
+                                              const VSp10(),
+                                              Expanded(
+                                                child: Align(
+                                                  alignment: isAuth ? Alignment.center : Alignment.topCenter,
+                                                  child: MyFieldWithText(
+                                                    enable: !projectState.requesting,
+                                                    controller: _subtitle,
+                                                    text: localProject.subtitle ?? "",
+                                                    inputDecoration: const InputDecoration(labelText: "Subtitle"),
+                                                    textStyle: const TextStyle(fontSize: 16),
                                                   ),
                                                 ),
-                                              ],
-                                            ))
+                                              ),
+                                            ],
+                                          ),
+                                        )
                                       ],
                                     ),
                                   ),
@@ -236,9 +239,9 @@ class _ProjectPageState extends State<ProjectPage> {
                                     margin: const EdgeInsets.symmetric(vertical: 10),
                                     width: 150,
                                     child: SearchTags(
+                                      hintText: "Tech Stack",
                                       enable: !projectState.requesting,
                                       submitted: (value) {
-                                        _techTag.clear();
                                         List<String> newList = localProject.techTags.where((e) => e != value).toList();
                                         setState(() => localProject = localProject.copyWith(techTags: [...newList, value]));
                                       },
@@ -251,6 +254,7 @@ class _ProjectPageState extends State<ProjectPage> {
 
                             const VSp10(),
                             TechTagsWrap(
+                              keyWrap: "Tech",
                               techTags: localProject.techTags,
                               backgroundColor: Colors.white,
                               techTagsOrder: isAuth && !projectState.requesting
@@ -318,29 +322,144 @@ class _ProjectPageState extends State<ProjectPage> {
                                   setState(() => localProject = localProject.copyWith(images: localProject.images.where((e) => e != image).toList()));
                                 },
                               ),
+                            const VSp24(),
                             Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Flexible(
-                                  child: ToLink(
-                                    enable: !projectState.requesting,
-                                    title: "Github",
-                                    leading: Image.asset('/images/github.png'),
-                                    uri: localProject.githubLink == null && !isAuth ? null : Uri.tryParse(localProject.githubLink ?? ""),
-                                    onTextChange: isAuth ? (value) => localProject = localProject.copyWith(githubLink: value) : null,
+                                Expanded(
+                                  flex: 2,
+                                  child: Column(
+                                    children: [
+                                      ToLink(
+                                        enable: !projectState.requesting,
+                                        title: "Github",
+                                        leading: Image.asset('/images/github.png'),
+                                        uri: localProject.githubLink == null && !isAuth ? null : Uri.tryParse(localProject.githubLink ?? ""),
+                                        onTextChange: isAuth ? (value) => localProject = localProject.copyWith(githubLink: value) : null,
+                                      ),
+                                      ToLink(
+                                        enable: !projectState.requesting,
+                                        title: "Application",
+                                        leading: Image.asset('/images/application.png'),
+                                        uri: localProject.appLink == null && !isAuth ? null : Uri.tryParse(localProject.appLink ?? ""),
+                                        onTextChange: isAuth ? (value) => localProject = localProject.copyWith(appLink: value) : null,
+                                      ),
+                                    ],
                                   ),
                                 ),
-                                Flexible(
-                                  child: ToLink(
-                                    enable: !projectState.requesting,
-                                    title: "Application",
-                                    leading: Image.asset('/images/application.png'),
-                                    uri: localProject.appLink == null && !isAuth ? null : Uri.tryParse(localProject.appLink ?? ""),
-                                    onTextChange: isAuth ? (value) => localProject = localProject.copyWith(appLink: value) : null,
+                                Expanded(
+                                  flex: 3,
+                                  child: Container(
+                                    padding: EdgeInsets.all(8),
+                                    decoration: BoxDecoration(border: Border.all(color: Colors.white), borderRadius: BorderRadius.circular(20)),
+                                    child: SingleChildScrollView(
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        children: [
+                                          const Text(
+                                            "Owner Info",
+                                            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+                                          ),
+                                          Row(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            children: [
+                                              Column(
+                                                children: [
+                                                  ProjectLogo(
+                                                    size: const Size(120, 120),
+                                                    imageUrl: localProject.projectOwnerLogoUrl,
+                                                    onEdit: isAuth && !projectState.requesting
+                                                        ? () async {
+                                                            BlocProvider.of<ProjectBloc>(context).add(
+                                                              ProjectEventUploadFile(
+                                                                project: localProject,
+                                                                multiple: false,
+                                                                onResult: (value) {
+                                                                  if (value.isEmpty) return;
+                                                                  setState(
+                                                                      () => localProject = localProject.copyWith(projectOwnerLogoUrl: value.first));
+                                                                },
+                                                              ),
+                                                            );
+                                                          }
+                                                        : null,
+                                                  ),
+                                                  if (isAuth)
+                                                    Container(
+                                                      margin: const EdgeInsets.only(top: 16),
+                                                      width: 160,
+                                                      child: SearchTags(
+                                                        hintText: "Industries Tags",
+                                                        suggestions:
+                                                            Project.allIndustriesTags(projects: BlocProvider.of<ProjectBloc>(context).state.projects),
+                                                        enable: !projectState.requesting,
+                                                        submitted: (value) {
+                                                          List<String> newList = localProject.industries.where((e) => e != value).toList();
+                                                          setState(() => localProject = localProject.copyWith(industries: [...newList, value]));
+                                                        },
+                                                      ),
+                                                    ),
+                                                ],
+                                              ),
+                                              const HSp16(),
+                                              Expanded(
+                                                child: Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  mainAxisAlignment: MainAxisAlignment.start,
+                                                  children: [
+                                                    MyFieldWithText(
+                                                      enable: !projectState.requesting,
+                                                      controller: _projectOwner,
+                                                      text: localProject.projectOwner ?? "",
+                                                      inputDecoration: const InputDecoration(labelText: "Project Owner"),
+                                                      textStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                                                    ),
+                                                    const VSp10(),
+                                                    if (isAuth) const VSp10(),
+                                                    Row(
+                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                      mainAxisAlignment: MainAxisAlignment.start,
+                                                      children: [
+                                                        Expanded(
+                                                          child: TechTagsWrap(
+                                                            keyWrap: "Industries",
+                                                            techTags: localProject.industries,
+                                                            backgroundColor: Colors.white,
+                                                            techTagsOrder: isAuth && !projectState.requesting
+                                                                ? (newIndex, oldIndex) {
+                                                                    List<String> reordenable = localProject.industries.toList();
+                                                                    reordenable.insert(newIndex, reordenable.removeAt(oldIndex));
+                                                                    setState(() => localProject = localProject.copyWith(industries: reordenable));
+                                                                  }
+                                                                : null,
+                                                            onRemove: isAuth && !projectState.requesting
+                                                                ? (value) {
+                                                                    List<String> newList = localProject.industries.where((e) => e != value).toList();
+
+                                                                    setState(() => localProject = localProject.copyWith(industries: newList));
+                                                                  }
+                                                                : null,
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ],
+                                                ),
+                                              )
+                                            ],
+                                          )
+                                        ],
+                                      ),
+                                    ),
                                   ),
-                                )
+                                ),
                               ],
                             ),
-                            const VSp24()
+                            const SizedBox(height: 200)
                             // Dates -> Client Info
                             // buildDatesAndClientInfo(),
                           ],

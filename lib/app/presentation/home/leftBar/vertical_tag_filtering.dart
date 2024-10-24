@@ -21,10 +21,7 @@ class VerticalTagFiltering extends StatelessWidget {
         builder: (context, state) {
           final bloc = BlocProvider.of<FilterBloc>(context);
           List<String> tags = Project.allTechTags(projects: projects);
-          tags = tags
-              .where(
-                  (ele) => ele.toLowerCase().contains(state.filterTag.toLowerCase()) && !state.techTags.contains(ele))
-              .toList();
+          tags = tags.where((ele) => ele.toLowerCase().contains(state.filterTag.toLowerCase()) && !state.techTags.contains(ele)).toList();
 
           return Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -44,6 +41,7 @@ class VerticalTagFiltering extends StatelessWidget {
                     minWidth: double.maxFinite,
                   ),
                   child: TechTagsWrap(
+                      keyWrap: "TechSelected",
                       techTags: state.techTags,
                       textColor: Colors.black45,
                       onRemove: (tagName) {
@@ -57,6 +55,7 @@ class VerticalTagFiltering extends StatelessWidget {
               SizedBox(
                 width: double.maxFinite,
                 child: TechTagsWrap(
+                  keyWrap: "TechSuggestion",
                   techTags: tags,
                   textColor: Colors.black45,
                   onTab: (tagName) {
