@@ -406,7 +406,7 @@ class _ProjectPageState extends State<ProjectPage> {
                                               const HSp16(),
                                               Expanded(
                                                 child: Column(
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  crossAxisAlignment: CrossAxisAlignment.center,
                                                   mainAxisAlignment: MainAxisAlignment.start,
                                                   children: [
                                                     MyFieldWithText(
@@ -416,7 +416,7 @@ class _ProjectPageState extends State<ProjectPage> {
                                                       inputDecoration: const InputDecoration(labelText: "Project Owner"),
                                                       textStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                                                     ),
-                                                    const VSp10(),
+                                                    const VSp24(),
                                                     TechTagsWrap(
                                                       keyWrap: "Industries",
                                                       techTags: localProject.industries,
