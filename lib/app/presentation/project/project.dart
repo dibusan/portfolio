@@ -6,6 +6,7 @@ import 'package:portfolio_eriel/app/bloc/project/project_bloc.dart';
 import 'package:portfolio_eriel/app/bloc/security/security_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:portfolio_eriel/app/presentation/project/dialog/field.dart';
+import 'package:portfolio_eriel/app/presentation/project/widgets/images_carousel.dart';
 import 'package:portfolio_eriel/app/presentation/project/widgets/project_logo.dart';
 import 'package:portfolio_eriel/app/presentation/project/widgets/tech_tag_wrap.dart';
 import 'package:portfolio_eriel/app/presentation/project/widgets/tech_tags.dart';
@@ -67,14 +68,6 @@ class _ProjectPageState extends State<ProjectPage> {
     if (widget.project != null) {
       BlocProvider.of<ProjectBloc>(context).add(ProjectEventDelete(projectId: widget.project!.id, onDelete: () => context.pop()));
     }
-  }
-
-  _imageOnlyLocal(String image) {
-    return !(widget.project?.images.contains(image) ?? false) && localProject.images.contains(image);
-  }
-
-  _imageOnlyRemote(String image) {
-    return (widget.project?.images.contains(image) ?? false) && !localProject.images.contains(image);
   }
 
   @override
@@ -202,7 +195,6 @@ class _ProjectPageState extends State<ProjectPage> {
                                                       text: localProject.title ?? "",
                                                       inputDecoration: const InputDecoration(labelText: "Title"),
                                                       textStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 26),
-                                                      textAlign: TextAlign.left,
                                                     ),
                                                   ),
                                                 ),
@@ -215,7 +207,6 @@ class _ProjectPageState extends State<ProjectPage> {
                                                       text: localProject.subtitle ?? "",
                                                       inputDecoration: const InputDecoration(labelText: "Subtitle"),
                                                       textStyle: const TextStyle(fontSize: 16),
-                                                      textAlign: TextAlign.left,
                                                     ),
                                                   ),
                                                 ),
@@ -306,91 +297,19 @@ class _ProjectPageState extends State<ProjectPage> {
                             // Images
 
                             if (allImages.isNotEmpty)
-                              LayoutBuilder(builder: (context, constrains) {
-                                final dec = BoxDecoration(
-                                  color: const Color.fromRGBO(255, 255, 255, 1),
-                                  borderRadius: BorderRadius.circular(20),
-                                  border: Border.all(color: Colors.white, width: 2),
-                                );
-                                return Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 5),
-                                  child: allImages.length == 1
-                                      ? Container(
-                                          height: 300,
-                                          decoration: dec,
-                                          child: ImageOnCache(
-                                            imageUrl: allImages.first,
-                                            boxDecoration: dec,
-                                            fit: BoxFit.cover,
-                                          ),
-                                        )
-                                      : CarouselSlider(
-                                          options: CarouselOptions(height: 300.0, autoPlay: true, viewportFraction: 0.6),
-                                          items: allImages.map((i) {
-                                            return Builder(
-                                              builder: (BuildContext context) {
-                                                return Container(
-                                                  width: constrains.maxWidth * 0.8,
-                                                  margin: const EdgeInsets.symmetric(horizontal: 5.0),
-                                                  decoration: dec,
-                                                  child: Stack(
-                                                    children: [
-                                                      ImageOnCache(
-                                                        imageUrl: i,
-                                                        boxDecoration: dec,
-                                                        fit: BoxFit.cover,
-                                                      ),
-                                                      if (_imageOnlyLocal(i))
-                                                        Container(
-                                                          width: double.maxFinite,
-                                                          height: double.maxFinite,
-                                                          decoration: BoxDecoration(
-                                                            color: Colors.grey.withOpacity(0.6),
-                                                            borderRadius: const BorderRadius.all(Radius.circular(20)),
-                                                          ),
-                                                          child: const Center(child: Text("Pending Uploading when save...")),
-                                                        ),
-                                                      if (_imageOnlyRemote(i))
-                                                        Container(
-                                                          width: double.maxFinite,
-                                                          height: double.maxFinite,
-                                                          decoration: BoxDecoration(
-                                                            color: Colors.grey.withOpacity(0.6),
-                                                            borderRadius: const BorderRadius.all(Radius.circular(20)),
-                                                          ),
-                                                          child: const Center(child: Text("Pending Remove when save....")),
-                                                        ),
-                                                      Positioned(
-                                                        right: 10,
-                                                        top: 10,
-                                                        child: CircleAvatar(
-                                                          radius: 16,
-                                                          backgroundColor: Colors.grey.withOpacity(0.8),
-                                                          child: IconButton(
-                                                            onPressed: () {
-                                                              if (_imageOnlyRemote(i)) {
-                                                                setState(
-                                                                    () => localProject = localProject.copyWith(images: [...localProject.images, i]));
-                                                                return;
-                                                              }
-                                                              BlocProvider.of<ProjectBloc>(context).add(ProjectEventClose(removeTempFile: [i]));
-                                                              setState(() => localProject =
-                                                                  localProject.copyWith(images: localProject.images.where((e) => e != i).toList()));
-                                                            },
-                                                            icon: Icon(_imageOnlyRemote(i) ? Icons.cancel_outlined : Icons.remove_circle),
-                                                            iconSize: 16,
-                                                          ),
-                                                        ),
-                                                      )
-                                                    ],
-                                                  ),
-                                                );
-                                              },
-                                            );
-                                          }).toList(),
-                                        ),
-                                );
-                              }),
+                              ImagesCarousel(
+                                allImages: allImages,
+                                remotes: widget.project?.images ?? [],
+                                locals: localProject.images,
+                                onDelete: (image, onlyRemote) {
+                                  if (onlyRemote) {
+                                    setState(() => localProject = localProject.copyWith(images: [...localProject.images, image]));
+                                    return;
+                                  }
+                                  BlocProvider.of<ProjectBloc>(context).add(ProjectEventClose(removeTempFile: [image]));
+                                  setState(() => localProject = localProject.copyWith(images: localProject.images.where((e) => e != image).toList()));
+                                },
+                              ),
                             // Dates -> Client Info
                             // buildDatesAndClientInfo(),
                           ],
