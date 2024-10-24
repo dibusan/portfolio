@@ -231,6 +231,11 @@ class _ProjectPageState extends State<ProjectPage> {
                             TechTagsWrap(
                               techTags: localProject.techTags,
                               backgroundColor: Colors.white,
+                              techTagsOrder: (newIndex, oldIndex) {
+                                List<String> reordenable = localProject.techTags.toList();
+                                reordenable.insert(newIndex, reordenable.removeAt(oldIndex));
+                                setState(() => localProject = localProject.copyWith(techTags: reordenable));
+                              },
                               onRemove: isAuth
                                   ? (value) {
                                       List<String> newList = localProject.techTags.where((e) => e != value).toList();
@@ -273,77 +278,88 @@ class _ProjectPageState extends State<ProjectPage> {
 
                             if (allImages.isNotEmpty)
                               LayoutBuilder(builder: (context, constrains) {
+                                final dec = BoxDecoration(
+                                  color: const Color.fromRGBO(255, 255, 255, 1),
+                                  borderRadius: BorderRadius.circular(20),
+                                  border: Border.all(color: Colors.white, width: 2),
+                                );
                                 return Padding(
                                   padding: const EdgeInsets.symmetric(horizontal: 5),
-                                  child: CarouselSlider(
-                                    options: CarouselOptions(height: 300.0, autoPlay: true, viewportFraction: 0.6),
-                                    items: allImages.map((i) {
-                                      final dec = BoxDecoration(
-                                        color: const Color.fromRGBO(255, 255, 255, 1),
-                                        borderRadius: BorderRadius.circular(20),
-                                        border: Border.all(color: Colors.white, width: 2),
-                                      );
-                                      return Builder(
-                                        builder: (BuildContext context) {
-                                          return Container(
-                                            width: constrains.maxWidth * 0.8,
-                                            margin: const EdgeInsets.symmetric(horizontal: 5.0),
-                                            decoration: dec,
-                                            child: Stack(
-                                              children: [
-                                                ImageOnCache(
-                                                  imageUrl: i,
-                                                  boxDecoration: dec,
-                                                  fit: BoxFit.cover,
-                                                ),
-                                                if (_imageOnlyLocal(i))
-                                                  Container(
-                                                    width: double.maxFinite,
-                                                    height: double.maxFinite,
-                                                    decoration: BoxDecoration(
-                                                      color: Colors.grey.withOpacity(0.6),
-                                                      borderRadius: const BorderRadius.all(Radius.circular(20)),
-                                                    ),
-                                                    child: const Center(child: Text("Pending Uploading.when save...")),
+                                  child: allImages.length == 1
+                                      ? Container(
+                                          height: 300,
+                                          decoration: dec,
+                                          child: ImageOnCache(
+                                            imageUrl: allImages.first,
+                                            boxDecoration: dec,
+                                            fit: BoxFit.cover,
+                                          ),
+                                        )
+                                      : CarouselSlider(
+                                          options: CarouselOptions(height: 300.0, autoPlay: true, viewportFraction: 0.6),
+                                          items: allImages.map((i) {
+                                            return Builder(
+                                              builder: (BuildContext context) {
+                                                return Container(
+                                                  width: constrains.maxWidth * 0.8,
+                                                  margin: const EdgeInsets.symmetric(horizontal: 5.0),
+                                                  decoration: dec,
+                                                  child: Stack(
+                                                    children: [
+                                                      ImageOnCache(
+                                                        imageUrl: i,
+                                                        boxDecoration: dec,
+                                                        fit: BoxFit.cover,
+                                                      ),
+                                                      if (_imageOnlyLocal(i))
+                                                        Container(
+                                                          width: double.maxFinite,
+                                                          height: double.maxFinite,
+                                                          decoration: BoxDecoration(
+                                                            color: Colors.grey.withOpacity(0.6),
+                                                            borderRadius: const BorderRadius.all(Radius.circular(20)),
+                                                          ),
+                                                          child: const Center(child: Text("Pending Uploading when save...")),
+                                                        ),
+                                                      if (_imageOnlyRemote(i))
+                                                        Container(
+                                                          width: double.maxFinite,
+                                                          height: double.maxFinite,
+                                                          decoration: BoxDecoration(
+                                                            color: Colors.grey.withOpacity(0.6),
+                                                            borderRadius: const BorderRadius.all(Radius.circular(20)),
+                                                          ),
+                                                          child: const Center(child: Text("Pending Remove when save....")),
+                                                        ),
+                                                      Positioned(
+                                                        right: 10,
+                                                        top: 10,
+                                                        child: CircleAvatar(
+                                                          radius: 16,
+                                                          backgroundColor: Colors.grey.withOpacity(0.8),
+                                                          child: IconButton(
+                                                            onPressed: () {
+                                                              if (_imageOnlyRemote(i)) {
+                                                                setState(
+                                                                    () => localProject = localProject.copyWith(images: [...localProject.images, i]));
+                                                                return;
+                                                              }
+                                                              BlocProvider.of<ProjectBloc>(context).add(ProjectEventClose(removeTempFile: [i]));
+                                                              setState(() => localProject =
+                                                                  localProject.copyWith(images: localProject.images.where((e) => e != i).toList()));
+                                                            },
+                                                            icon: Icon(_imageOnlyRemote(i) ? Icons.cancel_outlined : Icons.remove_circle),
+                                                            iconSize: 16,
+                                                          ),
+                                                        ),
+                                                      )
+                                                    ],
                                                   ),
-                                                if (_imageOnlyRemote(i))
-                                                  Container(
-                                                    width: double.maxFinite,
-                                                    height: double.maxFinite,
-                                                    decoration: BoxDecoration(
-                                                      color: Colors.grey.withOpacity(0.6),
-                                                      borderRadius: const BorderRadius.all(Radius.circular(20)),
-                                                    ),
-                                                    child: const Center(child: Text("Pending Remove when save....")),
-                                                  ),
-                                                Positioned(
-                                                  right: 10,
-                                                  top: 10,
-                                                  child: CircleAvatar(
-                                                    radius: 16,
-                                                    backgroundColor: Colors.grey.withOpacity(0.8),
-                                                    child: IconButton(
-                                                      onPressed: () {
-                                                        if (_imageOnlyRemote(i)) {
-                                                          setState(() => localProject = localProject.copyWith(images: [...localProject.images, i]));
-                                                          return;
-                                                        }
-                                                        BlocProvider.of<ProjectBloc>(context).add(ProjectEventClose(removeTempFile: [i]));
-                                                        setState(() => localProject =
-                                                            localProject.copyWith(images: localProject.images.where((e) => e != i).toList()));
-                                                      },
-                                                      icon: Icon(_imageOnlyRemote(i) ? Icons.cancel_outlined : Icons.remove_circle),
-                                                      iconSize: 16,
-                                                    ),
-                                                  ),
-                                                )
-                                              ],
-                                            ),
-                                          );
-                                        },
-                                      );
-                                    }).toList(),
-                                  ),
+                                                );
+                                              },
+                                            );
+                                          }).toList(),
+                                        ),
                                 );
                               }),
                             // Dates -> Client Info

@@ -103,7 +103,7 @@ class TechTag extends StatefulWidget {
   final Color? backgroundColor;
   final List<String>? suggestions;
 
-  TechTag({
+  const TechTag({
     super.key,
     required this.name,
     this.onTap,
@@ -113,6 +113,8 @@ class TechTag extends StatefulWidget {
     this.textColor = Colors.black45,
     this.suggestions,
   });
+
+  String get data => name;
 
   @override
   State<TechTag> createState() => _TechTagState();

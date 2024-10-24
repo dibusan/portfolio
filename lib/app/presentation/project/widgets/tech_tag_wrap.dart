@@ -3,12 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:portfolio_eriel/app/bloc/project/project_bloc.dart';
 import 'package:portfolio_eriel/app/presentation/project/widgets/tech_tags.dart';
 import 'package:portfolio_eriel/domain/entities/project/project.dart';
+import 'package:reorderables/reorderables.dart';
 
-class TechTagsWrap extends StatelessWidget {
+class TechTagsWrap extends StatefulWidget {
   final List<String>? techTags;
+  final Function(int toIndex, int fromIndex)? techTagsOrder;
   final Function(String)? onTab;
   final Function(String)? onRemove;
-  final bool only4;
   final Color? borderColor;
   final Color? textColor;
   final Color? backgroundColor;
@@ -18,69 +19,47 @@ class TechTagsWrap extends StatelessWidget {
     this.techTags,
     this.onTab,
     this.onRemove,
-    this.only4 = false,
     this.borderColor,
     this.backgroundColor,
     this.textColor,
+    this.techTagsOrder,
   });
 
-  final TextEditingController techC = TextEditingController();
+  @override
+  State<TechTagsWrap> createState() => _TechTagsWrapState();
+}
 
+class _TechTagsWrapState extends State<TechTagsWrap> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ProjectBloc, ProjectState>(
       builder: (_, state) {
-        List<String> tags = techTags ?? Project.allTechTags(projects: state.projects);
-
-        List<String> visibleTags;
-        bool hasMoreTags;
-
-        if (only4) {
-          visibleTags = tags.take(4).toList();
-          hasMoreTags = tags.length > 4;
-        } else {
-          visibleTags = tags;
-          hasMoreTags = false;
-        }
-
-        List<Widget> tagWidgets = visibleTags
-            .map(
-              (e) => TechTag(
-                name: e,
-                textColor: textColor,
-                borderColor: borderColor,
-                backgroundColor: backgroundColor,
-                onTap: onTab == null ? null : () => onTab!.call(e),
-                onRemoved: onRemove == null ? null : () => onRemove!.call(e),
-              ),
-            )
-            .toList();
-
-        if (hasMoreTags && only4) {
-          tagWidgets.add(
-            TechTag(
-              name: "....",
-              textColor: textColor,
-              borderColor: borderColor,
-              backgroundColor: backgroundColor,
-              onTap: () {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Hay más etiquetas')),
-                );
-              },
-            ),
-          );
-        }
+        List<String> tags = widget.techTags ?? Project.allTechTags(projects: state.projects);
 
         return SizedBox(
           width: double.maxFinite,
-          child: Wrap(
+          child: ReorderableWrap(
             crossAxisAlignment: WrapCrossAlignment.center,
             runAlignment: WrapAlignment.center,
             alignment: WrapAlignment.center,
-            spacing: 8.0, // gap between adjacent chips
-            runSpacing: 4.0, // gap between lines
-            children: tagWidgets,
+            spacing: 8.0,
+            runSpacing: 4.0,
+            onReorder: (int oldIndex, int newIndex) {
+              if (widget.techTags == null) return;
+              widget.techTagsOrder?.call(newIndex, oldIndex);
+            },
+            children: tags
+                .map(
+                  (t) => TechTag(
+                    name: t,
+                    textColor: widget.textColor,
+                    borderColor: widget.borderColor,
+                    backgroundColor: widget.backgroundColor,
+                    onTap: widget.onTab == null ? null : () => widget.onTab!.call(t),
+                    onRemoved: widget.onRemove == null ? null : () => widget.onRemove!.call(t),
+                  ),
+                )
+                .toList(),
           ),
         );
       },
