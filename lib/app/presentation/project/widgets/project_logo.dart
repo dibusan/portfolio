@@ -5,8 +5,9 @@ import 'package:portfolio_eriel/app/shared/cache_image.dart';
 class ProjectLogo extends StatelessWidget {
   final String? imageUrl;
   final VoidCallback? onEdit;
+  final Size? size;
 
-  const ProjectLogo({super.key, this.imageUrl, this.onEdit});
+  const ProjectLogo({super.key, this.imageUrl, this.onEdit, this.size = const Size(84, 84)});
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +15,7 @@ class ProjectLogo extends StatelessWidget {
       children: [
         ImageOnCache(
           imageUrl: imageUrl ?? "",
-          size: const Size(84, 84),
+          size: size,
           fit: BoxFit.cover,
           boxDecoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
@@ -28,7 +29,7 @@ class ProjectLogo extends StatelessWidget {
             child: CircleAvatar(
               radius: 16,
               child: IconButton(
-                icon: const Icon(Icons.edit, color: Colors.blue, size: 16)  ,
+                icon: const Icon(Icons.edit, color: Colors.blue, size: 16),
                 onPressed: onEdit,
               ),
             ),

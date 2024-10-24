@@ -164,40 +164,67 @@ class _ProjectPageState extends State<ProjectPage> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: <Widget>[
-                                  const SizedBox(width: double.maxFinite),
-                                  ProjectLogo(
-                                    imageUrl: localProject.logoUrl,
-                                    onEdit: isAuth && !projectState.requesting
-                                        ? () async {
-                                            BlocProvider.of<ProjectBloc>(context).add(
-                                              ProjectEventUploadFile(
-                                                project: localProject,
-                                                multiple: false,
-                                                onResult: (value) {
-                                                  if (value.isNotEmpty) setState(() => localProject = localProject.copyWith(logoUrl: value.first));
-                                                },
-                                              ),
-                                            );
-                                          }
-                                        : null,
+                                  SizedBox(
+                                    width: double.maxFinite,
+                                    child: Row(
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        ProjectLogo(
+                                          size: const Size(120, 120),
+                                          imageUrl: localProject.logoUrl,
+                                          onEdit: isAuth && !projectState.requesting
+                                              ? () async {
+                                                  BlocProvider.of<ProjectBloc>(context).add(
+                                                    ProjectEventUploadFile(
+                                                      project: localProject,
+                                                      multiple: false,
+                                                      onResult: (value) {
+                                                        if (value.isEmpty) return;
+                                                        setState(() => localProject = localProject.copyWith(logoUrl: value.first));
+                                                      },
+                                                    ),
+                                                  );
+                                                }
+                                              : null,
+                                        ),
+                                        const HSp16(),
+                                        SizedBox(
+                                            width: 300,
+                                            height: 90,
+                                            child: Column(
+                                              children: [
+                                                Expanded(
+                                                  child: Center(
+                                                    child: MyFieldWithText(
+                                                      controller: _name,
+                                                      text: localProject.title ?? "",
+                                                      inputDecoration: const InputDecoration(labelText: "Title"),
+                                                      textStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 26),
+                                                      textAlign: TextAlign.left,
+                                                    ),
+                                                  ),
+                                                ),
+                                                const VSp10(),
+                                                Expanded(
+                                                  child: Align(
+                                                    alignment: isAuth ? Alignment.center : Alignment.topCenter,
+                                                    child: MyFieldWithText(
+                                                      controller: _subtitle,
+                                                      text: localProject.subtitle ?? "",
+                                                      inputDecoration: const InputDecoration(labelText: "Subtitle"),
+                                                      textStyle: const TextStyle(fontSize: 16),
+                                                      textAlign: TextAlign.left,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ))
+                                      ],
+                                    ),
                                   ),
-                                  const VSp8(),
-                                  MyFieldWithText(
-                                    width: 300,
-                                    controller: _name,
-                                    text: localProject.title ?? "",
-                                    inputDecoration: const InputDecoration(labelText: "Title"),
-                                    textStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                                  ),
-                                  const VSp8(),
-                                  MyFieldWithText(
-                                    width: 300,
-                                    controller: _subtitle,
-                                    text: localProject.subtitle ?? "",
-                                    inputDecoration: const InputDecoration(labelText: "Subtitle"),
-                                    textStyle: const TextStyle(fontSize: 16),
-                                  ),
-                                  const VSp8(),
+                                  const VSp24(),
                                   MyFieldWithText(
                                     controller: _description,
                                     text: localProject.description ?? "",
@@ -231,11 +258,13 @@ class _ProjectPageState extends State<ProjectPage> {
                             TechTagsWrap(
                               techTags: localProject.techTags,
                               backgroundColor: Colors.white,
-                              techTagsOrder: (newIndex, oldIndex) {
-                                List<String> reordenable = localProject.techTags.toList();
-                                reordenable.insert(newIndex, reordenable.removeAt(oldIndex));
-                                setState(() => localProject = localProject.copyWith(techTags: reordenable));
-                              },
+                              techTagsOrder: isAuth
+                                  ? (newIndex, oldIndex) {
+                                      List<String> reordenable = localProject.techTags.toList();
+                                      reordenable.insert(newIndex, reordenable.removeAt(oldIndex));
+                                      setState(() => localProject = localProject.copyWith(techTags: reordenable));
+                                    }
+                                  : null,
                               onRemove: isAuth
                                   ? (value) {
                                       List<String> newList = localProject.techTags.where((e) => e != value).toList();

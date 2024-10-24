@@ -39,6 +39,7 @@ class _TechTagsWrapState extends State<TechTagsWrap> {
         return SizedBox(
           width: double.maxFinite,
           child: ReorderableWrap(
+            enableReorder: widget.techTagsOrder != null,
             crossAxisAlignment: WrapCrossAlignment.center,
             runAlignment: WrapAlignment.center,
             alignment: WrapAlignment.center,

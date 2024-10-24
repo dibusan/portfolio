@@ -37,6 +37,7 @@ class MyFieldWithText extends StatelessWidget {
             : Text(
                 text,
                 textAlign: textAlign,
+                style: textStyle,
               ),
       ),
     );
