@@ -6,8 +6,9 @@ import 'package:portfolio_eriel/domain/entities/project/project.dart';
 class SearchTags extends StatefulWidget {
   final Function(String value)? submitted;
   final Function(TextEditingController controller, FocusNode focusNode)? onBuild;
+  final bool enable;
 
-  const SearchTags({super.key, this.submitted, this.onBuild});
+  const SearchTags({super.key, this.submitted, this.onBuild, this.enable = true});
 
   @override
   State<SearchTags> createState() => _SearchTagsState();
@@ -37,6 +38,7 @@ class _SearchTagsState extends State<SearchTags> {
         _focusNode = focusNode;
         widget.onBuild?.call(_controller, _focusNode);
         return TextFormField(
+          enabled: widget.enable,
           canRequestFocus: true,
           autofocus: false,
           controller: _controller,

@@ -7,8 +7,9 @@ class ImagesCarousel extends StatelessWidget {
   final List<String> locals;
   final List<String> remotes;
   final Function(String image, bool onlyRemote)? onDelete;
+  final bool enable;
 
-  const ImagesCarousel({super.key, required this.allImages, this.locals = const [], this.remotes = const [], this.onDelete});
+  const ImagesCarousel({super.key, required this.allImages, this.locals = const [], this.remotes = const [], this.onDelete, this.enable = true});
 
   _imageOnlyLocal(String image) {
     return !remotes.contains(image) && locals.contains(image);
@@ -79,7 +80,7 @@ class ImagesCarousel extends StatelessWidget {
                       ),
                     ),
                     ...infoWidget(allImages.first),
-                    if (onDelete != null) removeWidget(allImages.first)
+                    if (onDelete != null && enable) removeWidget(allImages.first)
                   ],
                 ),
               )

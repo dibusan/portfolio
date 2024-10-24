@@ -10,6 +10,7 @@ class MyFieldWithText extends StatelessWidget {
   final InputDecoration? inputDecoration;
   final TextEditingController controller;
   final double? width;
+  final bool enable;
 
   const MyFieldWithText({
     super.key,
@@ -20,6 +21,7 @@ class MyFieldWithText extends StatelessWidget {
     this.maxLines = 1,
     this.textAlign = TextAlign.center,
     this.width,
+    this.enable = true,
   });
 
   @override
@@ -29,6 +31,7 @@ class MyFieldWithText extends StatelessWidget {
       child: BlocBuilder<SecurityBloc, SecurityState>(
         builder: (_, state) => state.isAuth
             ? TextFormField(
+                enabled: enable,
                 controller: controller,
                 decoration: inputDecoration,
                 maxLines: maxLines,

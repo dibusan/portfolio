@@ -1,4 +1,3 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:glass_kit/glass_kit.dart';
@@ -10,6 +9,7 @@ import 'package:portfolio_eriel/app/presentation/project/widgets/images_carousel
 import 'package:portfolio_eriel/app/presentation/project/widgets/project_logo.dart';
 import 'package:portfolio_eriel/app/presentation/project/widgets/tech_tag_wrap.dart';
 import 'package:portfolio_eriel/app/presentation/project/widgets/tech_tags.dart';
+import 'package:portfolio_eriel/app/presentation/project/widgets/to_link.dart';
 import 'package:portfolio_eriel/app/shared/__.dart';
 import 'package:portfolio_eriel/domain/entities/__.dart';
 
@@ -191,6 +191,7 @@ class _ProjectPageState extends State<ProjectPage> {
                                                 Expanded(
                                                   child: Center(
                                                     child: MyFieldWithText(
+                                                      enable: !projectState.requesting,
                                                       controller: _name,
                                                       text: localProject.title ?? "",
                                                       inputDecoration: const InputDecoration(labelText: "Title"),
@@ -203,6 +204,7 @@ class _ProjectPageState extends State<ProjectPage> {
                                                   child: Align(
                                                     alignment: isAuth ? Alignment.center : Alignment.topCenter,
                                                     child: MyFieldWithText(
+                                                      enable: !projectState.requesting,
                                                       controller: _subtitle,
                                                       text: localProject.subtitle ?? "",
                                                       inputDecoration: const InputDecoration(labelText: "Subtitle"),
@@ -217,6 +219,7 @@ class _ProjectPageState extends State<ProjectPage> {
                                   ),
                                   const VSp24(),
                                   MyFieldWithText(
+                                    enable: !projectState.requesting,
                                     controller: _description,
                                     text: localProject.description ?? "",
                                     inputDecoration: const InputDecoration(labelText: "Description"),
@@ -233,6 +236,7 @@ class _ProjectPageState extends State<ProjectPage> {
                                     margin: const EdgeInsets.symmetric(vertical: 10),
                                     width: 150,
                                     child: SearchTags(
+                                      enable: !projectState.requesting,
                                       submitted: (value) {
                                         _techTag.clear();
                                         List<String> newList = localProject.techTags.where((e) => e != value).toList();
@@ -249,14 +253,14 @@ class _ProjectPageState extends State<ProjectPage> {
                             TechTagsWrap(
                               techTags: localProject.techTags,
                               backgroundColor: Colors.white,
-                              techTagsOrder: isAuth
+                              techTagsOrder: isAuth && !projectState.requesting
                                   ? (newIndex, oldIndex) {
                                       List<String> reordenable = localProject.techTags.toList();
                                       reordenable.insert(newIndex, reordenable.removeAt(oldIndex));
                                       setState(() => localProject = localProject.copyWith(techTags: reordenable));
                                     }
                                   : null,
-                              onRemove: isAuth
+                              onRemove: isAuth && !projectState.requesting
                                   ? (value) {
                                       List<String> newList = localProject.techTags.where((e) => e != value).toList();
 
@@ -280,14 +284,17 @@ class _ProjectPageState extends State<ProjectPage> {
                                   const HSp16(),
                                   CircleAvatar(
                                     child: IconButton(
-                                        onPressed: () {
-                                          BlocProvider.of<ProjectBloc>(context).add(ProjectEventUploadFile(
-                                              project: localProject,
-                                              multiple: true,
-                                              onResult: (value) {
-                                                setState(() => localProject = localProject.copyWith(images: [...localProject.images, ...value]));
-                                              }));
-                                        },
+                                        onPressed: projectState.requesting
+                                            ? null
+                                            : () {
+                                                BlocProvider.of<ProjectBloc>(context).add(ProjectEventUploadFile(
+                                                    project: localProject,
+                                                    multiple: true,
+                                                    onResult: (value) {
+                                                      setState(
+                                                          () => localProject = localProject.copyWith(images: [...localProject.images, ...value]));
+                                                    }));
+                                              },
                                         icon: const Icon(Icons.add)),
                                   ),
                                 ]
@@ -298,6 +305,7 @@ class _ProjectPageState extends State<ProjectPage> {
 
                             if (allImages.isNotEmpty)
                               ImagesCarousel(
+                                enable: !projectState.requesting,
                                 allImages: allImages,
                                 remotes: widget.project?.images ?? [],
                                 locals: localProject.images,
@@ -310,6 +318,29 @@ class _ProjectPageState extends State<ProjectPage> {
                                   setState(() => localProject = localProject.copyWith(images: localProject.images.where((e) => e != image).toList()));
                                 },
                               ),
+                            Row(
+                              children: [
+                                Flexible(
+                                  child: ToLink(
+                                    enable: !projectState.requesting,
+                                    title: "Github",
+                                    assetsIcon: '/images/github.png',
+                                    uri: localProject.githubLink == null && !isAuth ? null : Uri.tryParse(localProject.githubLink ?? ""),
+                                    onTextChange: isAuth ? (value) => localProject = localProject.copyWith(githubLink: value) : null,
+                                  ),
+                                ),
+                                Flexible(
+                                  child: ToLink(
+                                    enable: !projectState.requesting,
+                                    title: "Application",
+                                    assetsIcon: '/images/application.png',
+                                    uri: localProject.appLink == null && !isAuth ? null : Uri.tryParse(localProject.appLink ?? ""),
+                                    onTextChange: isAuth ? (value) => localProject = localProject.copyWith(appLink: value) : null,
+                                  ),
+                                )
+                              ],
+                            ),
+                            const VSp24()
                             // Dates -> Client Info
                             // buildDatesAndClientInfo(),
                           ],
