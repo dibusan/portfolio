@@ -351,7 +351,7 @@ class _ProjectPageState extends State<ProjectPage> {
                                 Expanded(
                                   flex: 3,
                                   child: Container(
-                                    padding: EdgeInsets.all(8),
+                                    padding: const EdgeInsets.all(8),
                                     decoration: BoxDecoration(border: Border.all(color: Colors.white), borderRadius: BorderRadius.circular(20)),
                                     child: SingleChildScrollView(
                                       child: Column(
@@ -359,10 +359,8 @@ class _ProjectPageState extends State<ProjectPage> {
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         mainAxisAlignment: MainAxisAlignment.start,
                                         children: [
-                                          const Text(
-                                            "Owner Info",
-                                            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
-                                          ),
+                                          const Text("Owner Info", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24)),
+                                          const VSp8(),
                                           Row(
                                             crossAxisAlignment: CrossAxisAlignment.start,
                                             mainAxisAlignment: MainAxisAlignment.start,
@@ -419,33 +417,24 @@ class _ProjectPageState extends State<ProjectPage> {
                                                       textStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                                                     ),
                                                     const VSp10(),
-                                                    if (isAuth) const VSp10(),
-                                                    Row(
-                                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                                      mainAxisAlignment: MainAxisAlignment.start,
-                                                      children: [
-                                                        Expanded(
-                                                          child: TechTagsWrap(
-                                                            keyWrap: "Industries",
-                                                            techTags: localProject.industries,
-                                                            backgroundColor: Colors.white,
-                                                            techTagsOrder: isAuth && !projectState.requesting
-                                                                ? (newIndex, oldIndex) {
-                                                                    List<String> reordenable = localProject.industries.toList();
-                                                                    reordenable.insert(newIndex, reordenable.removeAt(oldIndex));
-                                                                    setState(() => localProject = localProject.copyWith(industries: reordenable));
-                                                                  }
-                                                                : null,
-                                                            onRemove: isAuth && !projectState.requesting
-                                                                ? (value) {
-                                                                    List<String> newList = localProject.industries.where((e) => e != value).toList();
+                                                    TechTagsWrap(
+                                                      keyWrap: "Industries",
+                                                      techTags: localProject.industries,
+                                                      backgroundColor: Colors.white,
+                                                      techTagsOrder: isAuth && !projectState.requesting
+                                                          ? (newIndex, oldIndex) {
+                                                              List<String> reordenable = localProject.industries.toList();
+                                                              reordenable.insert(newIndex, reordenable.removeAt(oldIndex));
+                                                              setState(() => localProject = localProject.copyWith(industries: reordenable));
+                                                            }
+                                                          : null,
+                                                      onRemove: isAuth && !projectState.requesting
+                                                          ? (value) {
+                                                              List<String> newList = localProject.industries.where((e) => e != value).toList();
 
-                                                                    setState(() => localProject = localProject.copyWith(industries: newList));
-                                                                  }
-                                                                : null,
-                                                          ),
-                                                        ),
-                                                      ],
+                                                              setState(() => localProject = localProject.copyWith(industries: newList));
+                                                            }
+                                                          : null,
                                                     ),
                                                   ],
                                                 ),
