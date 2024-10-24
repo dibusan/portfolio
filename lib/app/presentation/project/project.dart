@@ -61,9 +61,18 @@ class _ProjectPageState extends State<ProjectPage> {
     }
   }
 
+  _imageOnlyLocal(String image) {
+    return !(widget.project?.images.contains(image) ?? false) && localProject.images.contains(image);
+  }
+
+  _imageOnlyRemote(String image) {
+    return (widget.project?.images.contains(image) ?? false) && !localProject.images.contains(image);
+  }
+
   @override
   Widget build(BuildContext context) {
     final isAuth = BlocProvider.of<SecurityBloc>(context).state.isAuth;
+    final List<String> allImages = <String>{...(widget.project?.images ?? []), ...localProject.images}.toList();
 
     return BlocBuilder<ProjectBloc, ProjectState>(
       buildWhen: (oldState, newState) {
@@ -253,7 +262,8 @@ class _ProjectPageState extends State<ProjectPage> {
                             ),
                             const VSp8(),
                             // Images
-                            if (localProject.images.isNotEmpty)
+
+                            if (allImages.isNotEmpty)
                               LayoutBuilder(builder: (context, constrains) {
                                 return Padding(
                                   padding: const EdgeInsets.symmetric(horizontal: 5),
@@ -262,7 +272,7 @@ class _ProjectPageState extends State<ProjectPage> {
                                       height: 300.0,
                                       autoPlay: true,
                                     ),
-                                    items: localProject.images.map((i) {
+                                    items: allImages.map((i) {
                                       final dec = BoxDecoration(
                                         color: const Color.fromRGBO(255, 255, 255, 1),
                                         borderRadius: BorderRadius.circular(20),
@@ -280,29 +290,43 @@ class _ProjectPageState extends State<ProjectPage> {
                                                   boxDecoration: dec,
                                                   fit: BoxFit.cover,
                                                 ),
-                                                if (!(widget.project?.images.contains(i) ?? false))
+                                                if (_imageOnlyLocal(i))
                                                   Container(
                                                     width: double.maxFinite,
                                                     height: double.maxFinite,
                                                     decoration: BoxDecoration(
-                                                      color: Colors.grey.withOpacity(0.4),
+                                                      color: Colors.grey.withOpacity(0.6),
                                                       borderRadius: const BorderRadius.all(Radius.circular(20)),
                                                     ),
+                                                    child: const Center(child: Text("Pending Uploading.when save...")),
+                                                  ),
+                                                if (_imageOnlyRemote(i))
+                                                  Container(
+                                                    width: double.maxFinite,
+                                                    height: double.maxFinite,
+                                                    decoration: BoxDecoration(
+                                                      color: Colors.grey.withOpacity(0.6),
+                                                      borderRadius: const BorderRadius.all(Radius.circular(20)),
+                                                    ),
+                                                    child: const Center(child: Text("Pending Remove when save....")),
                                                   ),
                                                 Positioned(
                                                   right: 10,
                                                   top: 10,
                                                   child: CircleAvatar(
                                                     radius: 16,
-
                                                     backgroundColor: Colors.grey.withOpacity(0.8),
                                                     child: IconButton(
                                                       onPressed: () {
+                                                        if (_imageOnlyRemote(i)) {
+                                                          setState(() => localProject = localProject.copyWith(images: [...localProject.images, i]));
+                                                          return;
+                                                        }
                                                         BlocProvider.of<ProjectBloc>(context).add(ProjectEventClose(removeTempFile: [i]));
                                                         setState(() => localProject =
                                                             localProject.copyWith(images: localProject.images.where((e) => e != i).toList()));
                                                       },
-                                                      icon: const Icon(Icons.remove_circle),
+                                                      icon: Icon(_imageOnlyRemote(i) ? Icons.cancel_outlined : Icons.remove_circle),
                                                       iconSize: 16,
                                                     ),
                                                   ),
