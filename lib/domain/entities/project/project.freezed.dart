@@ -20,6 +20,7 @@ Project _$ProjectFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Project {
+  int get priority => throw _privateConstructorUsedError;
   String get id => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
   String? get subtitle => throw _privateConstructorUsedError;
@@ -54,7 +55,8 @@ abstract class $ProjectCopyWith<$Res> {
       _$ProjectCopyWithImpl<$Res, Project>;
   @useResult
   $Res call(
-      {String id,
+      {int priority,
+      String id,
       String title,
       String? subtitle,
       String? logoUrl,
@@ -87,6 +89,7 @@ class _$ProjectCopyWithImpl<$Res, $Val extends Project>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? priority = null,
     Object? id = null,
     Object? title = null,
     Object? subtitle = freezed,
@@ -105,6 +108,10 @@ class _$ProjectCopyWithImpl<$Res, $Val extends Project>
     Object? industries = null,
   }) {
     return _then(_value.copyWith(
+      priority: null == priority
+          ? _value.priority
+          : priority // ignore: cast_nullable_to_non_nullable
+              as int,
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -181,7 +188,8 @@ abstract class _$$ProjectImplCopyWith<$Res> implements $ProjectCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {String id,
+      {int priority,
+      String id,
       String title,
       String? subtitle,
       String? logoUrl,
@@ -212,6 +220,7 @@ class __$$ProjectImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? priority = null,
     Object? id = null,
     Object? title = null,
     Object? subtitle = freezed,
@@ -230,6 +239,10 @@ class __$$ProjectImplCopyWithImpl<$Res>
     Object? industries = null,
   }) {
     return _then(_$ProjectImpl(
+      priority: null == priority
+          ? _value.priority
+          : priority // ignore: cast_nullable_to_non_nullable
+              as int,
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -302,7 +315,8 @@ class __$$ProjectImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$ProjectImpl implements _Project {
   const _$ProjectImpl(
-      {required this.id,
+      {this.priority = 0,
+      required this.id,
       required this.title,
       this.subtitle,
       this.logoUrl,
@@ -325,6 +339,9 @@ class _$ProjectImpl implements _Project {
   factory _$ProjectImpl.fromJson(Map<String, dynamic> json) =>
       _$$ProjectImplFromJson(json);
 
+  @override
+  @JsonKey()
+  final int priority;
   @override
   final String id;
   @override
@@ -383,7 +400,7 @@ class _$ProjectImpl implements _Project {
 
   @override
   String toString() {
-    return 'Project(id: $id, title: $title, subtitle: $subtitle, logoUrl: $logoUrl, description: $description, techTags: $techTags, images: $images, githubLink: $githubLink, appLink: $appLink, projectStartDate: $projectStartDate, projectLaunchDate: $projectLaunchDate, isInProgress: $isInProgress, projectOwner: $projectOwner, projectOwnerLogoUrl: $projectOwnerLogoUrl, projectType: $projectType, industries: $industries)';
+    return 'Project(priority: $priority, id: $id, title: $title, subtitle: $subtitle, logoUrl: $logoUrl, description: $description, techTags: $techTags, images: $images, githubLink: $githubLink, appLink: $appLink, projectStartDate: $projectStartDate, projectLaunchDate: $projectLaunchDate, isInProgress: $isInProgress, projectOwner: $projectOwner, projectOwnerLogoUrl: $projectOwnerLogoUrl, projectType: $projectType, industries: $industries)';
   }
 
   @override
@@ -391,6 +408,8 @@ class _$ProjectImpl implements _Project {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ProjectImpl &&
+            (identical(other.priority, priority) ||
+                other.priority == priority) &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.subtitle, subtitle) ||
@@ -423,6 +442,7 @@ class _$ProjectImpl implements _Project {
   @override
   int get hashCode => Object.hash(
       runtimeType,
+      priority,
       id,
       title,
       subtitle,
@@ -458,7 +478,8 @@ class _$ProjectImpl implements _Project {
 
 abstract class _Project implements Project {
   const factory _Project(
-      {required final String id,
+      {final int priority,
+      required final String id,
       required final String title,
       final String? subtitle,
       final String? logoUrl,
@@ -477,6 +498,8 @@ abstract class _Project implements Project {
 
   factory _Project.fromJson(Map<String, dynamic> json) = _$ProjectImpl.fromJson;
 
+  @override
+  int get priority;
   @override
   String get id;
   @override

@@ -17,6 +17,7 @@ dependencies:
   url_launcher: ^6.3.0
   file_picker: ^8.1.2
   reorderables: ^0.6.0
+  numberpicker: ^2.1.2
 
 
   # State

@@ -50,7 +50,7 @@ class CloudFireStore {
         });
       }).toList();
     }
-
+    projects.sort((a,b)=> a.priority.compareTo(b.priority));
     return DeveloperInfo(developer, projects);
   }
 

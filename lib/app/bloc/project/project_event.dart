@@ -10,8 +10,6 @@ class ProjectEvent with _$ProjectEvent {
 
   const factory ProjectEvent.deleteProject({required String projectId, Function()? onDelete}) = ProjectEventDelete;
 
-  const factory ProjectEvent.createProject({required Project project}) = ProjectEventCreate;
-
   const factory ProjectEvent.uploadFile({Function(@Default([]) List<String> url)? onResult, @Default(false) bool multiple, Project? project}) =
       ProjectEventUploadFile;
 

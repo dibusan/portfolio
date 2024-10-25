@@ -107,6 +107,7 @@ class _HomePageState extends State<HomePage> {
                                                   builder: (_, constrains) => ScrollConfiguration(
                                                     behavior: MyCustomScrollBehavior(),
                                                     child: DynamicHeightGridView(
+                                                      physics: const BouncingScrollPhysics(),
                                                       itemCount: projects.length,
                                                       crossAxisCount: (constrains.maxWidth / 350).toInt(),
                                                       builder: (context, index) => ProjectPreviewCard(project: projects[index]),

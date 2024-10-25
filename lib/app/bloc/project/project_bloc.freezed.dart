@@ -25,7 +25,6 @@ mixin _$ProjectEvent {
         updateProject,
     required TResult Function(String projectId, dynamic Function()? onDelete)
         deleteProject,
-    required TResult Function(Project project) createProject,
     required TResult Function(dynamic Function(List<String>)? onResult,
             bool multiple, Project? project)
         uploadFile,
@@ -41,7 +40,6 @@ mixin _$ProjectEvent {
         updateProject,
     TResult? Function(String projectId, dynamic Function()? onDelete)?
         deleteProject,
-    TResult? Function(Project project)? createProject,
     TResult? Function(dynamic Function(List<String>)? onResult, bool multiple,
             Project? project)?
         uploadFile,
@@ -57,7 +55,6 @@ mixin _$ProjectEvent {
         updateProject,
     TResult Function(String projectId, dynamic Function()? onDelete)?
         deleteProject,
-    TResult Function(Project project)? createProject,
     TResult Function(dynamic Function(List<String>)? onResult, bool multiple,
             Project? project)?
         uploadFile,
@@ -71,7 +68,6 @@ mixin _$ProjectEvent {
     required TResult Function(ProjectEventSelect value) selectProject,
     required TResult Function(ProjectEventUpdate value) updateProject,
     required TResult Function(ProjectEventDelete value) deleteProject,
-    required TResult Function(ProjectEventCreate value) createProject,
     required TResult Function(ProjectEventUploadFile value) uploadFile,
     required TResult Function(ProjectEventClose value) closeEvent,
   }) =>
@@ -82,7 +78,6 @@ mixin _$ProjectEvent {
     TResult? Function(ProjectEventSelect value)? selectProject,
     TResult? Function(ProjectEventUpdate value)? updateProject,
     TResult? Function(ProjectEventDelete value)? deleteProject,
-    TResult? Function(ProjectEventCreate value)? createProject,
     TResult? Function(ProjectEventUploadFile value)? uploadFile,
     TResult? Function(ProjectEventClose value)? closeEvent,
   }) =>
@@ -93,7 +88,6 @@ mixin _$ProjectEvent {
     TResult Function(ProjectEventSelect value)? selectProject,
     TResult Function(ProjectEventUpdate value)? updateProject,
     TResult Function(ProjectEventDelete value)? deleteProject,
-    TResult Function(ProjectEventCreate value)? createProject,
     TResult Function(ProjectEventUploadFile value)? uploadFile,
     TResult Function(ProjectEventClose value)? closeEvent,
     required TResult orElse(),
@@ -179,7 +173,6 @@ class _$ProjectEventStartedImpl
         updateProject,
     required TResult Function(String projectId, dynamic Function()? onDelete)
         deleteProject,
-    required TResult Function(Project project) createProject,
     required TResult Function(dynamic Function(List<String>)? onResult,
             bool multiple, Project? project)
         uploadFile,
@@ -198,7 +191,6 @@ class _$ProjectEventStartedImpl
         updateProject,
     TResult? Function(String projectId, dynamic Function()? onDelete)?
         deleteProject,
-    TResult? Function(Project project)? createProject,
     TResult? Function(dynamic Function(List<String>)? onResult, bool multiple,
             Project? project)?
         uploadFile,
@@ -217,7 +209,6 @@ class _$ProjectEventStartedImpl
         updateProject,
     TResult Function(String projectId, dynamic Function()? onDelete)?
         deleteProject,
-    TResult Function(Project project)? createProject,
     TResult Function(dynamic Function(List<String>)? onResult, bool multiple,
             Project? project)?
         uploadFile,
@@ -237,7 +228,6 @@ class _$ProjectEventStartedImpl
     required TResult Function(ProjectEventSelect value) selectProject,
     required TResult Function(ProjectEventUpdate value) updateProject,
     required TResult Function(ProjectEventDelete value) deleteProject,
-    required TResult Function(ProjectEventCreate value) createProject,
     required TResult Function(ProjectEventUploadFile value) uploadFile,
     required TResult Function(ProjectEventClose value) closeEvent,
   }) {
@@ -251,7 +241,6 @@ class _$ProjectEventStartedImpl
     TResult? Function(ProjectEventSelect value)? selectProject,
     TResult? Function(ProjectEventUpdate value)? updateProject,
     TResult? Function(ProjectEventDelete value)? deleteProject,
-    TResult? Function(ProjectEventCreate value)? createProject,
     TResult? Function(ProjectEventUploadFile value)? uploadFile,
     TResult? Function(ProjectEventClose value)? closeEvent,
   }) {
@@ -265,7 +254,6 @@ class _$ProjectEventStartedImpl
     TResult Function(ProjectEventSelect value)? selectProject,
     TResult Function(ProjectEventUpdate value)? updateProject,
     TResult Function(ProjectEventDelete value)? deleteProject,
-    TResult Function(ProjectEventCreate value)? createProject,
     TResult Function(ProjectEventUploadFile value)? uploadFile,
     TResult Function(ProjectEventClose value)? closeEvent,
     required TResult orElse(),
@@ -383,7 +371,6 @@ class _$ProjectEventSelectImpl
         updateProject,
     required TResult Function(String projectId, dynamic Function()? onDelete)
         deleteProject,
-    required TResult Function(Project project) createProject,
     required TResult Function(dynamic Function(List<String>)? onResult,
             bool multiple, Project? project)
         uploadFile,
@@ -402,7 +389,6 @@ class _$ProjectEventSelectImpl
         updateProject,
     TResult? Function(String projectId, dynamic Function()? onDelete)?
         deleteProject,
-    TResult? Function(Project project)? createProject,
     TResult? Function(dynamic Function(List<String>)? onResult, bool multiple,
             Project? project)?
         uploadFile,
@@ -421,7 +407,6 @@ class _$ProjectEventSelectImpl
         updateProject,
     TResult Function(String projectId, dynamic Function()? onDelete)?
         deleteProject,
-    TResult Function(Project project)? createProject,
     TResult Function(dynamic Function(List<String>)? onResult, bool multiple,
             Project? project)?
         uploadFile,
@@ -441,7 +426,6 @@ class _$ProjectEventSelectImpl
     required TResult Function(ProjectEventSelect value) selectProject,
     required TResult Function(ProjectEventUpdate value) updateProject,
     required TResult Function(ProjectEventDelete value) deleteProject,
-    required TResult Function(ProjectEventCreate value) createProject,
     required TResult Function(ProjectEventUploadFile value) uploadFile,
     required TResult Function(ProjectEventClose value) closeEvent,
   }) {
@@ -455,7 +439,6 @@ class _$ProjectEventSelectImpl
     TResult? Function(ProjectEventSelect value)? selectProject,
     TResult? Function(ProjectEventUpdate value)? updateProject,
     TResult? Function(ProjectEventDelete value)? deleteProject,
-    TResult? Function(ProjectEventCreate value)? createProject,
     TResult? Function(ProjectEventUploadFile value)? uploadFile,
     TResult? Function(ProjectEventClose value)? closeEvent,
   }) {
@@ -469,7 +452,6 @@ class _$ProjectEventSelectImpl
     TResult Function(ProjectEventSelect value)? selectProject,
     TResult Function(ProjectEventUpdate value)? updateProject,
     TResult Function(ProjectEventDelete value)? deleteProject,
-    TResult Function(ProjectEventCreate value)? createProject,
     TResult Function(ProjectEventUploadFile value)? uploadFile,
     TResult Function(ProjectEventClose value)? closeEvent,
     required TResult orElse(),
@@ -613,7 +595,6 @@ class _$ProjectEventUpdateImpl
         updateProject,
     required TResult Function(String projectId, dynamic Function()? onDelete)
         deleteProject,
-    required TResult Function(Project project) createProject,
     required TResult Function(dynamic Function(List<String>)? onResult,
             bool multiple, Project? project)
         uploadFile,
@@ -632,7 +613,6 @@ class _$ProjectEventUpdateImpl
         updateProject,
     TResult? Function(String projectId, dynamic Function()? onDelete)?
         deleteProject,
-    TResult? Function(Project project)? createProject,
     TResult? Function(dynamic Function(List<String>)? onResult, bool multiple,
             Project? project)?
         uploadFile,
@@ -651,7 +631,6 @@ class _$ProjectEventUpdateImpl
         updateProject,
     TResult Function(String projectId, dynamic Function()? onDelete)?
         deleteProject,
-    TResult Function(Project project)? createProject,
     TResult Function(dynamic Function(List<String>)? onResult, bool multiple,
             Project? project)?
         uploadFile,
@@ -671,7 +650,6 @@ class _$ProjectEventUpdateImpl
     required TResult Function(ProjectEventSelect value) selectProject,
     required TResult Function(ProjectEventUpdate value) updateProject,
     required TResult Function(ProjectEventDelete value) deleteProject,
-    required TResult Function(ProjectEventCreate value) createProject,
     required TResult Function(ProjectEventUploadFile value) uploadFile,
     required TResult Function(ProjectEventClose value) closeEvent,
   }) {
@@ -685,7 +663,6 @@ class _$ProjectEventUpdateImpl
     TResult? Function(ProjectEventSelect value)? selectProject,
     TResult? Function(ProjectEventUpdate value)? updateProject,
     TResult? Function(ProjectEventDelete value)? deleteProject,
-    TResult? Function(ProjectEventCreate value)? createProject,
     TResult? Function(ProjectEventUploadFile value)? uploadFile,
     TResult? Function(ProjectEventClose value)? closeEvent,
   }) {
@@ -699,7 +676,6 @@ class _$ProjectEventUpdateImpl
     TResult Function(ProjectEventSelect value)? selectProject,
     TResult Function(ProjectEventUpdate value)? updateProject,
     TResult Function(ProjectEventDelete value)? deleteProject,
-    TResult Function(ProjectEventCreate value)? createProject,
     TResult Function(ProjectEventUploadFile value)? uploadFile,
     TResult Function(ProjectEventClose value)? closeEvent,
     required TResult orElse(),
@@ -825,7 +801,6 @@ class _$ProjectEventDeleteImpl
         updateProject,
     required TResult Function(String projectId, dynamic Function()? onDelete)
         deleteProject,
-    required TResult Function(Project project) createProject,
     required TResult Function(dynamic Function(List<String>)? onResult,
             bool multiple, Project? project)
         uploadFile,
@@ -844,7 +819,6 @@ class _$ProjectEventDeleteImpl
         updateProject,
     TResult? Function(String projectId, dynamic Function()? onDelete)?
         deleteProject,
-    TResult? Function(Project project)? createProject,
     TResult? Function(dynamic Function(List<String>)? onResult, bool multiple,
             Project? project)?
         uploadFile,
@@ -863,7 +837,6 @@ class _$ProjectEventDeleteImpl
         updateProject,
     TResult Function(String projectId, dynamic Function()? onDelete)?
         deleteProject,
-    TResult Function(Project project)? createProject,
     TResult Function(dynamic Function(List<String>)? onResult, bool multiple,
             Project? project)?
         uploadFile,
@@ -883,7 +856,6 @@ class _$ProjectEventDeleteImpl
     required TResult Function(ProjectEventSelect value) selectProject,
     required TResult Function(ProjectEventUpdate value) updateProject,
     required TResult Function(ProjectEventDelete value) deleteProject,
-    required TResult Function(ProjectEventCreate value) createProject,
     required TResult Function(ProjectEventUploadFile value) uploadFile,
     required TResult Function(ProjectEventClose value) closeEvent,
   }) {
@@ -897,7 +869,6 @@ class _$ProjectEventDeleteImpl
     TResult? Function(ProjectEventSelect value)? selectProject,
     TResult? Function(ProjectEventUpdate value)? updateProject,
     TResult? Function(ProjectEventDelete value)? deleteProject,
-    TResult? Function(ProjectEventCreate value)? createProject,
     TResult? Function(ProjectEventUploadFile value)? uploadFile,
     TResult? Function(ProjectEventClose value)? closeEvent,
   }) {
@@ -911,7 +882,6 @@ class _$ProjectEventDeleteImpl
     TResult Function(ProjectEventSelect value)? selectProject,
     TResult Function(ProjectEventUpdate value)? updateProject,
     TResult Function(ProjectEventDelete value)? deleteProject,
-    TResult Function(ProjectEventCreate value)? createProject,
     TResult Function(ProjectEventUploadFile value)? uploadFile,
     TResult Function(ProjectEventClose value)? closeEvent,
     required TResult orElse(),
@@ -935,215 +905,6 @@ abstract class ProjectEventDelete implements ProjectEvent {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ProjectEventDeleteImplCopyWith<_$ProjectEventDeleteImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$$ProjectEventCreateImplCopyWith<$Res> {
-  factory _$$ProjectEventCreateImplCopyWith(_$ProjectEventCreateImpl value,
-          $Res Function(_$ProjectEventCreateImpl) then) =
-      __$$ProjectEventCreateImplCopyWithImpl<$Res>;
-  @useResult
-  $Res call({Project project});
-
-  $ProjectCopyWith<$Res> get project;
-}
-
-/// @nodoc
-class __$$ProjectEventCreateImplCopyWithImpl<$Res>
-    extends _$ProjectEventCopyWithImpl<$Res, _$ProjectEventCreateImpl>
-    implements _$$ProjectEventCreateImplCopyWith<$Res> {
-  __$$ProjectEventCreateImplCopyWithImpl(_$ProjectEventCreateImpl _value,
-      $Res Function(_$ProjectEventCreateImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of ProjectEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? project = null,
-  }) {
-    return _then(_$ProjectEventCreateImpl(
-      project: null == project
-          ? _value.project
-          : project // ignore: cast_nullable_to_non_nullable
-              as Project,
-    ));
-  }
-
-  /// Create a copy of ProjectEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $ProjectCopyWith<$Res> get project {
-    return $ProjectCopyWith<$Res>(_value.project, (value) {
-      return _then(_value.copyWith(project: value));
-    });
-  }
-}
-
-/// @nodoc
-
-class _$ProjectEventCreateImpl
-    with DiagnosticableTreeMixin
-    implements ProjectEventCreate {
-  const _$ProjectEventCreateImpl({required this.project});
-
-  @override
-  final Project project;
-
-  @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ProjectEvent.createProject(project: $project)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'ProjectEvent.createProject'))
-      ..add(DiagnosticsProperty('project', project));
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$ProjectEventCreateImpl &&
-            (identical(other.project, project) || other.project == project));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, project);
-
-  /// Create a copy of ProjectEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$ProjectEventCreateImplCopyWith<_$ProjectEventCreateImpl> get copyWith =>
-      __$$ProjectEventCreateImplCopyWithImpl<_$ProjectEventCreateImpl>(
-          this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() started,
-    required TResult Function(Project? project) selectProject,
-    required TResult Function(String? projectId, Project project,
-            dynamic Function(Project)? onDone)
-        updateProject,
-    required TResult Function(String projectId, dynamic Function()? onDelete)
-        deleteProject,
-    required TResult Function(Project project) createProject,
-    required TResult Function(dynamic Function(List<String>)? onResult,
-            bool multiple, Project? project)
-        uploadFile,
-    required TResult Function(List<String> removeTempFile) closeEvent,
-  }) {
-    return createProject(project);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? started,
-    TResult? Function(Project? project)? selectProject,
-    TResult? Function(String? projectId, Project project,
-            dynamic Function(Project)? onDone)?
-        updateProject,
-    TResult? Function(String projectId, dynamic Function()? onDelete)?
-        deleteProject,
-    TResult? Function(Project project)? createProject,
-    TResult? Function(dynamic Function(List<String>)? onResult, bool multiple,
-            Project? project)?
-        uploadFile,
-    TResult? Function(List<String> removeTempFile)? closeEvent,
-  }) {
-    return createProject?.call(project);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? started,
-    TResult Function(Project? project)? selectProject,
-    TResult Function(String? projectId, Project project,
-            dynamic Function(Project)? onDone)?
-        updateProject,
-    TResult Function(String projectId, dynamic Function()? onDelete)?
-        deleteProject,
-    TResult Function(Project project)? createProject,
-    TResult Function(dynamic Function(List<String>)? onResult, bool multiple,
-            Project? project)?
-        uploadFile,
-    TResult Function(List<String> removeTempFile)? closeEvent,
-    required TResult orElse(),
-  }) {
-    if (createProject != null) {
-      return createProject(project);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(ProjectEventStarted value) started,
-    required TResult Function(ProjectEventSelect value) selectProject,
-    required TResult Function(ProjectEventUpdate value) updateProject,
-    required TResult Function(ProjectEventDelete value) deleteProject,
-    required TResult Function(ProjectEventCreate value) createProject,
-    required TResult Function(ProjectEventUploadFile value) uploadFile,
-    required TResult Function(ProjectEventClose value) closeEvent,
-  }) {
-    return createProject(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(ProjectEventStarted value)? started,
-    TResult? Function(ProjectEventSelect value)? selectProject,
-    TResult? Function(ProjectEventUpdate value)? updateProject,
-    TResult? Function(ProjectEventDelete value)? deleteProject,
-    TResult? Function(ProjectEventCreate value)? createProject,
-    TResult? Function(ProjectEventUploadFile value)? uploadFile,
-    TResult? Function(ProjectEventClose value)? closeEvent,
-  }) {
-    return createProject?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(ProjectEventStarted value)? started,
-    TResult Function(ProjectEventSelect value)? selectProject,
-    TResult Function(ProjectEventUpdate value)? updateProject,
-    TResult Function(ProjectEventDelete value)? deleteProject,
-    TResult Function(ProjectEventCreate value)? createProject,
-    TResult Function(ProjectEventUploadFile value)? uploadFile,
-    TResult Function(ProjectEventClose value)? closeEvent,
-    required TResult orElse(),
-  }) {
-    if (createProject != null) {
-      return createProject(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class ProjectEventCreate implements ProjectEvent {
-  const factory ProjectEventCreate({required final Project project}) =
-      _$ProjectEventCreateImpl;
-
-  Project get project;
-
-  /// Create a copy of ProjectEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ProjectEventCreateImplCopyWith<_$ProjectEventCreateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -1276,7 +1037,6 @@ class _$ProjectEventUploadFileImpl
         updateProject,
     required TResult Function(String projectId, dynamic Function()? onDelete)
         deleteProject,
-    required TResult Function(Project project) createProject,
     required TResult Function(dynamic Function(List<String>)? onResult,
             bool multiple, Project? project)
         uploadFile,
@@ -1295,7 +1055,6 @@ class _$ProjectEventUploadFileImpl
         updateProject,
     TResult? Function(String projectId, dynamic Function()? onDelete)?
         deleteProject,
-    TResult? Function(Project project)? createProject,
     TResult? Function(dynamic Function(List<String>)? onResult, bool multiple,
             Project? project)?
         uploadFile,
@@ -1314,7 +1073,6 @@ class _$ProjectEventUploadFileImpl
         updateProject,
     TResult Function(String projectId, dynamic Function()? onDelete)?
         deleteProject,
-    TResult Function(Project project)? createProject,
     TResult Function(dynamic Function(List<String>)? onResult, bool multiple,
             Project? project)?
         uploadFile,
@@ -1334,7 +1092,6 @@ class _$ProjectEventUploadFileImpl
     required TResult Function(ProjectEventSelect value) selectProject,
     required TResult Function(ProjectEventUpdate value) updateProject,
     required TResult Function(ProjectEventDelete value) deleteProject,
-    required TResult Function(ProjectEventCreate value) createProject,
     required TResult Function(ProjectEventUploadFile value) uploadFile,
     required TResult Function(ProjectEventClose value) closeEvent,
   }) {
@@ -1348,7 +1105,6 @@ class _$ProjectEventUploadFileImpl
     TResult? Function(ProjectEventSelect value)? selectProject,
     TResult? Function(ProjectEventUpdate value)? updateProject,
     TResult? Function(ProjectEventDelete value)? deleteProject,
-    TResult? Function(ProjectEventCreate value)? createProject,
     TResult? Function(ProjectEventUploadFile value)? uploadFile,
     TResult? Function(ProjectEventClose value)? closeEvent,
   }) {
@@ -1362,7 +1118,6 @@ class _$ProjectEventUploadFileImpl
     TResult Function(ProjectEventSelect value)? selectProject,
     TResult Function(ProjectEventUpdate value)? updateProject,
     TResult Function(ProjectEventDelete value)? deleteProject,
-    TResult Function(ProjectEventCreate value)? createProject,
     TResult Function(ProjectEventUploadFile value)? uploadFile,
     TResult Function(ProjectEventClose value)? closeEvent,
     required TResult orElse(),
@@ -1486,7 +1241,6 @@ class _$ProjectEventCloseImpl
         updateProject,
     required TResult Function(String projectId, dynamic Function()? onDelete)
         deleteProject,
-    required TResult Function(Project project) createProject,
     required TResult Function(dynamic Function(List<String>)? onResult,
             bool multiple, Project? project)
         uploadFile,
@@ -1505,7 +1259,6 @@ class _$ProjectEventCloseImpl
         updateProject,
     TResult? Function(String projectId, dynamic Function()? onDelete)?
         deleteProject,
-    TResult? Function(Project project)? createProject,
     TResult? Function(dynamic Function(List<String>)? onResult, bool multiple,
             Project? project)?
         uploadFile,
@@ -1524,7 +1277,6 @@ class _$ProjectEventCloseImpl
         updateProject,
     TResult Function(String projectId, dynamic Function()? onDelete)?
         deleteProject,
-    TResult Function(Project project)? createProject,
     TResult Function(dynamic Function(List<String>)? onResult, bool multiple,
             Project? project)?
         uploadFile,
@@ -1544,7 +1296,6 @@ class _$ProjectEventCloseImpl
     required TResult Function(ProjectEventSelect value) selectProject,
     required TResult Function(ProjectEventUpdate value) updateProject,
     required TResult Function(ProjectEventDelete value) deleteProject,
-    required TResult Function(ProjectEventCreate value) createProject,
     required TResult Function(ProjectEventUploadFile value) uploadFile,
     required TResult Function(ProjectEventClose value) closeEvent,
   }) {
@@ -1558,7 +1309,6 @@ class _$ProjectEventCloseImpl
     TResult? Function(ProjectEventSelect value)? selectProject,
     TResult? Function(ProjectEventUpdate value)? updateProject,
     TResult? Function(ProjectEventDelete value)? deleteProject,
-    TResult? Function(ProjectEventCreate value)? createProject,
     TResult? Function(ProjectEventUploadFile value)? uploadFile,
     TResult? Function(ProjectEventClose value)? closeEvent,
   }) {
@@ -1572,7 +1322,6 @@ class _$ProjectEventCloseImpl
     TResult Function(ProjectEventSelect value)? selectProject,
     TResult Function(ProjectEventUpdate value)? updateProject,
     TResult Function(ProjectEventDelete value)? deleteProject,
-    TResult Function(ProjectEventCreate value)? createProject,
     TResult Function(ProjectEventUploadFile value)? uploadFile,
     TResult Function(ProjectEventClose value)? closeEvent,
     required TResult orElse(),

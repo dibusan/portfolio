@@ -50,17 +50,16 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
     on<ProjectEventUpdate>((event, emit) async {
       emit(state.copyWith(requesting: true));
       if (state.developer == null) return add(const ProjectEventClose());
-      if (event.projectId == null) return add(ProjectEventCreate(project: event.project));
-      Project? project = await CloudFireStore.instance.updateProject(state.developer!.id, event.projectId!, event.project.toJson());
+      Project? project;
+      if (event.projectId == null) {
+        project = await CloudFireStore.instance.createProject(state.developer!.id, event.project);
+      } else {
+        project = await CloudFireStore.instance.updateProject(state.developer!.id, event.projectId!, event.project.toJson());
+      }
+
       if (project == null) return add(const ProjectEventClose());
       event.onDone?.call(project);
       emit(state.copyWith(tempFileUploaded: []));
-      add(const ProjectEventStarted());
-    });
-    on<ProjectEventCreate>((event, emit) async {
-      if (state.developer == null) return;
-      emit(state.copyWith(requesting: true));
-      await CloudFireStore.instance.createProject(state.developer!.id, event.project);
       add(const ProjectEventStarted());
     });
     on<ProjectEventUploadFile>((event, emit) async {
@@ -84,7 +83,7 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
         uploadedFiles.add(uploadResult.$1!);
       }
 
-      emit(state.copyWith(tempFileUploaded: [...state.tempFileUploaded,...uploadedFiles]));
+      emit(state.copyWith(tempFileUploaded: [...state.tempFileUploaded, ...uploadedFiles]));
       event.onResult?.call(uploadedFiles);
       return add(const ProjectEventClose());
     });

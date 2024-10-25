@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:glass_kit/glass_kit.dart';
+import 'package:numberpicker/numberpicker.dart';
 import 'package:portfolio_eriel/app/bloc/project/project_bloc.dart';
 import 'package:portfolio_eriel/app/bloc/security/security_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:portfolio_eriel/app/presentation/project/dialog/field.dart';
 import 'package:portfolio_eriel/app/presentation/project/widgets/images_carousel.dart';
+import 'package:portfolio_eriel/app/presentation/project/widgets/number_selector.dart';
 import 'package:portfolio_eriel/app/presentation/project/widgets/project_logo.dart';
+import 'package:portfolio_eriel/app/presentation/project/widgets/project_preview_card.dart';
 import 'package:portfolio_eriel/app/presentation/project/widgets/tech_tag_wrap.dart';
 import 'package:portfolio_eriel/app/presentation/project/widgets/tech_tags.dart';
 import 'package:portfolio_eriel/app/presentation/project/widgets/to_link.dart';
@@ -166,6 +169,12 @@ class _ProjectPageState extends State<ProjectPage> {
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       mainAxisSize: MainAxisSize.max,
                                       children: [
+                                        if (isAuth)
+                                          NumberSelector(
+                                            initial: localProject.priority,
+                                            max: projectState.projects.length + (widget.project == null ? 1 : 0),
+                                            onChange: (value) => localProject = localProject.copyWith(priority: value),
+                                          ),
                                         ProjectLogo(
                                           size: const Size(120, 120),
                                           imageUrl: localProject.logoUrl,

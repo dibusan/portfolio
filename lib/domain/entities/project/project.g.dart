@@ -8,6 +8,7 @@ part of 'project.dart';
 
 _$ProjectImpl _$$ProjectImplFromJson(Map<String, dynamic> json) =>
     _$ProjectImpl(
+      priority: (json['priority'] as num?)?.toInt() ?? 0,
       id: json['id'] as String,
       title: json['title'] as String,
       subtitle: json['subtitle'] as String?,
@@ -40,6 +41,7 @@ _$ProjectImpl _$$ProjectImplFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$$ProjectImplToJson(_$ProjectImpl instance) =>
     <String, dynamic>{
+      'priority': instance.priority,
       'id': instance.id,
       'title': instance.title,
       'subtitle': instance.subtitle,
