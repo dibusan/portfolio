@@ -70,6 +70,10 @@ class CloudFireStore {
         await FireStoreService.deleteFile(project.logoUrl!);
       }
 
+      if (project.projectOwnerLogoUrl != null && project.projectOwnerLogoUrl!.isNotEmpty) {
+        await FireStoreService.deleteFile(project.projectOwnerLogoUrl!);
+      }
+
       for (var imageUrl in project.images) {
         await FireStoreService.deleteFile(imageUrl);
       }
@@ -89,6 +93,9 @@ class CloudFireStore {
       await projectDoc.update(updatedData);
       if (p.logoUrl != updatedData['logoUrl']) {
         FireStoreService.deleteFile(p.logoUrl ?? "");
+      }
+      if (p.projectOwnerLogoUrl != updatedData['projectOwnerLogoUrl']) {
+        FireStoreService.deleteFile(p.projectOwnerLogoUrl ?? "");
       }
       for (var url in p.images.where((image) => !(updatedData['images'] as List<String>).contains(image)).toList()) {
         FireStoreService.deleteFile(url);
