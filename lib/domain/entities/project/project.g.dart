@@ -24,10 +24,8 @@ _$ProjectImpl _$$ProjectImplFromJson(Map<String, dynamic> json) =>
           const [],
       githubLink: json['githubLink'] as String?,
       appLink: json['appLink'] as String?,
-      projectStartDate:
-          const TimestampOrStringConverter().fromJson(json['projectStartDate']),
-      projectLaunchDate: const TimestampOrStringConverter()
-          .fromJson(json['projectLaunchDate']),
+      startDate: const TimestampOrStringConverter().fromJson(json['startDate']),
+      endDate: const TimestampOrStringConverter().fromJson(json['endDate']),
       isInProgress: json['isInProgress'] as bool? ?? false,
       projectOwner: json['projectOwner'] as String?,
       projectOwnerLogoUrl: json['projectOwnerLogoUrl'] as String?,
@@ -51,10 +49,9 @@ Map<String, dynamic> _$$ProjectImplToJson(_$ProjectImpl instance) =>
       'images': instance.images,
       'githubLink': instance.githubLink,
       'appLink': instance.appLink,
-      'projectStartDate':
-          const TimestampOrStringConverter().toJson(instance.projectStartDate),
-      'projectLaunchDate':
-          const TimestampOrStringConverter().toJson(instance.projectLaunchDate),
+      'startDate':
+          const TimestampOrStringConverter().toJson(instance.startDate),
+      'endDate': const TimestampOrStringConverter().toJson(instance.endDate),
       'isInProgress': instance.isInProgress,
       'projectOwner': instance.projectOwner,
       'projectOwnerLogoUrl': instance.projectOwnerLogoUrl,

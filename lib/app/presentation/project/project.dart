@@ -124,8 +124,72 @@ class _ProjectPageState extends State<ProjectPage> {
                               ),
                             ),
                           ),
-                          const Expanded(child: SizedBox()),
                         ],
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 100),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Expanded(
+                                  child: Transform.flip(
+                                    child: ListTile(
+                                      title: const Align(alignment: Alignment.centerRight, child: Text("Start Date")),
+                                      subtitle: Align(alignment: Alignment.centerRight, child: Text(localProject.formatStartDate())),
+                                      leading: localProject.startDate == widget.project?.startDate
+                                          ? null
+                                          : IconButton(
+                                              onPressed: () =>
+                                                  setState(() => localProject = localProject.copyWith(startDate: widget.project?.startDate)),
+                                              icon: const Icon(Icons.clear)),
+                                      trailing: !isAuth
+                                          ? null
+                                          : IconButton(
+                                              onPressed: () async {
+                                                final result = await showDatePicker(
+                                                  context: context,
+                                                  initialDate: localProject.startDate,
+                                                  firstDate: DateTime(1998),
+                                                  lastDate: DateTime.now(),
+                                                );
+                                                if (result == null) return;
+                                                setState(() => localProject = localProject.copyWith(startDate: result));
+                                              },
+                                              icon: const Icon(Icons.date_range)),
+                                    ),
+                                  ),
+                                ),
+                                Expanded(
+                                  child: ListTile(
+                                    title: const Text("End Date"),
+                                    subtitle: Text(localProject.formatEndDate()),
+                                    trailing: localProject.endDate == widget.project?.endDate
+                                        ? null
+                                        : IconButton(
+                                            onPressed: () => setState(() => localProject = localProject.copyWith(endDate: widget.project?.endDate)),
+                                            icon: const Icon(Icons.clear)),
+                                    leading: !isAuth
+                                        ? null
+                                        : IconButton(
+                                            onPressed: () async {
+                                              final result = await showDatePicker(
+                                                context: context,
+                                                initialDate: localProject.endDate,
+                                                firstDate: DateTime(1998),
+                                                lastDate: DateTime.now(),
+                                              );
+                                              if (result == null) return;
+                                              setState(() => localProject = localProject.copyWith(endDate: result));
+                                            },
+                                            icon: const Icon(Icons.date_range)),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        const HSp16(),
                         if (isAuth) ...[
                           CircleAvatar(
                             backgroundColor: Colors.green.shade100,

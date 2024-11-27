@@ -31,9 +31,9 @@ mixin _$Project {
   String? get githubLink => throw _privateConstructorUsedError;
   String? get appLink => throw _privateConstructorUsedError;
   @TimestampOrStringConverter()
-  DateTime? get projectStartDate => throw _privateConstructorUsedError;
+  DateTime? get startDate => throw _privateConstructorUsedError;
   @TimestampOrStringConverter()
-  DateTime? get projectLaunchDate => throw _privateConstructorUsedError;
+  DateTime? get endDate => throw _privateConstructorUsedError;
   bool get isInProgress => throw _privateConstructorUsedError;
   String? get projectOwner => throw _privateConstructorUsedError;
   String? get projectOwnerLogoUrl => throw _privateConstructorUsedError;
@@ -65,8 +65,8 @@ abstract class $ProjectCopyWith<$Res> {
       List<String> images,
       String? githubLink,
       String? appLink,
-      @TimestampOrStringConverter() DateTime? projectStartDate,
-      @TimestampOrStringConverter() DateTime? projectLaunchDate,
+      @TimestampOrStringConverter() DateTime? startDate,
+      @TimestampOrStringConverter() DateTime? endDate,
       bool isInProgress,
       String? projectOwner,
       String? projectOwnerLogoUrl,
@@ -99,8 +99,8 @@ class _$ProjectCopyWithImpl<$Res, $Val extends Project>
     Object? images = null,
     Object? githubLink = freezed,
     Object? appLink = freezed,
-    Object? projectStartDate = freezed,
-    Object? projectLaunchDate = freezed,
+    Object? startDate = freezed,
+    Object? endDate = freezed,
     Object? isInProgress = null,
     Object? projectOwner = freezed,
     Object? projectOwnerLogoUrl = freezed,
@@ -148,13 +148,13 @@ class _$ProjectCopyWithImpl<$Res, $Val extends Project>
           ? _value.appLink
           : appLink // ignore: cast_nullable_to_non_nullable
               as String?,
-      projectStartDate: freezed == projectStartDate
-          ? _value.projectStartDate
-          : projectStartDate // ignore: cast_nullable_to_non_nullable
+      startDate: freezed == startDate
+          ? _value.startDate
+          : startDate // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      projectLaunchDate: freezed == projectLaunchDate
-          ? _value.projectLaunchDate
-          : projectLaunchDate // ignore: cast_nullable_to_non_nullable
+      endDate: freezed == endDate
+          ? _value.endDate
+          : endDate // ignore: cast_nullable_to_non_nullable
               as DateTime?,
       isInProgress: null == isInProgress
           ? _value.isInProgress
@@ -198,8 +198,8 @@ abstract class _$$ProjectImplCopyWith<$Res> implements $ProjectCopyWith<$Res> {
       List<String> images,
       String? githubLink,
       String? appLink,
-      @TimestampOrStringConverter() DateTime? projectStartDate,
-      @TimestampOrStringConverter() DateTime? projectLaunchDate,
+      @TimestampOrStringConverter() DateTime? startDate,
+      @TimestampOrStringConverter() DateTime? endDate,
       bool isInProgress,
       String? projectOwner,
       String? projectOwnerLogoUrl,
@@ -230,8 +230,8 @@ class __$$ProjectImplCopyWithImpl<$Res>
     Object? images = null,
     Object? githubLink = freezed,
     Object? appLink = freezed,
-    Object? projectStartDate = freezed,
-    Object? projectLaunchDate = freezed,
+    Object? startDate = freezed,
+    Object? endDate = freezed,
     Object? isInProgress = null,
     Object? projectOwner = freezed,
     Object? projectOwnerLogoUrl = freezed,
@@ -279,13 +279,13 @@ class __$$ProjectImplCopyWithImpl<$Res>
           ? _value.appLink
           : appLink // ignore: cast_nullable_to_non_nullable
               as String?,
-      projectStartDate: freezed == projectStartDate
-          ? _value.projectStartDate
-          : projectStartDate // ignore: cast_nullable_to_non_nullable
+      startDate: freezed == startDate
+          ? _value.startDate
+          : startDate // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      projectLaunchDate: freezed == projectLaunchDate
-          ? _value.projectLaunchDate
-          : projectLaunchDate // ignore: cast_nullable_to_non_nullable
+      endDate: freezed == endDate
+          ? _value.endDate
+          : endDate // ignore: cast_nullable_to_non_nullable
               as DateTime?,
       isInProgress: null == isInProgress
           ? _value.isInProgress
@@ -313,7 +313,7 @@ class __$$ProjectImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$ProjectImpl implements _Project {
+class _$ProjectImpl extends _Project {
   const _$ProjectImpl(
       {this.priority = 0,
       required this.id,
@@ -325,8 +325,8 @@ class _$ProjectImpl implements _Project {
       final List<String> images = const [],
       this.githubLink,
       this.appLink,
-      @TimestampOrStringConverter() this.projectStartDate,
-      @TimestampOrStringConverter() this.projectLaunchDate,
+      @TimestampOrStringConverter() this.startDate,
+      @TimestampOrStringConverter() this.endDate,
       this.isInProgress = false,
       this.projectOwner,
       this.projectOwnerLogoUrl,
@@ -334,7 +334,8 @@ class _$ProjectImpl implements _Project {
       final List<String> industries = const []})
       : _techTags = techTags,
         _images = images,
-        _industries = industries;
+        _industries = industries,
+        super._();
 
   factory _$ProjectImpl.fromJson(Map<String, dynamic> json) =>
       _$$ProjectImplFromJson(json);
@@ -376,10 +377,10 @@ class _$ProjectImpl implements _Project {
   final String? appLink;
   @override
   @TimestampOrStringConverter()
-  final DateTime? projectStartDate;
+  final DateTime? startDate;
   @override
   @TimestampOrStringConverter()
-  final DateTime? projectLaunchDate;
+  final DateTime? endDate;
   @override
   @JsonKey()
   final bool isInProgress;
@@ -400,7 +401,7 @@ class _$ProjectImpl implements _Project {
 
   @override
   String toString() {
-    return 'Project(priority: $priority, id: $id, title: $title, subtitle: $subtitle, logoUrl: $logoUrl, description: $description, techTags: $techTags, images: $images, githubLink: $githubLink, appLink: $appLink, projectStartDate: $projectStartDate, projectLaunchDate: $projectLaunchDate, isInProgress: $isInProgress, projectOwner: $projectOwner, projectOwnerLogoUrl: $projectOwnerLogoUrl, projectType: $projectType, industries: $industries)';
+    return 'Project(priority: $priority, id: $id, title: $title, subtitle: $subtitle, logoUrl: $logoUrl, description: $description, techTags: $techTags, images: $images, githubLink: $githubLink, appLink: $appLink, startDate: $startDate, endDate: $endDate, isInProgress: $isInProgress, projectOwner: $projectOwner, projectOwnerLogoUrl: $projectOwnerLogoUrl, projectType: $projectType, industries: $industries)';
   }
 
   @override
@@ -422,10 +423,9 @@ class _$ProjectImpl implements _Project {
             (identical(other.githubLink, githubLink) ||
                 other.githubLink == githubLink) &&
             (identical(other.appLink, appLink) || other.appLink == appLink) &&
-            (identical(other.projectStartDate, projectStartDate) ||
-                other.projectStartDate == projectStartDate) &&
-            (identical(other.projectLaunchDate, projectLaunchDate) ||
-                other.projectLaunchDate == projectLaunchDate) &&
+            (identical(other.startDate, startDate) ||
+                other.startDate == startDate) &&
+            (identical(other.endDate, endDate) || other.endDate == endDate) &&
             (identical(other.isInProgress, isInProgress) ||
                 other.isInProgress == isInProgress) &&
             (identical(other.projectOwner, projectOwner) ||
@@ -452,8 +452,8 @@ class _$ProjectImpl implements _Project {
       const DeepCollectionEquality().hash(_images),
       githubLink,
       appLink,
-      projectStartDate,
-      projectLaunchDate,
+      startDate,
+      endDate,
       isInProgress,
       projectOwner,
       projectOwnerLogoUrl,
@@ -476,7 +476,7 @@ class _$ProjectImpl implements _Project {
   }
 }
 
-abstract class _Project implements Project {
+abstract class _Project extends Project {
   const factory _Project(
       {final int priority,
       required final String id,
@@ -488,13 +488,14 @@ abstract class _Project implements Project {
       final List<String> images,
       final String? githubLink,
       final String? appLink,
-      @TimestampOrStringConverter() final DateTime? projectStartDate,
-      @TimestampOrStringConverter() final DateTime? projectLaunchDate,
+      @TimestampOrStringConverter() final DateTime? startDate,
+      @TimestampOrStringConverter() final DateTime? endDate,
       final bool isInProgress,
       final String? projectOwner,
       final String? projectOwnerLogoUrl,
       final ProjectType? projectType,
       final List<String> industries}) = _$ProjectImpl;
+  const _Project._() : super._();
 
   factory _Project.fromJson(Map<String, dynamic> json) = _$ProjectImpl.fromJson;
 
@@ -520,10 +521,10 @@ abstract class _Project implements Project {
   String? get appLink;
   @override
   @TimestampOrStringConverter()
-  DateTime? get projectStartDate;
+  DateTime? get startDate;
   @override
   @TimestampOrStringConverter()
-  DateTime? get projectLaunchDate;
+  DateTime? get endDate;
   @override
   bool get isInProgress;
   @override

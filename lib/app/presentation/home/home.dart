@@ -57,8 +57,8 @@ class _HomePageState extends State<HomePage> {
           if (stateFilters.dateFilter?.title != 'All') {
             projects = projects
                 .where((element) =>
-                    (element.projectStartDate != null && stateFilters.dateFilter!.date.isAfter(element.projectStartDate!)) &&
-                    (element.projectLaunchDate != null && stateFilters.dateFilter!.date.isBefore(element.projectLaunchDate!)))
+                    (element.startDate != null && stateFilters.dateFilter!.date.isAfter(element.startDate!)) &&
+                    (element.endDate != null && stateFilters.dateFilter!.date.isBefore(element.endDate!)))
                 .toList();
           }
           final size = MediaQuery.of(context).size;

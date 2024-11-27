@@ -70,7 +70,7 @@ class ProjectPreviewCard extends StatelessWidget {
                   child: GlassContainer.clearGlass(
                     borderColor: Colors.transparent,
                     color: Colors.white.withOpacity(isSelected ? 0.8 : 0.3),
-                    height: 320,
+                    height: 350,
                     elevation: 20,
                     borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(20),
@@ -88,10 +88,23 @@ class ProjectPreviewCard extends StatelessWidget {
                               project.title,
                               style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black87),
                             ),
-                            subtitle: Text(
-                              project.subtitle ?? "",
-                              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black54),
+                            subtitle: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "${project.subtitle ?? ""}\n ",
+                                  maxLines: project.startDate != null || project.endDate != null ? 1 : 2,
+                                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black54),
+                                ),
+                                if (project.startDate != null || project.endDate != null)
+                                  Text(
+                                    "${project.formatStartDate(format: "MM/yy")}  -  ${project.formatEndDate(format: "MM/yy")}",
+                                    style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                                  ),
+                              ],
                             ),
+                            isThreeLine: true,
                           ),
                           Padding(
                             padding: const EdgeInsets.only(right: 35),
@@ -104,16 +117,20 @@ class ProjectPreviewCard extends StatelessWidget {
                           ),
                           const SizedBox(height: 5),
                           Expanded(
-                            child: project.images.isEmpty
-                                ? const SizedBox()
-                                : ImageOnCache(
-                                    key: Key(project.images.first),
-                                    imageUrl: project.images.first,
-                                    fit: BoxFit.cover,
-                                    boxDecoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(20),
-                                    ),
-                                  ),
+                            child: Stack(
+                              children: [
+                                project.images.isEmpty
+                                    ? const SizedBox()
+                                    : ImageOnCache(
+                                        key: Key(project.images.first),
+                                        imageUrl: project.images.first,
+                                        fit: BoxFit.cover,
+                                        boxDecoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(20),
+                                        ),
+                                      ),
+                              ],
+                            ),
                           ),
                           Container(
                             padding: const EdgeInsets.symmetric(vertical: 8),

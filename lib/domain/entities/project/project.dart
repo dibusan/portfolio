@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
 
 part 'project.freezed.dart';
 
@@ -9,6 +10,8 @@ part 'project.g.dart';
 
 @freezed
 class Project with _$Project {
+  const Project._();
+
   const factory Project({
     @Default(0) int priority,
     required String id,
@@ -20,8 +23,8 @@ class Project with _$Project {
     @Default([]) List<String> images,
     String? githubLink,
     String? appLink,
-    @TimestampOrStringConverter() DateTime? projectStartDate,
-    @TimestampOrStringConverter() DateTime? projectLaunchDate,
+    @TimestampOrStringConverter() DateTime? startDate,
+    @TimestampOrStringConverter() DateTime? endDate,
     @Default(false) bool isInProgress,
     String? projectOwner,
     String? projectOwnerLogoUrl,
@@ -34,6 +37,10 @@ class Project with _$Project {
   static List<String> allTechTags({List<Project> projects = const []}) {
     return projects.map((p) => p.techTags).toList().expand((element) => element).toSet().toList();
   }
+
+  String formatStartDate({String? format}) => startDate == null ? "A long time ago" : DateFormat(format ?? 'dd-MMMM-yyyy').format(startDate!);
+
+  String formatEndDate({String? format}) => endDate == null ? "Current" : DateFormat(format ?? 'dd-MMMM-yyyy').format(endDate!);
 
   static List<String> allIndustriesTags({List<Project> projects = const []}) {
     return projects.map((p) => p.industries).toList().expand((element) => element).toSet().toList();
