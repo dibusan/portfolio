@@ -6,6 +6,8 @@ import 'package:portfolio_eriel/app/bloc/filter/bloc.dart';
 import 'package:portfolio_eriel/app/bloc/filter/event.dart';
 import 'package:portfolio_eriel/app/bloc/filter/state.dart';
 import 'package:portfolio_eriel/app/bloc/project/project_bloc.dart';
+import 'package:portfolio_eriel/app/presentation/home/sections/company/company_section.dart';
+import 'package:portfolio_eriel/app/presentation/home/sections/personal/personal_section.dart';
 import 'package:portfolio_eriel/app/presentation/home/widgets/header.dart';
 import 'package:portfolio_eriel/app/presentation/home/leftBar/letf_bar.dart';
 import 'package:portfolio_eriel/app/presentation/project/project.dart';
@@ -55,11 +57,19 @@ class _HomePageState extends State<HomePage> {
                 .toList();
           }
           if (stateFilters.dateFilter?.title != 'All') {
-            projects = projects
-                .where((element) =>
-                    (element.startDate != null && stateFilters.dateFilter!.date.isAfter(element.startDate!)) &&
-                    (element.endDate != null && stateFilters.dateFilter!.date.isBefore(element.endDate!)))
-                .toList();
+            projects = projects.where((element) {
+              DateTime dateFilterStart = stateFilters.dateFilter!.date;
+              DateTime dateFilterEnd = DateTime.now();
+
+              DateTime? projectStart = element.startDate;
+              DateTime projectEnd = element.endDate ?? dateFilterEnd;
+
+              if (projectStart == null) return false;
+
+              bool isWithinFilter = projectEnd.isAfter(dateFilterStart) && projectStart.isBefore(dateFilterEnd);
+
+              return isWithinFilter;
+            }).toList();
           }
           final size = MediaQuery.of(context).size;
 
@@ -96,28 +106,11 @@ class _HomePageState extends State<HomePage> {
                                   child: Padding(
                                     padding: const EdgeInsets.only(left: 40, right: 20),
                                     child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
                                         const HeaderAppBar(),
-                                        Expanded(
-                                          child: Row(
-                                            children: [
-                                              Expanded(
-                                                child: LayoutBuilder(
-                                                  builder: (_, constrains) => ScrollConfiguration(
-                                                    behavior: MyCustomScrollBehavior(),
-                                                    child: DynamicHeightGridView(
-                                                      physics: const BouncingScrollPhysics(),
-                                                      itemCount: projects.length,
-                                                      crossAxisCount: (constrains.maxWidth / 350).toInt(),
-                                                      builder: (context, index) => ProjectPreviewCard(project: projects[index]),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        )
+                                        Flexible(flex: 2, child: CompanySection(projects: projects.where((e) => !e.isPersonal).toList())),
+                                        const Divider(color: Colors.white, thickness: 2),
+                                        Expanded(flex: 1, child: PersonalSection(projects: projects.where((e) => e.isPersonal).toList()))
                                       ],
                                     ),
                                   ),

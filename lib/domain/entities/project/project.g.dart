@@ -26,7 +26,7 @@ _$ProjectImpl _$$ProjectImplFromJson(Map<String, dynamic> json) =>
       appLink: json['appLink'] as String?,
       startDate: const TimestampOrStringConverter().fromJson(json['startDate']),
       endDate: const TimestampOrStringConverter().fromJson(json['endDate']),
-      isInProgress: json['isInProgress'] as bool? ?? false,
+      isPersonal: json['isPersonal'] as bool? ?? false,
       projectOwner: json['projectOwner'] as String?,
       projectOwnerLogoUrl: json['projectOwnerLogoUrl'] as String?,
       projectType:
@@ -52,7 +52,7 @@ Map<String, dynamic> _$$ProjectImplToJson(_$ProjectImpl instance) =>
       'startDate':
           const TimestampOrStringConverter().toJson(instance.startDate),
       'endDate': const TimestampOrStringConverter().toJson(instance.endDate),
-      'isInProgress': instance.isInProgress,
+      'isPersonal': instance.isPersonal,
       'projectOwner': instance.projectOwner,
       'projectOwnerLogoUrl': instance.projectOwnerLogoUrl,
       'projectType': _$ProjectTypeEnumMap[instance.projectType],

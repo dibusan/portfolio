@@ -191,6 +191,19 @@ class _ProjectPageState extends State<ProjectPage> {
                         ),
                         const HSp16(),
                         if (isAuth) ...[
+                          SizedBox(
+                            width: 150,
+                            child: CheckboxListTile(
+                              title: const Text("Personal"),
+                              dense: true,
+                              value: localProject.isPersonal,
+                              onChanged: (value) => setState(
+                                    () => localProject = localProject.copyWith(
+                                  isPersonal: value ?? false,
+                                ),
+                              ),
+                            ),
+                          ),
                           CircleAvatar(
                             backgroundColor: Colors.green.shade100,
                             child: IconButton(

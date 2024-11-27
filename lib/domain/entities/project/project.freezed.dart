@@ -34,7 +34,7 @@ mixin _$Project {
   DateTime? get startDate => throw _privateConstructorUsedError;
   @TimestampOrStringConverter()
   DateTime? get endDate => throw _privateConstructorUsedError;
-  bool get isInProgress => throw _privateConstructorUsedError;
+  bool get isPersonal => throw _privateConstructorUsedError;
   String? get projectOwner => throw _privateConstructorUsedError;
   String? get projectOwnerLogoUrl => throw _privateConstructorUsedError;
   ProjectType? get projectType => throw _privateConstructorUsedError;
@@ -67,7 +67,7 @@ abstract class $ProjectCopyWith<$Res> {
       String? appLink,
       @TimestampOrStringConverter() DateTime? startDate,
       @TimestampOrStringConverter() DateTime? endDate,
-      bool isInProgress,
+      bool isPersonal,
       String? projectOwner,
       String? projectOwnerLogoUrl,
       ProjectType? projectType,
@@ -101,7 +101,7 @@ class _$ProjectCopyWithImpl<$Res, $Val extends Project>
     Object? appLink = freezed,
     Object? startDate = freezed,
     Object? endDate = freezed,
-    Object? isInProgress = null,
+    Object? isPersonal = null,
     Object? projectOwner = freezed,
     Object? projectOwnerLogoUrl = freezed,
     Object? projectType = freezed,
@@ -156,9 +156,9 @@ class _$ProjectCopyWithImpl<$Res, $Val extends Project>
           ? _value.endDate
           : endDate // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      isInProgress: null == isInProgress
-          ? _value.isInProgress
-          : isInProgress // ignore: cast_nullable_to_non_nullable
+      isPersonal: null == isPersonal
+          ? _value.isPersonal
+          : isPersonal // ignore: cast_nullable_to_non_nullable
               as bool,
       projectOwner: freezed == projectOwner
           ? _value.projectOwner
@@ -200,7 +200,7 @@ abstract class _$$ProjectImplCopyWith<$Res> implements $ProjectCopyWith<$Res> {
       String? appLink,
       @TimestampOrStringConverter() DateTime? startDate,
       @TimestampOrStringConverter() DateTime? endDate,
-      bool isInProgress,
+      bool isPersonal,
       String? projectOwner,
       String? projectOwnerLogoUrl,
       ProjectType? projectType,
@@ -232,7 +232,7 @@ class __$$ProjectImplCopyWithImpl<$Res>
     Object? appLink = freezed,
     Object? startDate = freezed,
     Object? endDate = freezed,
-    Object? isInProgress = null,
+    Object? isPersonal = null,
     Object? projectOwner = freezed,
     Object? projectOwnerLogoUrl = freezed,
     Object? projectType = freezed,
@@ -287,9 +287,9 @@ class __$$ProjectImplCopyWithImpl<$Res>
           ? _value.endDate
           : endDate // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      isInProgress: null == isInProgress
-          ? _value.isInProgress
-          : isInProgress // ignore: cast_nullable_to_non_nullable
+      isPersonal: null == isPersonal
+          ? _value.isPersonal
+          : isPersonal // ignore: cast_nullable_to_non_nullable
               as bool,
       projectOwner: freezed == projectOwner
           ? _value.projectOwner
@@ -327,7 +327,7 @@ class _$ProjectImpl extends _Project {
       this.appLink,
       @TimestampOrStringConverter() this.startDate,
       @TimestampOrStringConverter() this.endDate,
-      this.isInProgress = false,
+      this.isPersonal = false,
       this.projectOwner,
       this.projectOwnerLogoUrl,
       this.projectType,
@@ -383,7 +383,7 @@ class _$ProjectImpl extends _Project {
   final DateTime? endDate;
   @override
   @JsonKey()
-  final bool isInProgress;
+  final bool isPersonal;
   @override
   final String? projectOwner;
   @override
@@ -401,7 +401,7 @@ class _$ProjectImpl extends _Project {
 
   @override
   String toString() {
-    return 'Project(priority: $priority, id: $id, title: $title, subtitle: $subtitle, logoUrl: $logoUrl, description: $description, techTags: $techTags, images: $images, githubLink: $githubLink, appLink: $appLink, startDate: $startDate, endDate: $endDate, isInProgress: $isInProgress, projectOwner: $projectOwner, projectOwnerLogoUrl: $projectOwnerLogoUrl, projectType: $projectType, industries: $industries)';
+    return 'Project(priority: $priority, id: $id, title: $title, subtitle: $subtitle, logoUrl: $logoUrl, description: $description, techTags: $techTags, images: $images, githubLink: $githubLink, appLink: $appLink, startDate: $startDate, endDate: $endDate, isPersonal: $isPersonal, projectOwner: $projectOwner, projectOwnerLogoUrl: $projectOwnerLogoUrl, projectType: $projectType, industries: $industries)';
   }
 
   @override
@@ -426,8 +426,8 @@ class _$ProjectImpl extends _Project {
             (identical(other.startDate, startDate) ||
                 other.startDate == startDate) &&
             (identical(other.endDate, endDate) || other.endDate == endDate) &&
-            (identical(other.isInProgress, isInProgress) ||
-                other.isInProgress == isInProgress) &&
+            (identical(other.isPersonal, isPersonal) ||
+                other.isPersonal == isPersonal) &&
             (identical(other.projectOwner, projectOwner) ||
                 other.projectOwner == projectOwner) &&
             (identical(other.projectOwnerLogoUrl, projectOwnerLogoUrl) ||
@@ -454,7 +454,7 @@ class _$ProjectImpl extends _Project {
       appLink,
       startDate,
       endDate,
-      isInProgress,
+      isPersonal,
       projectOwner,
       projectOwnerLogoUrl,
       projectType,
@@ -490,7 +490,7 @@ abstract class _Project extends Project {
       final String? appLink,
       @TimestampOrStringConverter() final DateTime? startDate,
       @TimestampOrStringConverter() final DateTime? endDate,
-      final bool isInProgress,
+      final bool isPersonal,
       final String? projectOwner,
       final String? projectOwnerLogoUrl,
       final ProjectType? projectType,
@@ -526,7 +526,7 @@ abstract class _Project extends Project {
   @TimestampOrStringConverter()
   DateTime? get endDate;
   @override
-  bool get isInProgress;
+  bool get isPersonal;
   @override
   String? get projectOwner;
   @override

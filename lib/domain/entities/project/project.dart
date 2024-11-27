@@ -25,7 +25,7 @@ class Project with _$Project {
     String? appLink,
     @TimestampOrStringConverter() DateTime? startDate,
     @TimestampOrStringConverter() DateTime? endDate,
-    @Default(false) bool isInProgress,
+    @Default(false) bool isPersonal,
     String? projectOwner,
     String? projectOwnerLogoUrl,
     ProjectType? projectType,
