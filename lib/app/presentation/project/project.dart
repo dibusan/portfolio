@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:glass_kit/glass_kit.dart';
-import 'package:numberpicker/numberpicker.dart';
+import 'package:html_editor_enhanced/html_editor.dart';
 import 'package:portfolio_eriel/app/bloc/project/project_bloc.dart';
 import 'package:portfolio_eriel/app/bloc/security/security_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -9,7 +9,6 @@ import 'package:portfolio_eriel/app/presentation/project/dialog/field.dart';
 import 'package:portfolio_eriel/app/presentation/project/widgets/images_carousel.dart';
 import 'package:portfolio_eriel/app/presentation/project/widgets/number_selector.dart';
 import 'package:portfolio_eriel/app/presentation/project/widgets/project_logo.dart';
-import 'package:portfolio_eriel/app/presentation/project/widgets/project_preview_card.dart';
 import 'package:portfolio_eriel/app/presentation/project/widgets/tech_tag_wrap.dart';
 import 'package:portfolio_eriel/app/presentation/project/widgets/tech_tags.dart';
 import 'package:portfolio_eriel/app/presentation/project/widgets/to_link.dart';
@@ -32,30 +31,31 @@ class _ProjectPageState extends State<ProjectPage> {
   late TextEditingController _name;
   late TextEditingController _projectOwner;
   late TextEditingController _subtitle;
-  late TextEditingController _description;
+  late HtmlEditorController _description;
 
   @override
   void initState() {
     localProject = widget.project ?? const Project(id: 'new', title: '');
     _name = TextEditingController(text: localProject.title);
     _subtitle = TextEditingController(text: localProject.subtitle);
-    _description = TextEditingController(text: localProject.description);
+    _description = HtmlEditorController();
     _projectOwner = TextEditingController(text: localProject.projectOwner);
     super.initState();
   }
 
-  _save() {
+  _save() async {
+    final bloc = BlocProvider.of<ProjectBloc>(context);
     try {
       Map<String, dynamic> jsonData = {
         "id": DateTime.now().microsecondsSinceEpoch.toString(),
         ...localProject.toJson(),
         "title": _name.text,
         "subtitle": _subtitle.text,
-        "description": _description.text,
+        "description": await _description.getText(),
         "projectOwner": _projectOwner.text,
       };
       Project p = Project.fromJson(jsonData);
-      BlocProvider.of<ProjectBloc>(context).add(ProjectEventUpdate(
+      bloc.add(ProjectEventUpdate(
           projectId: widget.project?.id,
           project: p,
           onDone: (Project project) {
@@ -198,7 +198,7 @@ class _ProjectPageState extends State<ProjectPage> {
                               dense: true,
                               value: localProject.isPersonal,
                               onChanged: (value) => setState(
-                                    () => localProject = localProject.copyWith(
+                                () => localProject = localProject.copyWith(
                                   isPersonal: value ?? false,
                                 ),
                               ),
@@ -307,13 +307,10 @@ class _ProjectPageState extends State<ProjectPage> {
                                     ),
                                   ),
                                   const VSp24(),
-                                  MyFieldWithText(
-                                    enable: !projectState.requesting,
+                                  MyHtmlText(
                                     controller: _description,
-                                    text: localProject.description ?? "",
-                                    inputDecoration: const InputDecoration(labelText: "Description"),
-                                    textStyle: const TextStyle(fontSize: 16),
-                                    maxLines: 3,
+                                    enable: !projectState.requesting,
+                                    initialText: localProject.description ?? "",
                                   ),
                                 ],
                               ),

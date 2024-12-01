@@ -106,15 +106,7 @@ class ProjectPreviewCard extends StatelessWidget {
                             ),
                             isThreeLine: true,
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(right: 35),
-                            child: Text(
-                              project.description ?? "",
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(fontSize: 14),
-                            ),
-                          ),
+
                           const SizedBox(height: 5),
                           Expanded(
                             child: Stack(

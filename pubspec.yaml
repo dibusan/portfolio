@@ -39,7 +39,8 @@ dependencies:
   carousel_slider: ^5.0.0
   json_annotation: ^4.9.0
   glass_kit: ^4.0.1
-
+  html_editor_enhanced: ^2.6.0
+  flutter_widget_from_html: ^0.15.3
 
 
 
