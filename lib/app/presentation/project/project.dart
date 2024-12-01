@@ -5,6 +5,7 @@ import 'package:html_editor_enhanced/html_editor.dart';
 import 'package:portfolio_eriel/app/bloc/project/project_bloc.dart';
 import 'package:portfolio_eriel/app/bloc/security/security_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:pointer_interceptor/pointer_interceptor.dart';
 import 'package:portfolio_eriel/app/presentation/project/dialog/field.dart';
 import 'package:portfolio_eriel/app/presentation/project/widgets/images_carousel.dart';
 import 'package:portfolio_eriel/app/presentation/project/widgets/number_selector.dart';
@@ -152,6 +153,7 @@ class _ProjectPageState extends State<ProjectPage> {
                                                   initialDate: localProject.startDate,
                                                   firstDate: DateTime(1998),
                                                   lastDate: DateTime.now(),
+                                                  builder: (_, child) => PointerInterceptor(child: child ?? const SizedBox()),
                                                 );
                                                 if (result == null) return;
                                                 setState(() => localProject = localProject.copyWith(startDate: result));
@@ -178,6 +180,7 @@ class _ProjectPageState extends State<ProjectPage> {
                                                 initialDate: localProject.endDate,
                                                 firstDate: DateTime(1998),
                                                 lastDate: DateTime.now(),
+                                                builder: (_, child) => PointerInterceptor(child: child ?? const SizedBox()),
                                               );
                                               if (result == null) return;
                                               setState(() => localProject = localProject.copyWith(endDate: result));

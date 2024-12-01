@@ -50,7 +50,21 @@ class CloudFireStore {
         });
       }).toList();
     }
-    projects.sort((a,b)=> a.priority.compareTo(b.priority));
+
+    projects.sort((a, b) {
+      int priorityComparison = a.priority.compareTo(b.priority);
+      if (priorityComparison != 0) {
+        return priorityComparison;
+      }
+      if (a.startDate == null && b.startDate == null) {
+        return 0;
+      } else if (a.startDate == null) {
+        return -1;
+      } else if (b.startDate == null) {
+        return 1;
+      }
+      return a.startDate!.compareTo(b.startDate!);
+    });
     return DeveloperInfo(developer, projects);
   }
 
