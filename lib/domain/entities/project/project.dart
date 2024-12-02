@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
+import 'package:html/parser.dart';
 
 part 'project.freezed.dart';
 
@@ -36,6 +37,12 @@ class Project with _$Project {
 
   static List<String> allTechTags({List<Project> projects = const []}) {
     return projects.map((p) => p.techTags).toList().expand((element) => element).toSet().toList();
+  }
+
+  String get descriptionH1 {
+    final document = parse(description ?? "");
+    final h1Element = document.querySelector('h3');
+    return h1Element?.text ?? "";
   }
 
   String formatStartDate({String? format}) => startDate == null ? "A long time ago" : DateFormat(format ?? 'dd-MMMM-yyyy').format(startDate!);

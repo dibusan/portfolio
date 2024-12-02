@@ -41,6 +41,7 @@ dependencies:
   glass_kit: ^4.0.1
   html_editor_enhanced: ^2.6.0
   flutter_widget_from_html: ^0.15.3
+  super_banners: ^0.0.1
 
 
 

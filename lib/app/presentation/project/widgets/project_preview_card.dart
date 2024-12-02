@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -8,6 +9,7 @@ import 'package:portfolio_eriel/app/presentation/project/dialog/project_dialog.d
 import 'package:portfolio_eriel/app/presentation/project/widgets/tech_tags.dart';
 import 'package:portfolio_eriel/app/shared/__.dart';
 import 'package:portfolio_eriel/domain/entities/__.dart';
+import 'package:super_banners/super_banners.dart';
 
 class MyCustomScrollBehavior extends MaterialScrollBehavior {
   // Override behavior methods and getters like dragDevices
@@ -83,6 +85,7 @@ class ProjectPreviewCard extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           ListTile(
+                            // dense: true,
                             contentPadding: EdgeInsets.zero,
                             title: Text(
                               project.title,
@@ -93,20 +96,18 @@ class ProjectPreviewCard extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 Text(
-                                  "${project.subtitle ?? ""}\n ",
-                                  maxLines: project.startDate != null || project.endDate != null ? 1 : 2,
+                                  project.subtitle ?? "",
                                   style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black54),
                                 ),
-                                if (project.startDate != null || project.endDate != null)
-                                  Text(
-                                    "${project.formatStartDate(format: "MM/yy")}  -  ${project.formatEndDate(format: "MM/yy")}",
-                                    style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
-                                  ),
+                                Container(
+                                  constraints: const BoxConstraints(minHeight: 20),
+                                  padding: const EdgeInsets.only(right: 40),
+                                  child: Text(project.descriptionH1, maxLines: 1),
+                                )
                               ],
                             ),
                             isThreeLine: true,
                           ),
-
                           const SizedBox(height: 5),
                           Expanded(
                             child: Stack(
@@ -121,6 +122,16 @@ class ProjectPreviewCard extends StatelessWidget {
                                           borderRadius: BorderRadius.circular(20),
                                         ),
                                       ),
+                                CornerBanner(
+                                  bannerPosition: CornerBannerPosition.topLeft,
+                                  bannerColor: Colors.white,
+                                  child: project.startDate != null || project.endDate != null
+                                      ? Text(
+                                          "${project.formatStartDate(format: "MM/yy")}  -  ${project.formatEndDate(format: "MM/yy")}",
+                                          style: const TextStyle(fontSize: 9, fontWeight: FontWeight.bold),
+                                        )
+                                      : const SizedBox(),
+                                ),
                               ],
                             ),
                           ),

@@ -12,7 +12,10 @@ class CompanySection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
-      children: [const Text("Contract Works", style: TextStyle(fontSize: 20)), Expanded(child: GridSection(projects: projects, divideLine: 1))],
+      children: [
+        Text("Contract Work (${projects.length})", style: const TextStyle(fontSize: 20)),
+        Expanded(child: GridSection(projects: projects, divideLine: 2))
+      ],
     );
   }
 }
