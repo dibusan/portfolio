@@ -89,6 +89,8 @@ class ProjectPreviewCard extends StatelessWidget {
                             contentPadding: EdgeInsets.zero,
                             title: Text(
                               project.title,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
                               style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black87),
                             ),
                             subtitle: Column(
@@ -97,6 +99,8 @@ class ProjectPreviewCard extends StatelessWidget {
                               children: [
                                 Text(
                                   project.subtitle ?? "",
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
                                   style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black54),
                                 ),
                                 Container(
