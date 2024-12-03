@@ -21,7 +21,7 @@ class MyHtmlText extends StatelessWidget {
     return BlocBuilder<SecurityBloc, SecurityState>(
       builder: (_, state) {
         return Container(
-          margin: EdgeInsets.symmetric(horizontal: 8.0),
+          margin: const EdgeInsets.symmetric(horizontal: 8.0),
           width: double.maxFinite,
           child: state.isAuth
               ? HtmlEditor(
