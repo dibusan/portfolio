@@ -132,4 +132,21 @@ class CloudFireStore {
       return null;
     }
   }
+
+  Future<Developer?> updateDeveloper(String developerId, Developer developer) async {
+    try {
+      DocumentReference developerDoc = collection.doc(developerId);
+
+      DocumentSnapshot developerSnapshot = await developerDoc.get();
+      if (!developerSnapshot.exists) {
+        return null;
+      }
+      await developerDoc.update(developer.toJson());
+      developerSnapshot = await developerDoc.get();
+      return Developer.fromJson(developerSnapshot.data() as Map<String, dynamic>);
+    } catch (e) {
+      return null;
+    }
+  }
+
 }

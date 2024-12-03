@@ -20,6 +20,9 @@ mixin _$ProjectEvent {
   TResult when<TResult extends Object?>({
     required TResult Function() started,
     required TResult Function(Project? project) selectProject,
+    required TResult Function(
+            Developer developer, dynamic Function(Developer)? onDone)
+        updateDeveloper,
     required TResult Function(String? projectId, Project project,
             dynamic Function(Project)? onDone)
         updateProject,
@@ -35,6 +38,8 @@ mixin _$ProjectEvent {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
     TResult? Function(Project? project)? selectProject,
+    TResult? Function(Developer developer, dynamic Function(Developer)? onDone)?
+        updateDeveloper,
     TResult? Function(String? projectId, Project project,
             dynamic Function(Project)? onDone)?
         updateProject,
@@ -50,6 +55,8 @@ mixin _$ProjectEvent {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
     TResult Function(Project? project)? selectProject,
+    TResult Function(Developer developer, dynamic Function(Developer)? onDone)?
+        updateDeveloper,
     TResult Function(String? projectId, Project project,
             dynamic Function(Project)? onDone)?
         updateProject,
@@ -66,6 +73,7 @@ mixin _$ProjectEvent {
   TResult map<TResult extends Object?>({
     required TResult Function(ProjectEventStarted value) started,
     required TResult Function(ProjectEventSelect value) selectProject,
+    required TResult Function(DeveloperEventUpdate value) updateDeveloper,
     required TResult Function(ProjectEventUpdate value) updateProject,
     required TResult Function(ProjectEventDelete value) deleteProject,
     required TResult Function(ProjectEventUploadFile value) uploadFile,
@@ -76,6 +84,7 @@ mixin _$ProjectEvent {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(ProjectEventStarted value)? started,
     TResult? Function(ProjectEventSelect value)? selectProject,
+    TResult? Function(DeveloperEventUpdate value)? updateDeveloper,
     TResult? Function(ProjectEventUpdate value)? updateProject,
     TResult? Function(ProjectEventDelete value)? deleteProject,
     TResult? Function(ProjectEventUploadFile value)? uploadFile,
@@ -86,6 +95,7 @@ mixin _$ProjectEvent {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(ProjectEventStarted value)? started,
     TResult Function(ProjectEventSelect value)? selectProject,
+    TResult Function(DeveloperEventUpdate value)? updateDeveloper,
     TResult Function(ProjectEventUpdate value)? updateProject,
     TResult Function(ProjectEventDelete value)? deleteProject,
     TResult Function(ProjectEventUploadFile value)? uploadFile,
@@ -168,6 +178,9 @@ class _$ProjectEventStartedImpl
   TResult when<TResult extends Object?>({
     required TResult Function() started,
     required TResult Function(Project? project) selectProject,
+    required TResult Function(
+            Developer developer, dynamic Function(Developer)? onDone)
+        updateDeveloper,
     required TResult Function(String? projectId, Project project,
             dynamic Function(Project)? onDone)
         updateProject,
@@ -186,6 +199,8 @@ class _$ProjectEventStartedImpl
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
     TResult? Function(Project? project)? selectProject,
+    TResult? Function(Developer developer, dynamic Function(Developer)? onDone)?
+        updateDeveloper,
     TResult? Function(String? projectId, Project project,
             dynamic Function(Project)? onDone)?
         updateProject,
@@ -204,6 +219,8 @@ class _$ProjectEventStartedImpl
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
     TResult Function(Project? project)? selectProject,
+    TResult Function(Developer developer, dynamic Function(Developer)? onDone)?
+        updateDeveloper,
     TResult Function(String? projectId, Project project,
             dynamic Function(Project)? onDone)?
         updateProject,
@@ -226,6 +243,7 @@ class _$ProjectEventStartedImpl
   TResult map<TResult extends Object?>({
     required TResult Function(ProjectEventStarted value) started,
     required TResult Function(ProjectEventSelect value) selectProject,
+    required TResult Function(DeveloperEventUpdate value) updateDeveloper,
     required TResult Function(ProjectEventUpdate value) updateProject,
     required TResult Function(ProjectEventDelete value) deleteProject,
     required TResult Function(ProjectEventUploadFile value) uploadFile,
@@ -239,6 +257,7 @@ class _$ProjectEventStartedImpl
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(ProjectEventStarted value)? started,
     TResult? Function(ProjectEventSelect value)? selectProject,
+    TResult? Function(DeveloperEventUpdate value)? updateDeveloper,
     TResult? Function(ProjectEventUpdate value)? updateProject,
     TResult? Function(ProjectEventDelete value)? deleteProject,
     TResult? Function(ProjectEventUploadFile value)? uploadFile,
@@ -252,6 +271,7 @@ class _$ProjectEventStartedImpl
   TResult maybeMap<TResult extends Object?>({
     TResult Function(ProjectEventStarted value)? started,
     TResult Function(ProjectEventSelect value)? selectProject,
+    TResult Function(DeveloperEventUpdate value)? updateDeveloper,
     TResult Function(ProjectEventUpdate value)? updateProject,
     TResult Function(ProjectEventDelete value)? deleteProject,
     TResult Function(ProjectEventUploadFile value)? uploadFile,
@@ -366,6 +386,9 @@ class _$ProjectEventSelectImpl
   TResult when<TResult extends Object?>({
     required TResult Function() started,
     required TResult Function(Project? project) selectProject,
+    required TResult Function(
+            Developer developer, dynamic Function(Developer)? onDone)
+        updateDeveloper,
     required TResult Function(String? projectId, Project project,
             dynamic Function(Project)? onDone)
         updateProject,
@@ -384,6 +407,8 @@ class _$ProjectEventSelectImpl
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
     TResult? Function(Project? project)? selectProject,
+    TResult? Function(Developer developer, dynamic Function(Developer)? onDone)?
+        updateDeveloper,
     TResult? Function(String? projectId, Project project,
             dynamic Function(Project)? onDone)?
         updateProject,
@@ -402,6 +427,8 @@ class _$ProjectEventSelectImpl
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
     TResult Function(Project? project)? selectProject,
+    TResult Function(Developer developer, dynamic Function(Developer)? onDone)?
+        updateDeveloper,
     TResult Function(String? projectId, Project project,
             dynamic Function(Project)? onDone)?
         updateProject,
@@ -424,6 +451,7 @@ class _$ProjectEventSelectImpl
   TResult map<TResult extends Object?>({
     required TResult Function(ProjectEventStarted value) started,
     required TResult Function(ProjectEventSelect value) selectProject,
+    required TResult Function(DeveloperEventUpdate value) updateDeveloper,
     required TResult Function(ProjectEventUpdate value) updateProject,
     required TResult Function(ProjectEventDelete value) deleteProject,
     required TResult Function(ProjectEventUploadFile value) uploadFile,
@@ -437,6 +465,7 @@ class _$ProjectEventSelectImpl
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(ProjectEventStarted value)? started,
     TResult? Function(ProjectEventSelect value)? selectProject,
+    TResult? Function(DeveloperEventUpdate value)? updateDeveloper,
     TResult? Function(ProjectEventUpdate value)? updateProject,
     TResult? Function(ProjectEventDelete value)? deleteProject,
     TResult? Function(ProjectEventUploadFile value)? uploadFile,
@@ -450,6 +479,7 @@ class _$ProjectEventSelectImpl
   TResult maybeMap<TResult extends Object?>({
     TResult Function(ProjectEventStarted value)? started,
     TResult Function(ProjectEventSelect value)? selectProject,
+    TResult Function(DeveloperEventUpdate value)? updateDeveloper,
     TResult Function(ProjectEventUpdate value)? updateProject,
     TResult Function(ProjectEventDelete value)? deleteProject,
     TResult Function(ProjectEventUploadFile value)? uploadFile,
@@ -474,6 +504,232 @@ abstract class ProjectEventSelect implements ProjectEvent {
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ProjectEventSelectImplCopyWith<_$ProjectEventSelectImpl> get copyWith =>
       throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$DeveloperEventUpdateImplCopyWith<$Res> {
+  factory _$$DeveloperEventUpdateImplCopyWith(_$DeveloperEventUpdateImpl value,
+          $Res Function(_$DeveloperEventUpdateImpl) then) =
+      __$$DeveloperEventUpdateImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({Developer developer, dynamic Function(Developer)? onDone});
+
+  $DeveloperCopyWith<$Res> get developer;
+}
+
+/// @nodoc
+class __$$DeveloperEventUpdateImplCopyWithImpl<$Res>
+    extends _$ProjectEventCopyWithImpl<$Res, _$DeveloperEventUpdateImpl>
+    implements _$$DeveloperEventUpdateImplCopyWith<$Res> {
+  __$$DeveloperEventUpdateImplCopyWithImpl(_$DeveloperEventUpdateImpl _value,
+      $Res Function(_$DeveloperEventUpdateImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of ProjectEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? developer = null,
+    Object? onDone = freezed,
+  }) {
+    return _then(_$DeveloperEventUpdateImpl(
+      developer: null == developer
+          ? _value.developer
+          : developer // ignore: cast_nullable_to_non_nullable
+              as Developer,
+      onDone: freezed == onDone
+          ? _value.onDone
+          : onDone // ignore: cast_nullable_to_non_nullable
+              as dynamic Function(Developer)?,
+    ));
+  }
+
+  /// Create a copy of ProjectEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $DeveloperCopyWith<$Res> get developer {
+    return $DeveloperCopyWith<$Res>(_value.developer, (value) {
+      return _then(_value.copyWith(developer: value));
+    });
+  }
+}
+
+/// @nodoc
+
+class _$DeveloperEventUpdateImpl
+    with DiagnosticableTreeMixin
+    implements DeveloperEventUpdate {
+  const _$DeveloperEventUpdateImpl({required this.developer, this.onDone});
+
+  @override
+  final Developer developer;
+  @override
+  final dynamic Function(Developer)? onDone;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'ProjectEvent.updateDeveloper(developer: $developer, onDone: $onDone)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'ProjectEvent.updateDeveloper'))
+      ..add(DiagnosticsProperty('developer', developer))
+      ..add(DiagnosticsProperty('onDone', onDone));
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$DeveloperEventUpdateImpl &&
+            (identical(other.developer, developer) ||
+                other.developer == developer) &&
+            (identical(other.onDone, onDone) || other.onDone == onDone));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, developer, onDone);
+
+  /// Create a copy of ProjectEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$DeveloperEventUpdateImplCopyWith<_$DeveloperEventUpdateImpl>
+      get copyWith =>
+          __$$DeveloperEventUpdateImplCopyWithImpl<_$DeveloperEventUpdateImpl>(
+              this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() started,
+    required TResult Function(Project? project) selectProject,
+    required TResult Function(
+            Developer developer, dynamic Function(Developer)? onDone)
+        updateDeveloper,
+    required TResult Function(String? projectId, Project project,
+            dynamic Function(Project)? onDone)
+        updateProject,
+    required TResult Function(String projectId, dynamic Function()? onDelete)
+        deleteProject,
+    required TResult Function(dynamic Function(List<String>)? onResult,
+            bool multiple, Project? project)
+        uploadFile,
+    required TResult Function(List<String> removeTempFile) closeEvent,
+  }) {
+    return updateDeveloper(developer, onDone);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? started,
+    TResult? Function(Project? project)? selectProject,
+    TResult? Function(Developer developer, dynamic Function(Developer)? onDone)?
+        updateDeveloper,
+    TResult? Function(String? projectId, Project project,
+            dynamic Function(Project)? onDone)?
+        updateProject,
+    TResult? Function(String projectId, dynamic Function()? onDelete)?
+        deleteProject,
+    TResult? Function(dynamic Function(List<String>)? onResult, bool multiple,
+            Project? project)?
+        uploadFile,
+    TResult? Function(List<String> removeTempFile)? closeEvent,
+  }) {
+    return updateDeveloper?.call(developer, onDone);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? started,
+    TResult Function(Project? project)? selectProject,
+    TResult Function(Developer developer, dynamic Function(Developer)? onDone)?
+        updateDeveloper,
+    TResult Function(String? projectId, Project project,
+            dynamic Function(Project)? onDone)?
+        updateProject,
+    TResult Function(String projectId, dynamic Function()? onDelete)?
+        deleteProject,
+    TResult Function(dynamic Function(List<String>)? onResult, bool multiple,
+            Project? project)?
+        uploadFile,
+    TResult Function(List<String> removeTempFile)? closeEvent,
+    required TResult orElse(),
+  }) {
+    if (updateDeveloper != null) {
+      return updateDeveloper(developer, onDone);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(ProjectEventStarted value) started,
+    required TResult Function(ProjectEventSelect value) selectProject,
+    required TResult Function(DeveloperEventUpdate value) updateDeveloper,
+    required TResult Function(ProjectEventUpdate value) updateProject,
+    required TResult Function(ProjectEventDelete value) deleteProject,
+    required TResult Function(ProjectEventUploadFile value) uploadFile,
+    required TResult Function(ProjectEventClose value) closeEvent,
+  }) {
+    return updateDeveloper(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(ProjectEventStarted value)? started,
+    TResult? Function(ProjectEventSelect value)? selectProject,
+    TResult? Function(DeveloperEventUpdate value)? updateDeveloper,
+    TResult? Function(ProjectEventUpdate value)? updateProject,
+    TResult? Function(ProjectEventDelete value)? deleteProject,
+    TResult? Function(ProjectEventUploadFile value)? uploadFile,
+    TResult? Function(ProjectEventClose value)? closeEvent,
+  }) {
+    return updateDeveloper?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(ProjectEventStarted value)? started,
+    TResult Function(ProjectEventSelect value)? selectProject,
+    TResult Function(DeveloperEventUpdate value)? updateDeveloper,
+    TResult Function(ProjectEventUpdate value)? updateProject,
+    TResult Function(ProjectEventDelete value)? deleteProject,
+    TResult Function(ProjectEventUploadFile value)? uploadFile,
+    TResult Function(ProjectEventClose value)? closeEvent,
+    required TResult orElse(),
+  }) {
+    if (updateDeveloper != null) {
+      return updateDeveloper(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class DeveloperEventUpdate implements ProjectEvent {
+  const factory DeveloperEventUpdate(
+      {required final Developer developer,
+      final dynamic Function(Developer)? onDone}) = _$DeveloperEventUpdateImpl;
+
+  Developer get developer;
+  dynamic Function(Developer)? get onDone;
+
+  /// Create a copy of ProjectEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$DeveloperEventUpdateImplCopyWith<_$DeveloperEventUpdateImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -590,6 +846,9 @@ class _$ProjectEventUpdateImpl
   TResult when<TResult extends Object?>({
     required TResult Function() started,
     required TResult Function(Project? project) selectProject,
+    required TResult Function(
+            Developer developer, dynamic Function(Developer)? onDone)
+        updateDeveloper,
     required TResult Function(String? projectId, Project project,
             dynamic Function(Project)? onDone)
         updateProject,
@@ -608,6 +867,8 @@ class _$ProjectEventUpdateImpl
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
     TResult? Function(Project? project)? selectProject,
+    TResult? Function(Developer developer, dynamic Function(Developer)? onDone)?
+        updateDeveloper,
     TResult? Function(String? projectId, Project project,
             dynamic Function(Project)? onDone)?
         updateProject,
@@ -626,6 +887,8 @@ class _$ProjectEventUpdateImpl
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
     TResult Function(Project? project)? selectProject,
+    TResult Function(Developer developer, dynamic Function(Developer)? onDone)?
+        updateDeveloper,
     TResult Function(String? projectId, Project project,
             dynamic Function(Project)? onDone)?
         updateProject,
@@ -648,6 +911,7 @@ class _$ProjectEventUpdateImpl
   TResult map<TResult extends Object?>({
     required TResult Function(ProjectEventStarted value) started,
     required TResult Function(ProjectEventSelect value) selectProject,
+    required TResult Function(DeveloperEventUpdate value) updateDeveloper,
     required TResult Function(ProjectEventUpdate value) updateProject,
     required TResult Function(ProjectEventDelete value) deleteProject,
     required TResult Function(ProjectEventUploadFile value) uploadFile,
@@ -661,6 +925,7 @@ class _$ProjectEventUpdateImpl
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(ProjectEventStarted value)? started,
     TResult? Function(ProjectEventSelect value)? selectProject,
+    TResult? Function(DeveloperEventUpdate value)? updateDeveloper,
     TResult? Function(ProjectEventUpdate value)? updateProject,
     TResult? Function(ProjectEventDelete value)? deleteProject,
     TResult? Function(ProjectEventUploadFile value)? uploadFile,
@@ -674,6 +939,7 @@ class _$ProjectEventUpdateImpl
   TResult maybeMap<TResult extends Object?>({
     TResult Function(ProjectEventStarted value)? started,
     TResult Function(ProjectEventSelect value)? selectProject,
+    TResult Function(DeveloperEventUpdate value)? updateDeveloper,
     TResult Function(ProjectEventUpdate value)? updateProject,
     TResult Function(ProjectEventDelete value)? deleteProject,
     TResult Function(ProjectEventUploadFile value)? uploadFile,
@@ -796,6 +1062,9 @@ class _$ProjectEventDeleteImpl
   TResult when<TResult extends Object?>({
     required TResult Function() started,
     required TResult Function(Project? project) selectProject,
+    required TResult Function(
+            Developer developer, dynamic Function(Developer)? onDone)
+        updateDeveloper,
     required TResult Function(String? projectId, Project project,
             dynamic Function(Project)? onDone)
         updateProject,
@@ -814,6 +1083,8 @@ class _$ProjectEventDeleteImpl
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
     TResult? Function(Project? project)? selectProject,
+    TResult? Function(Developer developer, dynamic Function(Developer)? onDone)?
+        updateDeveloper,
     TResult? Function(String? projectId, Project project,
             dynamic Function(Project)? onDone)?
         updateProject,
@@ -832,6 +1103,8 @@ class _$ProjectEventDeleteImpl
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
     TResult Function(Project? project)? selectProject,
+    TResult Function(Developer developer, dynamic Function(Developer)? onDone)?
+        updateDeveloper,
     TResult Function(String? projectId, Project project,
             dynamic Function(Project)? onDone)?
         updateProject,
@@ -854,6 +1127,7 @@ class _$ProjectEventDeleteImpl
   TResult map<TResult extends Object?>({
     required TResult Function(ProjectEventStarted value) started,
     required TResult Function(ProjectEventSelect value) selectProject,
+    required TResult Function(DeveloperEventUpdate value) updateDeveloper,
     required TResult Function(ProjectEventUpdate value) updateProject,
     required TResult Function(ProjectEventDelete value) deleteProject,
     required TResult Function(ProjectEventUploadFile value) uploadFile,
@@ -867,6 +1141,7 @@ class _$ProjectEventDeleteImpl
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(ProjectEventStarted value)? started,
     TResult? Function(ProjectEventSelect value)? selectProject,
+    TResult? Function(DeveloperEventUpdate value)? updateDeveloper,
     TResult? Function(ProjectEventUpdate value)? updateProject,
     TResult? Function(ProjectEventDelete value)? deleteProject,
     TResult? Function(ProjectEventUploadFile value)? uploadFile,
@@ -880,6 +1155,7 @@ class _$ProjectEventDeleteImpl
   TResult maybeMap<TResult extends Object?>({
     TResult Function(ProjectEventStarted value)? started,
     TResult Function(ProjectEventSelect value)? selectProject,
+    TResult Function(DeveloperEventUpdate value)? updateDeveloper,
     TResult Function(ProjectEventUpdate value)? updateProject,
     TResult Function(ProjectEventDelete value)? deleteProject,
     TResult Function(ProjectEventUploadFile value)? uploadFile,
@@ -1032,6 +1308,9 @@ class _$ProjectEventUploadFileImpl
   TResult when<TResult extends Object?>({
     required TResult Function() started,
     required TResult Function(Project? project) selectProject,
+    required TResult Function(
+            Developer developer, dynamic Function(Developer)? onDone)
+        updateDeveloper,
     required TResult Function(String? projectId, Project project,
             dynamic Function(Project)? onDone)
         updateProject,
@@ -1050,6 +1329,8 @@ class _$ProjectEventUploadFileImpl
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
     TResult? Function(Project? project)? selectProject,
+    TResult? Function(Developer developer, dynamic Function(Developer)? onDone)?
+        updateDeveloper,
     TResult? Function(String? projectId, Project project,
             dynamic Function(Project)? onDone)?
         updateProject,
@@ -1068,6 +1349,8 @@ class _$ProjectEventUploadFileImpl
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
     TResult Function(Project? project)? selectProject,
+    TResult Function(Developer developer, dynamic Function(Developer)? onDone)?
+        updateDeveloper,
     TResult Function(String? projectId, Project project,
             dynamic Function(Project)? onDone)?
         updateProject,
@@ -1090,6 +1373,7 @@ class _$ProjectEventUploadFileImpl
   TResult map<TResult extends Object?>({
     required TResult Function(ProjectEventStarted value) started,
     required TResult Function(ProjectEventSelect value) selectProject,
+    required TResult Function(DeveloperEventUpdate value) updateDeveloper,
     required TResult Function(ProjectEventUpdate value) updateProject,
     required TResult Function(ProjectEventDelete value) deleteProject,
     required TResult Function(ProjectEventUploadFile value) uploadFile,
@@ -1103,6 +1387,7 @@ class _$ProjectEventUploadFileImpl
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(ProjectEventStarted value)? started,
     TResult? Function(ProjectEventSelect value)? selectProject,
+    TResult? Function(DeveloperEventUpdate value)? updateDeveloper,
     TResult? Function(ProjectEventUpdate value)? updateProject,
     TResult? Function(ProjectEventDelete value)? deleteProject,
     TResult? Function(ProjectEventUploadFile value)? uploadFile,
@@ -1116,6 +1401,7 @@ class _$ProjectEventUploadFileImpl
   TResult maybeMap<TResult extends Object?>({
     TResult Function(ProjectEventStarted value)? started,
     TResult Function(ProjectEventSelect value)? selectProject,
+    TResult Function(DeveloperEventUpdate value)? updateDeveloper,
     TResult Function(ProjectEventUpdate value)? updateProject,
     TResult Function(ProjectEventDelete value)? deleteProject,
     TResult Function(ProjectEventUploadFile value)? uploadFile,
@@ -1236,6 +1522,9 @@ class _$ProjectEventCloseImpl
   TResult when<TResult extends Object?>({
     required TResult Function() started,
     required TResult Function(Project? project) selectProject,
+    required TResult Function(
+            Developer developer, dynamic Function(Developer)? onDone)
+        updateDeveloper,
     required TResult Function(String? projectId, Project project,
             dynamic Function(Project)? onDone)
         updateProject,
@@ -1254,6 +1543,8 @@ class _$ProjectEventCloseImpl
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
     TResult? Function(Project? project)? selectProject,
+    TResult? Function(Developer developer, dynamic Function(Developer)? onDone)?
+        updateDeveloper,
     TResult? Function(String? projectId, Project project,
             dynamic Function(Project)? onDone)?
         updateProject,
@@ -1272,6 +1563,8 @@ class _$ProjectEventCloseImpl
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
     TResult Function(Project? project)? selectProject,
+    TResult Function(Developer developer, dynamic Function(Developer)? onDone)?
+        updateDeveloper,
     TResult Function(String? projectId, Project project,
             dynamic Function(Project)? onDone)?
         updateProject,
@@ -1294,6 +1587,7 @@ class _$ProjectEventCloseImpl
   TResult map<TResult extends Object?>({
     required TResult Function(ProjectEventStarted value) started,
     required TResult Function(ProjectEventSelect value) selectProject,
+    required TResult Function(DeveloperEventUpdate value) updateDeveloper,
     required TResult Function(ProjectEventUpdate value) updateProject,
     required TResult Function(ProjectEventDelete value) deleteProject,
     required TResult Function(ProjectEventUploadFile value) uploadFile,
@@ -1307,6 +1601,7 @@ class _$ProjectEventCloseImpl
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(ProjectEventStarted value)? started,
     TResult? Function(ProjectEventSelect value)? selectProject,
+    TResult? Function(DeveloperEventUpdate value)? updateDeveloper,
     TResult? Function(ProjectEventUpdate value)? updateProject,
     TResult? Function(ProjectEventDelete value)? deleteProject,
     TResult? Function(ProjectEventUploadFile value)? uploadFile,
@@ -1320,6 +1615,7 @@ class _$ProjectEventCloseImpl
   TResult maybeMap<TResult extends Object?>({
     TResult Function(ProjectEventStarted value)? started,
     TResult Function(ProjectEventSelect value)? selectProject,
+    TResult Function(DeveloperEventUpdate value)? updateDeveloper,
     TResult Function(ProjectEventUpdate value)? updateProject,
     TResult Function(ProjectEventDelete value)? deleteProject,
     TResult Function(ProjectEventUploadFile value)? uploadFile,

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:portfolio_eriel/app/bloc/filter/bloc.dart';
 import 'package:portfolio_eriel/app/bloc/filter/state.dart';
 import 'package:portfolio_eriel/app/navigator.dart';
+import 'package:portfolio_eriel/app/presentation/about_me/about_me.dart';
 import 'package:portfolio_eriel/app/shared/__.dart';
 import 'package:portfolio_eriel/domain/entities/__.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -50,7 +51,7 @@ class HeaderAppBar extends StatelessWidget {
             ),
             const HSp16(),
             TextButton(
-              onPressed: () {},
+              onPressed: developer == null ? null : () => AboutMeDialog.show(context, developer: developer!),
               child: const Text(
                 "About me",
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),

@@ -10,6 +10,7 @@ _$DeveloperImpl _$$DeveloperImplFromJson(Map<String, dynamic> json) =>
     _$DeveloperImpl(
       id: json['id'] as String,
       name: json['name'] as String,
+      description: json['description'] as String? ?? "",
       info: json['info'] as String?,
       profileImageUrl: json['profileImageUrl'] as String?,
       githubUrl: json['githubUrl'] as String?,
@@ -25,6 +26,7 @@ Map<String, dynamic> _$$DeveloperImplToJson(_$DeveloperImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
+      'description': instance.description,
       'info': instance.info,
       'profileImageUrl': instance.profileImageUrl,
       'githubUrl': instance.githubUrl,

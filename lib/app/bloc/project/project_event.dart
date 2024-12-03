@@ -6,6 +6,8 @@ class ProjectEvent with _$ProjectEvent {
 
   const factory ProjectEvent.selectProject({Project? project}) = ProjectEventSelect;
 
+  const factory ProjectEvent.updateDeveloper({required Developer developer, Function(Developer developer)? onDone}) = DeveloperEventUpdate;
+
   const factory ProjectEvent.updateProject({String? projectId, required Project project, Function(Project project)? onDone}) = ProjectEventUpdate;
 
   const factory ProjectEvent.deleteProject({required String projectId, Function()? onDelete}) = ProjectEventDelete;

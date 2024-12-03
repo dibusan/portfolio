@@ -12,6 +12,7 @@ class Developer with _$Developer {
   const factory Developer({
     required String id,
     required String name,
+    @Default("") String description,
     String? info,
     String? profileImageUrl,
     String? githubUrl,

@@ -107,7 +107,7 @@ class _HomePageState extends State<HomePage> {
                                     padding: const EdgeInsets.only(left: 40, right: 20),
                                     child: Column(
                                       children: [
-                                        const HeaderAppBar(),
+                                         HeaderAppBar(developer: stateProjects.developer,),
                                         Flexible(flex: 2, child: CompanySection(projects: projects.where((e) => !e.isPersonal).toList())),
                                         const Divider(color: Colors.white, thickness: 2),
                                         Expanded(flex: 1, child: PersonalSection(projects: projects.where((e) => e.isPersonal).toList()))
