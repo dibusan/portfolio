@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:glass_kit/glass_kit.dart';
 import 'package:html_editor_enhanced/html_editor.dart';
 import 'package:portfolio_eriel/app/bloc/project/project_bloc.dart';
+import 'package:portfolio_eriel/app/bloc/security/security_bloc.dart';
 import 'package:portfolio_eriel/app/presentation/home/leftBar/small_banding_banner.dart';
 import 'package:portfolio_eriel/app/presentation/project/dialog/field.dart';
 import 'package:portfolio_eriel/app/shared/spacers.dart';
@@ -69,6 +70,7 @@ class _AboutMeDialogState extends State<AboutMeDialog> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    final isAuth = BlocProvider.of<SecurityBloc>(context).state.isAuth;
     return GlassContainer.clearGlass(
       width: size.width * 0.6,
       borderRadius: BorderRadius.circular(20),
@@ -79,7 +81,7 @@ class _AboutMeDialogState extends State<AboutMeDialog> {
             backgroundColor: Colors.transparent,
             appBar: AppBar(
               backgroundColor: Colors.transparent,
-              actions: [IconButton(onPressed: _save, icon: const Icon(Icons.save))],
+              actions: [isAuth ? IconButton(onPressed: _save, icon: const Icon(Icons.save)) : const SizedBox()],
             ),
             body: SingleChildScrollView(
               child: Column(
