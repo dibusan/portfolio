@@ -20,16 +20,20 @@ class MyHtmlText extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<SecurityBloc, SecurityState>(
       builder: (_, state) {
-        return state.isAuth
-            ? HtmlEditor(
-                controller: controller,
-                htmlEditorOptions: HtmlEditorOptions(
-                  disabled: !enable,
-                  hint: "Your text here...",
-                  initialText: initialText,
-                ),
-              )
-            : HtmlWidget(initialText);
+        return Container(
+          margin: EdgeInsets.symmetric(horizontal: 8.0),
+          width: double.maxFinite,
+          child: state.isAuth
+              ? HtmlEditor(
+                  controller: controller,
+                  htmlEditorOptions: HtmlEditorOptions(
+                    disabled: !enable,
+                    hint: "Your text here...",
+                    initialText: initialText,
+                  ),
+                )
+              : HtmlWidget(initialText),
+        );
       },
     );
   }

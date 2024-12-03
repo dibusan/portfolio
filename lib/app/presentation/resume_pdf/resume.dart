@@ -18,8 +18,6 @@ class _ResumePdfState extends State<ResumePdf> {
 
   @override
   void initState() {
-    super.initState();
-
     pdf.addPage(
       pw.Page(
         pageFormat: PdfPageFormat.a4,
@@ -36,6 +34,7 @@ class _ResumePdfState extends State<ResumePdf> {
         },
       ),
     );
+    super.initState();
   }
 
   @override
