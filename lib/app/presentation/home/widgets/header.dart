@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:portfolio_eriel/app/bloc/filter/bloc.dart';
 import 'package:portfolio_eriel/app/bloc/filter/state.dart';
+import 'package:portfolio_eriel/app/navigator.dart';
 import 'package:portfolio_eriel/app/shared/__.dart';
 import 'package:portfolio_eriel/domain/entities/__.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:go_router/go_router.dart';
 
 class HeaderAppBar extends StatelessWidget {
   final Developer? developer;
@@ -41,9 +43,19 @@ class HeaderAppBar extends StatelessWidget {
             ),
             const Expanded(child: SizedBox()),
             const HSp16(),
+            IconButton(
+              onPressed: () => context.goNamed(AppRoute.resume.name),
+              color: Theme.of(context).colorScheme.primary,
+              icon: const Icon(Icons.picture_as_pdf_outlined),
+            ),
+            const HSp16(),
             TextButton(
-                onPressed: () {},
-                child: const Text("About me", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18))),
+              onPressed: () {},
+              child: const Text(
+                "About me",
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+              ),
+            ),
             const HSp16(),
             InkWell(
               onTap: () {
