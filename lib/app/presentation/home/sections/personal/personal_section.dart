@@ -12,7 +12,10 @@ class PersonalSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
-      children: [ Text("Personal project (${projects.length})",style: const TextStyle(fontSize: 20),), Expanded(child: GridSection(projects: projects, divideLine: 1))],
+      children: [
+        Text("Personal project (${projects.length})", style: const TextStyle(fontSize: 20)),
+        Expanded(child: GridSection(projects: projects, divideLine: 1)),
+      ],
     );
   }
 }

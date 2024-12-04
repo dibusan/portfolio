@@ -62,123 +62,127 @@ class ProjectPreviewCard extends StatelessWidget {
             // );
           },
           borderRadius: BorderRadius.circular(20),
-          child: Container(
-            margin: const EdgeInsets.all(5),
-            width: 200,
-            child: Stack(
-              children: [
-                ClipPath(
-                  clipper: MyClipper(radius: 70),
-                  child: GlassContainer.clearGlass(
-                    borderColor: Colors.transparent,
-                    color: Colors.white.withOpacity(isSelected ? 0.8 : 0.3),
-                    height: 350,
-                    elevation: 20,
-                    borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(20),
-                      bottomRight: Radius.circular(20),
-                      bottomLeft: Radius.circular(20),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          ListTile(
-                            // dense: true,
-                            contentPadding: EdgeInsets.zero,
-                            title: Text(
-                              project.title,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black87),
-                            ),
-                            subtitle: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Text(
-                                  project.subtitle ?? "",
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black54),
-                                ),
-                                Container(
-                                  constraints: const BoxConstraints(minHeight: 40),
-                                  padding: const EdgeInsets.only(right: 40),
-                                  child: Text(project.descriptionFirstLine, maxLines: 2),
-                                )
-                              ],
-                            ),
-                            isThreeLine: true,
+          child: Stack(
+            children: [
+              ClipPath(
+                clipper: MyClipper(radius: 70),
+                child: GlassContainer.clearGlass(
+                  borderColor: Colors.transparent,
+                  color: Colors.white.withOpacity(isSelected ? 0.8 : 0.3),
+                  elevation: 20,
+                  width: 600,
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(20),
+                    bottomRight: Radius.circular(20),
+                    bottomLeft: Radius.circular(20),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        ListTile(
+                          // dense: true,
+                          contentPadding: EdgeInsets.zero,
+                          title: Text(
+                            project.title,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black87),
                           ),
-                          const SizedBox(height: 5),
-                          Expanded(
-                            child: Stack(
-                              children: [
-                                project.images.isEmpty
-                                    ? const SizedBox()
-                                    : ImageOnCache(
-                                        key: Key(project.images.first),
-                                        imageUrl: project.images.first,
-                                        fit: BoxFit.cover,
-                                        boxDecoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(20),
-                                        ),
-                                      ),
-                                CornerBanner(
-                                  bannerPosition: CornerBannerPosition.topLeft,
-                                  bannerColor: Colors.white,
-                                  child: project.startDate != null || project.endDate != null
-                                      ? Text(
-                                          "${project.formatStartDate(format: "MM/yy")}  -  ${project.formatEndDate(format: "MM/yy")}",
-                                          style: const TextStyle(fontSize: 9, fontWeight: FontWeight.bold),
-                                        )
-                                      : const SizedBox(),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Container(
-                            padding: const EdgeInsets.symmetric(vertical: 8),
-                            height: 50,
-                            child: ScrollConfiguration(
-                              behavior: MyCustomScrollBehavior(),
-                              child: ListView.separated(
-                                physics: const BouncingScrollPhysics(),
-                                separatorBuilder: (_, i) => const SizedBox(
-                                  width: 4,
-                                ),
-                                scrollDirection: Axis.horizontal,
-                                itemBuilder: (_, i) => TechTag(
-                                  name: project.techTags[i],
-                                  borderColor: Colors.black87,
-                                  textColor: Colors.black87,
-                                ),
-                                itemCount: project.techTags.length,
+                          subtitle: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text(
+                                project.subtitle ?? "",
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black54),
                               ),
+                              Container(
+                                constraints: const BoxConstraints(minHeight: 40),
+                                padding: const EdgeInsets.only(right: 40),
+                                child: Text(project.descriptionFirstLine, maxLines: 2),
+                              )
+                            ],
+                          ),
+                          isThreeLine: true,
+                        ),
+                        const SizedBox(height: 5),
+                        Flexible(
+                          child: Stack(
+                            children: [
+                              project.images.isEmpty
+                                  ? const SizedBox()
+                                  : ImageOnCache(
+                                      key: Key(project.images.first),
+                                      imageUrl: project.images.first,
+                                      fit: BoxFit.cover,
+                                      boxDecoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(20),
+                                      ),
+                                    ),
+                              if (project.startDate != null || project.endDate != null)
+                                Positioned(
+                                  child: Container(
+                                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                                    decoration: const BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.only(
+                                        bottomRight: Radius.circular(20),
+                                        topLeft: Radius.circular(20),
+                                      ),
+                                    ),
+                                    child: Text(
+                                      "${project.formatStartDate(format: "MMMM/yy")}  -  ${project.formatEndDate(format: "MMMM/yy")}",
+                                      style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                ),
+
+                            ],
+                          ),
+                        ),
+                        Container(
+                          padding: const EdgeInsets.symmetric(vertical: 8),
+                          height: 50,
+                          child: ScrollConfiguration(
+                            behavior: MyCustomScrollBehavior(),
+                            child: ListView.separated(
+                              physics: const BouncingScrollPhysics(),
+                              separatorBuilder: (_, i) => const SizedBox(
+                                width: 4,
+                              ),
+                              scrollDirection: Axis.horizontal,
+                              itemBuilder: (_, i) => TechTag(
+                                name: project.techTags[i],
+                                borderColor: Colors.black87,
+                                textColor: Colors.black87,
+                              ),
+                              itemCount: project.techTags.length,
                             ),
-                          )
-                        ],
-                      ),
+                          ),
+                        )
+                      ],
                     ),
                   ),
                 ),
-                Positioned(
-                  top: 0,
-                  right: 0,
+              ),
+              Positioned(
+                top: 0,
+                right: 0,
+                child: CircleAvatar(
+                  radius: 35,
+                  backgroundColor: Colors.white.withOpacity(isSelected ? 0.7 : 0.3),
                   child: CircleAvatar(
-                    radius: 35,
+                    radius: 30,
                     backgroundColor: Colors.white.withOpacity(isSelected ? 0.7 : 0.3),
-                    child: CircleAvatar(
-                      radius: 30,
-                      backgroundColor: Colors.white.withOpacity(isSelected ? 0.7 : 0.3),
-                      backgroundImage: project.logoUrl == null ? null : NetworkImage(project.logoUrl!),
-                    ),
+                    backgroundImage: project.logoUrl == null ? null : NetworkImage(project.logoUrl!),
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         );
       },

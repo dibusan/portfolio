@@ -108,7 +108,7 @@ class _HomePageState extends State<HomePage> {
                                     child: Column(
                                       children: [
                                          HeaderAppBar(developer: stateProjects.developer,),
-                                        Flexible(flex: 2, child: CompanySection(projects: projects.where((e) => !e.isPersonal).toList())),
+                                        Expanded(flex: 2, child: CompanySection(projects: projects.where((e) => !e.isPersonal).toList())),
                                         const Divider(color: Colors.white, thickness: 2),
                                         Expanded(flex: 1, child: PersonalSection(projects: projects.where((e) => e.isPersonal).toList()))
                                       ],

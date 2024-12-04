@@ -41,8 +41,8 @@ class _GridSectionState extends State<GridSection> {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (_, constraints) {
-        double cardWidth = 400;
-        cardWidth = cardWidth.clamp(300.0, 350.0);
+        double cardWidth = constraints.maxHeight / widget.divideLine;
+        cardWidth = cardWidth.clamp(250.0, 400.0);
         double cardHeight = cardWidth * 0.8;
         return Stack(
           children: [
