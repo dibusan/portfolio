@@ -15,9 +15,18 @@ class ResumePdf extends StatefulWidget {
 
 class _ResumePdfState extends State<ResumePdf> {
   final pdf = pw.Document();
+  final controller = PdfViewerController();
+  bool ready = false;
+
+  callback() {
+    if (ready != controller.isReady) {
+      setState(() => ready = controller.isReady);
+    }
+  }
 
   @override
   void initState() {
+    controller.addListener(callback);
     pdf.addPage(
       pw.Page(
         pageFormat: PdfPageFormat.a4,
@@ -38,8 +47,14 @@ class _ResumePdfState extends State<ResumePdf> {
   }
 
   @override
+  void dispose() {
+    controller.removeListener(callback);
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
+    return FutureBuilder<Uint8List>(
       future: Future.delayed(const Duration(seconds: 1), () async => await pdf.save()),
       builder: (_, doc) {
         bool loading = !doc.hasData || doc.data == null;
@@ -63,14 +78,7 @@ class _ResumePdfState extends State<ResumePdf> {
               ),
               loading
                   ? const Center(child: CircularProgressIndicator())
-                  : Padding(
-                      padding: const EdgeInsets.only(top: 64),
-                      child: PdfViewer.data(
-                        doc.data!,
-                        sourceName: "Resume",
-                        params: const PdfViewerParams(backgroundColor: Colors.transparent),
-                      ),
-                    )
+                  : Padding(padding: const EdgeInsets.only(top: 64), child: PdfViewerWidget(pdf: doc.data!))
             ],
           ),
           floatingActionButton: loading
@@ -80,6 +88,49 @@ class _ResumePdfState extends State<ResumePdf> {
                   label: const Row(children: [Icon(Icons.download), SizedBox(width: 8), Text("Download")])),
         );
       },
+    );
+  }
+}
+
+class PdfViewerWidget extends StatefulWidget {
+  final Uint8List pdf;
+
+  const PdfViewerWidget({super.key, required this.pdf});
+
+  @override
+  State<PdfViewerWidget> createState() => _PdfViewerWidgetState();
+}
+
+class _PdfViewerWidgetState extends State<PdfViewerWidget> {
+  final controller = PdfViewerController();
+  bool ready = false;
+
+  callback() {
+    if (ready != controller.isReady) {
+      setState(() => ready = controller.isReady);
+    }
+  }
+
+  @override
+  void initState() {
+    controller.addListener(callback);
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    controller.removeListener(callback);
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return PdfViewer.data(
+      widget.pdf,
+      controller: controller,
+      sourceName: "Resume",
+      params: const PdfViewerParams(backgroundColor: Colors.transparent),
     );
   }
 }
