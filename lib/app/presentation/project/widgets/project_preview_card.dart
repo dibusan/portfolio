@@ -135,7 +135,7 @@ class ProjectPreviewCard extends StatelessWidget {
                                       ),
                                     ),
                                     child: Text(
-                                      "${project.formatStartDate(format: "MMMM yyyy")}  -  ${project.formatEndDate(format: "MMMM yyyy")}",
+                                      "${project.formatStartDate(format: "MMM yyyy")}  -  ${project.formatEndDate(format: "MMM yyyy")}",
                                       style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
                                     ),
                                   ),
