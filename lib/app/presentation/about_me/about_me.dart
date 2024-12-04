@@ -104,10 +104,13 @@ class _AboutMeDialogState extends State<AboutMeDialog> {
                     ],
                   ),
                   const VSp24(),
-                  MyHtmlText(
-                    controller: _description,
-                    enable: !state.requesting,
-                    initialText: localDeveloper.description ?? "",
+                  Padding(
+                    padding: isAuth ? EdgeInsets.zero : const EdgeInsets.symmetric(horizontal: 150),
+                    child: MyHtmlText(
+                      controller: _description,
+                      enable: !state.requesting,
+                      initialText: localDeveloper.description ?? "",
+                    ),
                   ),
                 ],
               ),
