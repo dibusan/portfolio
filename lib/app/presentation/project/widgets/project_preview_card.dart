@@ -104,9 +104,9 @@ class ProjectPreviewCard extends StatelessWidget {
                                   style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black54),
                                 ),
                                 Container(
-                                  constraints: const BoxConstraints(minHeight: 20),
+                                  constraints: const BoxConstraints(minHeight: 40),
                                   padding: const EdgeInsets.only(right: 40),
-                                  child: Text(project.descriptionH1, maxLines: 1),
+                                  child: Text(project.descriptionFirstLine, maxLines: 2),
                                 )
                               ],
                             ),

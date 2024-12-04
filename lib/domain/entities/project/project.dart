@@ -39,10 +39,10 @@ class Project with _$Project {
     return projects.map((p) => p.techTags).toList().expand((element) => element).toSet().toList();
   }
 
-  String get descriptionH1 {
+  String get descriptionFirstLine {
     final document = parse(description ?? "");
-    final h1Element = document.querySelector('h3');
-    return h1Element?.text ?? "";
+    final firstElement = document.querySelector('p, h1, h2, h3, h4, h5, h6');
+    return firstElement?.text.trim() ?? "";
   }
 
   String formatStartDate({String? format}) => startDate == null ? "A long time ago" : DateFormat(format ?? 'dd-MMMM-yyyy').format(startDate!);
