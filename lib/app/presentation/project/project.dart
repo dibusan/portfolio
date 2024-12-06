@@ -7,6 +7,7 @@ import 'package:portfolio_eriel/app/bloc/security/security_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pointer_interceptor/pointer_interceptor.dart';
 import 'package:portfolio_eriel/app/presentation/project/dialog/field.dart';
+import 'package:portfolio_eriel/app/presentation/project/dialog/project_dialog.dart';
 import 'package:portfolio_eriel/app/presentation/project/widgets/images_carousel.dart';
 import 'package:portfolio_eriel/app/presentation/project/widgets/number_selector.dart';
 import 'package:portfolio_eriel/app/presentation/project/widgets/project_logo.dart';
@@ -14,6 +15,7 @@ import 'package:portfolio_eriel/app/presentation/project/widgets/tech_tag_wrap.d
 import 'package:portfolio_eriel/app/presentation/project/widgets/tech_tags.dart';
 import 'package:portfolio_eriel/app/presentation/project/widgets/to_link.dart';
 import 'package:portfolio_eriel/app/shared/__.dart';
+import 'package:portfolio_eriel/app/shared/responsive/device.dart';
 import 'package:portfolio_eriel/domain/entities/__.dart';
 
 class ProjectPage extends StatefulWidget {
@@ -103,80 +105,84 @@ class _ProjectPageState extends State<ProjectPage> {
               backgroundColor: Colors.transparent,
               title: Row(
                 children: [
-                  Flexible(
-                    child: Transform.flip(
+                  if (context.isDesktop)
+                    Flexible(
+                      child: Transform.flip(
+                        child: ListTile(
+                          title: Align(alignment: Alignment.centerRight, child: Text("Start: ${localProject.formatStartDate()}")),
+                          leading: localProject.startDate == widget.project?.startDate
+                              ? null
+                              : IconButton(
+                                  onPressed: () => setState(() => localProject = localProject.copyWith(startDate: widget.project?.startDate)),
+                                  icon: const Icon(Icons.clear)),
+                          trailing: !isAuth
+                              ? null
+                              : IconButton(
+                                  onPressed: () async {
+                                    final result = await showDatePicker(
+                                      context: context,
+                                      initialDate: localProject.startDate,
+                                      firstDate: DateTime(1998),
+                                      lastDate: DateTime.now(),
+                                      builder: (_, child) => PointerInterceptor(child: child ?? const SizedBox()),
+                                    );
+                                    if (result == null) return;
+                                    setState(() => localProject = localProject.copyWith(startDate: result));
+                                  },
+                                  icon: const Icon(Icons.date_range)),
+                        ),
+                      ),
+                    ),
+                  if (context.isDesktop)
+                    Flexible(
                       child: ListTile(
-                        title: Align(alignment: Alignment.centerRight, child: Text("Start: ${localProject.formatStartDate()}")),
-                        leading: localProject.startDate == widget.project?.startDate
+                        title: Text("End: ${localProject.formatEndDate()}"),
+                        trailing: localProject.endDate == widget.project?.endDate
                             ? null
                             : IconButton(
-                                onPressed: () => setState(() => localProject = localProject.copyWith(startDate: widget.project?.startDate)),
+                                onPressed: () => setState(() => localProject = localProject.copyWith(endDate: widget.project?.endDate)),
                                 icon: const Icon(Icons.clear)),
-                        trailing: !isAuth
+                        leading: !isAuth
                             ? null
                             : IconButton(
                                 onPressed: () async {
                                   final result = await showDatePicker(
                                     context: context,
-                                    initialDate: localProject.startDate,
+                                    initialDate: localProject.endDate,
                                     firstDate: DateTime(1998),
                                     lastDate: DateTime.now(),
                                     builder: (_, child) => PointerInterceptor(child: child ?? const SizedBox()),
                                   );
                                   if (result == null) return;
-                                  setState(() => localProject = localProject.copyWith(startDate: result));
+                                  setState(() => localProject = localProject.copyWith(endDate: result));
                                 },
                                 icon: const Icon(Icons.date_range)),
                       ),
                     ),
-                  ),
-                  Flexible(
-                    child: ListTile(
-                      title: Text("End: ${localProject.formatEndDate()}"),
-                      trailing: localProject.endDate == widget.project?.endDate
-                          ? null
-                          : IconButton(
-                              onPressed: () => setState(() => localProject = localProject.copyWith(endDate: widget.project?.endDate)),
-                              icon: const Icon(Icons.clear)),
-                      leading: !isAuth
-                          ? null
-                          : IconButton(
-                              onPressed: () async {
-                                final result = await showDatePicker(
-                                  context: context,
-                                  initialDate: localProject.endDate,
-                                  firstDate: DateTime(1998),
-                                  lastDate: DateTime.now(),
-                                  builder: (_, child) => PointerInterceptor(child: child ?? const SizedBox()),
-                                );
-                                if (result == null) return;
-                                setState(() => localProject = localProject.copyWith(endDate: result));
-                              },
-                              icon: const Icon(Icons.date_range)),
-                    ),
-                  ),
-                  Flexible(
-                    child: MyFieldWithText(
-                      enable: !projectState.requesting,
-                      controller: _salary,
-                      text: "\$ ${localProject.salary?.toString() ?? ""}",
-                      inputDecoration: const InputDecoration(labelText: "Salary", hintText: "Salary"),
-                      textStyle: const TextStyle(fontSize: 16),
-                      validator: (v) {
-                        if (v == null || v.isEmpty) {
+                  if (context.isDesktop)
+                    Container(
+                      constraints: const BoxConstraints(maxWidth: 160),
+                      child: MyFieldWithText(
+                        enable: !projectState.requesting,
+                        controller: _salary,
+                        text: "\$ ${localProject.salary?.toString() ?? ""}",
+                        inputDecoration: const InputDecoration(labelText: "Salary", hintText: "Salary"),
+                        textStyle: const TextStyle(fontSize: 16),
+                        validator: (v) {
+                          if (v == null || v.isEmpty) {
+                            return null;
+                          }
+                          final salary = double.tryParse(v);
+                          if (salary == null) {
+                            return "Please enter a valid number.";
+                          }
+                          if (salary <= 0) {
+                            return "Salary must be greater than zero.";
+                          }
                           return null;
-                        }
-                        final salary = double.tryParse(v);
-                        if (salary == null) {
-                          return "Please enter a valid number.";
-                        }
-                        if (salary <= 0) {
-                          return "Salary must be greater than zero.";
-                        }
-                        return null;
-                      },
+                        },
+                      ),
                     ),
-                  )
                 ],
               ),
               leading: IconButton(
@@ -260,24 +266,25 @@ class _ProjectPageState extends State<ProjectPage> {
                                       max: projectState.projects.length + (widget.project == null ? 1 : 0),
                                       onChange: (value) => localProject = localProject.copyWith(priority: value),
                                     ),
-                                  ProjectLogo(
-                                    size: const Size(120, 120),
-                                    imageUrl: localProject.logoUrl,
-                                    onEdit: isAuth && !projectState.requesting
-                                        ? () async {
-                                            BlocProvider.of<ProjectBloc>(context).add(
-                                              ProjectEventUploadFile(
-                                                project: localProject,
-                                                multiple: false,
-                                                onResult: (value) {
-                                                  if (value.isEmpty) return;
-                                                  setState(() => localProject = localProject.copyWith(logoUrl: value.first));
-                                                },
-                                              ),
-                                            );
-                                          }
-                                        : null,
-                                  ),
+                                  if (context.isDesktop)
+                                    ProjectLogo(
+                                      size: const Size(120, 120),
+                                      imageUrl: localProject.logoUrl,
+                                      onEdit: isAuth && !projectState.requesting
+                                          ? () async {
+                                              BlocProvider.of<ProjectBloc>(context).add(
+                                                ProjectEventUploadFile(
+                                                  project: localProject,
+                                                  multiple: false,
+                                                  onResult: (value) {
+                                                    if (value.isEmpty) return;
+                                                    setState(() => localProject = localProject.copyWith(logoUrl: value.first));
+                                                  },
+                                                ),
+                                              );
+                                            }
+                                          : null,
+                                    ),
                                   const HSp16(),
                                   SizedBox(
                                     width: 300,

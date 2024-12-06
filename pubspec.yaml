@@ -22,6 +22,7 @@ dependencies:
   pdf: ^3.11.1
   pdfrx: ^1.0.93
   file_saver: ^0.2.14
+  universal_platform: ^1.1.0
 
 
   # State

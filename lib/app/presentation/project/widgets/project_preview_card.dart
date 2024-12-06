@@ -45,8 +45,9 @@ class MyClipper extends CustomClipper<Path> {
 
 class ProjectPreviewCard extends StatelessWidget {
   final Project project;
+  final bool showPersonal;
 
-  const ProjectPreviewCard({super.key, required this.project});
+  const ProjectPreviewCard({super.key, required this.project, this.showPersonal = false});
 
   @override
   Widget build(BuildContext context) {
@@ -54,13 +55,7 @@ class ProjectPreviewCard extends StatelessWidget {
       builder: (context, state) {
         bool isSelected = state.selected?.id == project.id;
         return InkWell(
-          onTap: () {
-            ProjectDialog.show(context, project: project);
-
-            // BlocProvider.of<ProjectBloc>(context).add(
-            //   ProjectEventSelect(project: isSelected ? null : project),
-            // );
-          },
+          onTap: () => ProjectDialog.show(context, project: project),
           borderRadius: BorderRadius.circular(20),
           child: Stack(
             children: [
@@ -140,7 +135,25 @@ class ProjectPreviewCard extends StatelessWidget {
                                     ),
                                   ),
                                 ),
-
+                              if (showPersonal)
+                                Positioned(
+                                  bottom: 0,
+                                  right: 0,
+                                  child: Container(
+                                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                                    decoration: const BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.only(
+                                        bottomRight: Radius.circular(20),
+                                        topLeft: Radius.circular(20),
+                                      ),
+                                    ),
+                                    child: Text(
+                                      project.isPersonal ? "Personal" : "Work",
+                                      style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                ),
                             ],
                           ),
                         ),
@@ -151,9 +164,7 @@ class ProjectPreviewCard extends StatelessWidget {
                             behavior: MyCustomScrollBehavior(),
                             child: ListView.separated(
                               physics: const BouncingScrollPhysics(),
-                              separatorBuilder: (_, i) => const SizedBox(
-                                width: 4,
-                              ),
+                              separatorBuilder: (_, i) => const SizedBox(width: 4),
                               scrollDirection: Axis.horizontal,
                               itemBuilder: (_, i) => TechTag(
                                 name: project.techTags[i],
