@@ -248,7 +248,7 @@ class __$$DeveloperImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$DeveloperImpl implements _Developer {
+class _$DeveloperImpl extends _Developer {
   const _$DeveloperImpl(
       {required this.id,
       required this.name,
@@ -261,7 +261,8 @@ class _$DeveloperImpl implements _Developer {
       this.smallBrandingBanner,
       this.phoneNumber,
       this.emailContact,
-      this.password});
+      this.password})
+      : super._();
 
   factory _$DeveloperImpl.fromJson(Map<String, dynamic> json) =>
       _$$DeveloperImplFromJson(json);
@@ -358,7 +359,7 @@ class _$DeveloperImpl implements _Developer {
   }
 }
 
-abstract class _Developer implements Developer {
+abstract class _Developer extends Developer {
   const factory _Developer(
       {required final String id,
       required final String name,
@@ -372,6 +373,7 @@ abstract class _Developer implements Developer {
       final String? phoneNumber,
       final String? emailContact,
       final String? password}) = _$DeveloperImpl;
+  const _Developer._() : super._();
 
   factory _Developer.fromJson(Map<String, dynamic> json) =
       _$DeveloperImpl.fromJson;

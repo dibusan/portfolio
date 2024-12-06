@@ -9,6 +9,8 @@ part 'developer.g.dart';
 
 @freezed
 class Developer with _$Developer {
+  const Developer._();
+
   const factory Developer({
     required String id,
     required String name,
@@ -25,6 +27,16 @@ class Developer with _$Developer {
   }) = _Developer;
 
   factory Developer.fromJson(Map<String, Object?> json) => _$DeveloperFromJson(json);
+
+  Future<Uint8List?>  pdfAssets() async {
+    String assetsPath = 'assets/resume/$id.pdf';
+    try {
+      final data = await rootBundle.load(assetsPath);
+      return data.buffer.asUint8List();
+    } catch (e) {
+      return null;
+    }
+  }
 
   static Future<Developer> loadFromJson(String developerId) async {
     Developer defaultDeveloper = Developer(id: developerId, name: "Developer", info: developerId);

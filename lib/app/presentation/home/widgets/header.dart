@@ -5,6 +5,7 @@ import 'package:portfolio_eriel/app/bloc/filter/state.dart';
 import 'package:portfolio_eriel/app/navigator.dart';
 import 'package:portfolio_eriel/app/presentation/about_me/about_me.dart';
 import 'package:portfolio_eriel/app/shared/__.dart';
+import 'package:portfolio_eriel/app/shared/responsive/device.dart';
 import 'package:portfolio_eriel/domain/entities/__.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:go_router/go_router.dart';
@@ -15,10 +16,18 @@ class HeaderAppBar extends StatelessWidget {
   const HeaderAppBar({super.key, this.developer});
 
   static pdfReport(BuildContext context) {
-    return IconButton(
+    return TextButton(
       onPressed: () => context.goNamed(AppRoute.resume.name),
-      color: Theme.of(context).colorScheme.primary,
-      icon: const Icon(Icons.picture_as_pdf_outlined),
+      child: Row(
+        children: [
+          const Icon(Icons.picture_as_pdf),
+          const HSp10(),
+          Text(
+            "${context.isMobile ? "" : "Download"} Resume",
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+          )
+        ],
+      ),
     );
   }
 
