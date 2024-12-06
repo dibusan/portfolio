@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:html_editor_enhanced/html_editor.dart';
 import 'package:portfolio_eriel/app/bloc/security/security_bloc.dart';
+import 'package:portfolio_eriel/app/shared/spacers.dart';
 
 class MyHtmlText extends StatelessWidget {
   final HtmlEditorController controller;
@@ -48,6 +49,7 @@ class MyFieldWithText extends StatelessWidget {
   final TextEditingController controller;
   final double? width;
   final bool enable;
+  final FormFieldValidator<String>? validator;
 
   const MyFieldWithText({
     super.key,
@@ -59,6 +61,7 @@ class MyFieldWithText extends StatelessWidget {
     this.textAlign = TextAlign.center,
     this.width,
     this.enable = true,
+    this.validator,
   });
 
   @override
@@ -68,13 +71,25 @@ class MyFieldWithText extends StatelessWidget {
       child: BlocBuilder<SecurityBloc, SecurityState>(
         builder: (_, state) => state.isAuth
             ? TextFormField(
+                autovalidateMode: AutovalidateMode.onUserInteraction,
                 enabled: enable,
                 controller: controller,
                 decoration: inputDecoration,
                 maxLines: maxLines,
                 textAlign: textAlign,
+                validator: validator,
               )
-            : Text(text, textAlign: textAlign, style: textStyle),
+            : Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    inputDecoration?.hintText ?? "",
+                    style: inputDecoration?.hintStyle,
+                  ),
+                  const HSp10(),
+                  Text(text, textAlign: textAlign, style: textStyle)
+                ],
+              ),
       ),
     );
   }

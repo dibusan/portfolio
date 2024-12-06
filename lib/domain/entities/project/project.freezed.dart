@@ -23,6 +23,7 @@ mixin _$Project {
   int get priority => throw _privateConstructorUsedError;
   String get id => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
+  double? get salary => throw _privateConstructorUsedError;
   String? get subtitle => throw _privateConstructorUsedError;
   String? get logoUrl => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
@@ -58,6 +59,7 @@ abstract class $ProjectCopyWith<$Res> {
       {int priority,
       String id,
       String title,
+      double? salary,
       String? subtitle,
       String? logoUrl,
       String? description,
@@ -92,6 +94,7 @@ class _$ProjectCopyWithImpl<$Res, $Val extends Project>
     Object? priority = null,
     Object? id = null,
     Object? title = null,
+    Object? salary = freezed,
     Object? subtitle = freezed,
     Object? logoUrl = freezed,
     Object? description = freezed,
@@ -120,6 +123,10 @@ class _$ProjectCopyWithImpl<$Res, $Val extends Project>
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
+      salary: freezed == salary
+          ? _value.salary
+          : salary // ignore: cast_nullable_to_non_nullable
+              as double?,
       subtitle: freezed == subtitle
           ? _value.subtitle
           : subtitle // ignore: cast_nullable_to_non_nullable
@@ -191,6 +198,7 @@ abstract class _$$ProjectImplCopyWith<$Res> implements $ProjectCopyWith<$Res> {
       {int priority,
       String id,
       String title,
+      double? salary,
       String? subtitle,
       String? logoUrl,
       String? description,
@@ -223,6 +231,7 @@ class __$$ProjectImplCopyWithImpl<$Res>
     Object? priority = null,
     Object? id = null,
     Object? title = null,
+    Object? salary = freezed,
     Object? subtitle = freezed,
     Object? logoUrl = freezed,
     Object? description = freezed,
@@ -251,6 +260,10 @@ class __$$ProjectImplCopyWithImpl<$Res>
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
+      salary: freezed == salary
+          ? _value.salary
+          : salary // ignore: cast_nullable_to_non_nullable
+              as double?,
       subtitle: freezed == subtitle
           ? _value.subtitle
           : subtitle // ignore: cast_nullable_to_non_nullable
@@ -318,6 +331,7 @@ class _$ProjectImpl extends _Project {
       {this.priority = 0,
       required this.id,
       required this.title,
+      this.salary,
       this.subtitle,
       this.logoUrl,
       this.description,
@@ -347,6 +361,8 @@ class _$ProjectImpl extends _Project {
   final String id;
   @override
   final String title;
+  @override
+  final double? salary;
   @override
   final String? subtitle;
   @override
@@ -401,7 +417,7 @@ class _$ProjectImpl extends _Project {
 
   @override
   String toString() {
-    return 'Project(priority: $priority, id: $id, title: $title, subtitle: $subtitle, logoUrl: $logoUrl, description: $description, techTags: $techTags, images: $images, githubLink: $githubLink, appLink: $appLink, startDate: $startDate, endDate: $endDate, isPersonal: $isPersonal, projectOwner: $projectOwner, projectOwnerLogoUrl: $projectOwnerLogoUrl, projectType: $projectType, industries: $industries)';
+    return 'Project(priority: $priority, id: $id, title: $title, salary: $salary, subtitle: $subtitle, logoUrl: $logoUrl, description: $description, techTags: $techTags, images: $images, githubLink: $githubLink, appLink: $appLink, startDate: $startDate, endDate: $endDate, isPersonal: $isPersonal, projectOwner: $projectOwner, projectOwnerLogoUrl: $projectOwnerLogoUrl, projectType: $projectType, industries: $industries)';
   }
 
   @override
@@ -413,6 +429,7 @@ class _$ProjectImpl extends _Project {
                 other.priority == priority) &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.title, title) || other.title == title) &&
+            (identical(other.salary, salary) || other.salary == salary) &&
             (identical(other.subtitle, subtitle) ||
                 other.subtitle == subtitle) &&
             (identical(other.logoUrl, logoUrl) || other.logoUrl == logoUrl) &&
@@ -445,6 +462,7 @@ class _$ProjectImpl extends _Project {
       priority,
       id,
       title,
+      salary,
       subtitle,
       logoUrl,
       description,
@@ -481,6 +499,7 @@ abstract class _Project extends Project {
       {final int priority,
       required final String id,
       required final String title,
+      final double? salary,
       final String? subtitle,
       final String? logoUrl,
       final String? description,
@@ -505,6 +524,8 @@ abstract class _Project extends Project {
   String get id;
   @override
   String get title;
+  @override
+  double? get salary;
   @override
   String? get subtitle;
   @override

@@ -17,6 +17,7 @@ class Project with _$Project {
     @Default(0) int priority,
     required String id,
     required String title,
+    double? salary,
     String? subtitle,
     String? logoUrl,
     String? description,
