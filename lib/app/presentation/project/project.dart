@@ -93,6 +93,93 @@ class _ProjectPageState extends State<ProjectPage> {
         return oldState.requesting != newState.requesting || oldState.selected != newState.selected;
       },
       builder: (context, projectState) {
+        Widget salaryField() => MyFieldWithText(
+              enable: !projectState.requesting,
+              controller: _salary,
+              text: "\$ ${localProject.salary?.toString() ?? ""}",
+              inputDecoration: const InputDecoration(labelText: "Salary", hintText: "Salary"),
+              textStyle: const TextStyle(fontSize: 16),
+              validator: (v) {
+                if (v == null || v.isEmpty) {
+                  return null;
+                }
+                final salary = double.tryParse(v);
+                if (salary == null) {
+                  return "Please enter a valid number.";
+                }
+                if (salary <= 0) {
+                  return "Salary must be greater than zero.";
+                }
+                return null;
+              },
+            );
+
+        Widget projectLogoWidget() => ProjectLogo(
+              size: const Size(120, 120),
+              imageUrl: localProject.logoUrl,
+              onEdit: isAuth && !projectState.requesting
+                  ? () async {
+                      BlocProvider.of<ProjectBloc>(context).add(
+                        ProjectEventUploadFile(
+                          project: localProject,
+                          multiple: false,
+                          onResult: (value) {
+                            if (value.isEmpty) return;
+                            setState(() => localProject = localProject.copyWith(logoUrl: value.first));
+                          },
+                        ),
+                      );
+                    }
+                  : null,
+            );
+        Widget startDateWidget() => Transform.flip(
+              child: ListTile(
+                title: Align(alignment: Alignment.centerRight, child: Text(localProject.formatStartDate())),
+                leading: localProject.startDate == widget.project?.startDate
+                    ? null
+                    : IconButton(
+                        onPressed: () => setState(() => localProject = localProject.copyWith(startDate: widget.project?.startDate)),
+                        icon: const Icon(Icons.clear)),
+                trailing: !isAuth
+                    ? null
+                    : IconButton(
+                        onPressed: () async {
+                          final result = await showDatePicker(
+                            context: context,
+                            initialDate: localProject.startDate,
+                            firstDate: DateTime(1998),
+                            lastDate: DateTime.now(),
+                            builder: (_, child) => PointerInterceptor(child: child ?? const SizedBox()),
+                          );
+                          if (result == null) return;
+                          setState(() => localProject = localProject.copyWith(startDate: result));
+                        },
+                        icon: const Icon(Icons.date_range)),
+              ),
+            );
+        Widget endDateWidget() => ListTile(
+              title: Text(localProject.formatEndDate()),
+              trailing: localProject.endDate == widget.project?.endDate
+                  ? null
+                  : IconButton(
+                      onPressed: () => setState(() => localProject = localProject.copyWith(endDate: widget.project?.endDate)),
+                      icon: const Icon(Icons.clear)),
+              leading: !isAuth
+                  ? null
+                  : IconButton(
+                      onPressed: () async {
+                        final result = await showDatePicker(
+                          context: context,
+                          initialDate: localProject.endDate,
+                          firstDate: DateTime(1998),
+                          lastDate: DateTime.now(),
+                          builder: (_, child) => PointerInterceptor(child: child ?? const SizedBox()),
+                        );
+                        if (result == null) return;
+                        setState(() => localProject = localProject.copyWith(endDate: result));
+                      },
+                      icon: const Icon(Icons.date_range)),
+            );
         return GlassContainer.clearGlass(
           borderColor: Colors.white,
           elevation: 50,
@@ -105,84 +192,9 @@ class _ProjectPageState extends State<ProjectPage> {
               backgroundColor: Colors.transparent,
               title: Row(
                 children: [
-                  if (context.isDesktop)
-                    Flexible(
-                      child: Transform.flip(
-                        child: ListTile(
-                          title: Align(alignment: Alignment.centerRight, child: Text("Start: ${localProject.formatStartDate()}")),
-                          leading: localProject.startDate == widget.project?.startDate
-                              ? null
-                              : IconButton(
-                                  onPressed: () => setState(() => localProject = localProject.copyWith(startDate: widget.project?.startDate)),
-                                  icon: const Icon(Icons.clear)),
-                          trailing: !isAuth
-                              ? null
-                              : IconButton(
-                                  onPressed: () async {
-                                    final result = await showDatePicker(
-                                      context: context,
-                                      initialDate: localProject.startDate,
-                                      firstDate: DateTime(1998),
-                                      lastDate: DateTime.now(),
-                                      builder: (_, child) => PointerInterceptor(child: child ?? const SizedBox()),
-                                    );
-                                    if (result == null) return;
-                                    setState(() => localProject = localProject.copyWith(startDate: result));
-                                  },
-                                  icon: const Icon(Icons.date_range)),
-                        ),
-                      ),
-                    ),
-                  if (context.isDesktop)
-                    Flexible(
-                      child: ListTile(
-                        title: Text("End: ${localProject.formatEndDate()}"),
-                        trailing: localProject.endDate == widget.project?.endDate
-                            ? null
-                            : IconButton(
-                                onPressed: () => setState(() => localProject = localProject.copyWith(endDate: widget.project?.endDate)),
-                                icon: const Icon(Icons.clear)),
-                        leading: !isAuth
-                            ? null
-                            : IconButton(
-                                onPressed: () async {
-                                  final result = await showDatePicker(
-                                    context: context,
-                                    initialDate: localProject.endDate,
-                                    firstDate: DateTime(1998),
-                                    lastDate: DateTime.now(),
-                                    builder: (_, child) => PointerInterceptor(child: child ?? const SizedBox()),
-                                  );
-                                  if (result == null) return;
-                                  setState(() => localProject = localProject.copyWith(endDate: result));
-                                },
-                                icon: const Icon(Icons.date_range)),
-                      ),
-                    ),
-                  if (context.isDesktop)
-                    Container(
-                      constraints: const BoxConstraints(maxWidth: 160),
-                      child: MyFieldWithText(
-                        enable: !projectState.requesting,
-                        controller: _salary,
-                        text: "\$ ${localProject.salary?.toString() ?? ""}",
-                        inputDecoration: const InputDecoration(labelText: "Salary", hintText: "Salary"),
-                        textStyle: const TextStyle(fontSize: 16),
-                        validator: (v) {
-                          if (v == null || v.isEmpty) {
-                            return null;
-                          }
-                          final salary = double.tryParse(v);
-                          if (salary == null) {
-                            return "Please enter a valid number.";
-                          }
-                          if (salary <= 0) {
-                            return "Salary must be greater than zero.";
-                          }
-                          return null;
-                        },
-                      ),
-                    ),
+                  if (context.isDesktop) Flexible(child: startDateWidget()),
+                  if (context.isDesktop) Flexible(child: endDateWidget()),
+                  if (context.isDesktop) Container(constraints: const BoxConstraints(maxWidth: 160), child: salaryField()),
                 ],
               ),
               leading: IconButton(
@@ -253,6 +265,10 @@ class _ProjectPageState extends State<ProjectPage> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
+                            if (context.isMobile) ...[
+                              Row(children: [Flexible(child: startDateWidget()), Flexible(child: endDateWidget())]),
+                              projectLogoWidget(),
+                            ],
                             SizedBox(
                               width: double.maxFinite,
                               child: Row(
@@ -266,25 +282,7 @@ class _ProjectPageState extends State<ProjectPage> {
                                       max: projectState.projects.length + (widget.project == null ? 1 : 0),
                                       onChange: (value) => localProject = localProject.copyWith(priority: value),
                                     ),
-                                  if (context.isDesktop)
-                                    ProjectLogo(
-                                      size: const Size(120, 120),
-                                      imageUrl: localProject.logoUrl,
-                                      onEdit: isAuth && !projectState.requesting
-                                          ? () async {
-                                              BlocProvider.of<ProjectBloc>(context).add(
-                                                ProjectEventUploadFile(
-                                                  project: localProject,
-                                                  multiple: false,
-                                                  onResult: (value) {
-                                                    if (value.isEmpty) return;
-                                                    setState(() => localProject = localProject.copyWith(logoUrl: value.first));
-                                                  },
-                                                ),
-                                              );
-                                            }
-                                          : null,
-                                    ),
+                                  if (context.isDesktop) projectLogoWidget(),
                                   const HSp16(),
                                   SizedBox(
                                     width: 300,
@@ -321,6 +319,10 @@ class _ProjectPageState extends State<ProjectPage> {
                                 ],
                               ),
                             ),
+                            if (context.isMobile) ...[
+                              const VSp24(),
+                              salaryField(),
+                            ],
                             const VSp24(),
                             MyHtmlText(
                               controller: _description,
@@ -420,129 +422,113 @@ class _ProjectPageState extends State<ProjectPage> {
                           },
                         ),
                       const VSp24(),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Expanded(
-                            flex: 2,
-                            child: Column(
-                              children: [
-                                ToLink(
-                                  enable: !projectState.requesting,
-                                  title: "Github",
-                                  leading: Image.asset('/images/github.png'),
-                                  uri: localProject.githubLink == null && !isAuth ? null : Uri.tryParse(localProject.githubLink ?? ""),
-                                  onTextChange: isAuth ? (value) => localProject = localProject.copyWith(githubLink: value) : null,
-                                ),
-                                ToLink(
-                                  enable: !projectState.requesting,
-                                  title: "Application",
-                                  leading: Image.asset('/images/application.png'),
-                                  uri: localProject.appLink == null && !isAuth ? null : Uri.tryParse(localProject.appLink ?? ""),
-                                  onTextChange: isAuth ? (value) => localProject = localProject.copyWith(appLink: value) : null,
-                                ),
-                              ],
-                            ),
-                          ),
-                          Expanded(
-                            flex: 3,
-                            child: Container(
-                              padding: const EdgeInsets.all(8),
-                              decoration: BoxDecoration(border: Border.all(color: Colors.white), borderRadius: BorderRadius.circular(20)),
-                              child: SingleChildScrollView(
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    const Text("Owner Info", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24)),
-                                    const VSp8(),
-                                    Row(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                      ToLink(
+                        enable: !projectState.requesting,
+                        title: "Github",
+                        leading: Image.asset('images/github.png'),
+                        uri: localProject.githubLink == null && !isAuth ? null : Uri.tryParse(localProject.githubLink ?? ""),
+                        onTextChange: isAuth ? (value) => localProject = localProject.copyWith(githubLink: value) : null,
+                      ),
+                      ToLink(
+                        enable: !projectState.requesting,
+                        title: "Application",
+                        leading: Image.asset('images/application.png'),
+                        uri: localProject.appLink == null && !isAuth ? null : Uri.tryParse(localProject.appLink ?? ""),
+                        onTextChange: isAuth ? (value) => localProject = localProject.copyWith(appLink: value) : null,
+                      ),
+                      const VSp24(),
+                      Container(
+                        padding: const EdgeInsets.all(8),
+                        decoration: BoxDecoration(border: Border.all(color: Colors.white), borderRadius: BorderRadius.circular(20)),
+                        child: SingleChildScrollView(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              const Text("Owner Info", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24)),
+                              const VSp8(),
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Column(
+                                    children: [
+                                      ProjectLogo(
+                                        size: const Size(120, 120),
+                                        imageUrl: localProject.projectOwnerLogoUrl,
+                                        onEdit: isAuth && !projectState.requesting
+                                            ? () async {
+                                                BlocProvider.of<ProjectBloc>(context).add(
+                                                  ProjectEventUploadFile(
+                                                    project: localProject,
+                                                    multiple: false,
+                                                    onResult: (value) {
+                                                      if (value.isEmpty) return;
+                                                      setState(() => localProject = localProject.copyWith(projectOwnerLogoUrl: value.first));
+                                                    },
+                                                  ),
+                                                );
+                                              }
+                                            : null,
+                                      ),
+                                      if (isAuth)
+                                        Container(
+                                          margin: const EdgeInsets.only(top: 16),
+                                          width: 160,
+                                          child: SearchTags(
+                                            hintText: "Industries Tags",
+                                            suggestions: Project.allIndustriesTags(projects: BlocProvider.of<ProjectBloc>(context).state.projects),
+                                            enable: !projectState.requesting,
+                                            submitted: (value) {
+                                              List<String> newList = localProject.industries.where((e) => e != value).toList();
+                                              setState(() => localProject = localProject.copyWith(industries: [...newList, value]));
+                                            },
+                                          ),
+                                        ),
+                                    ],
+                                  ),
+                                  const HSp16(),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.center,
                                       mainAxisAlignment: MainAxisAlignment.start,
                                       children: [
-                                        Column(
-                                          children: [
-                                            ProjectLogo(
-                                              size: const Size(120, 120),
-                                              imageUrl: localProject.projectOwnerLogoUrl,
-                                              onEdit: isAuth && !projectState.requesting
-                                                  ? () async {
-                                                      BlocProvider.of<ProjectBloc>(context).add(
-                                                        ProjectEventUploadFile(
-                                                          project: localProject,
-                                                          multiple: false,
-                                                          onResult: (value) {
-                                                            if (value.isEmpty) return;
-                                                            setState(() => localProject = localProject.copyWith(projectOwnerLogoUrl: value.first));
-                                                          },
-                                                        ),
-                                                      );
-                                                    }
-                                                  : null,
-                                            ),
-                                            if (isAuth)
-                                              Container(
-                                                margin: const EdgeInsets.only(top: 16),
-                                                width: 160,
-                                                child: SearchTags(
-                                                  hintText: "Industries Tags",
-                                                  suggestions:
-                                                      Project.allIndustriesTags(projects: BlocProvider.of<ProjectBloc>(context).state.projects),
-                                                  enable: !projectState.requesting,
-                                                  submitted: (value) {
-                                                    List<String> newList = localProject.industries.where((e) => e != value).toList();
-                                                    setState(() => localProject = localProject.copyWith(industries: [...newList, value]));
-                                                  },
-                                                ),
-                                              ),
-                                          ],
+                                        MyFieldWithText(
+                                          enable: !projectState.requesting,
+                                          controller: _projectOwner,
+                                          text: localProject.projectOwner ?? "",
+                                          inputDecoration: const InputDecoration(labelText: "Project Owner"),
+                                          textStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                                         ),
-                                        const HSp16(),
-                                        Expanded(
-                                          child: Column(
-                                            crossAxisAlignment: CrossAxisAlignment.center,
-                                            mainAxisAlignment: MainAxisAlignment.start,
-                                            children: [
-                                              MyFieldWithText(
-                                                enable: !projectState.requesting,
-                                                controller: _projectOwner,
-                                                text: localProject.projectOwner ?? "",
-                                                inputDecoration: const InputDecoration(labelText: "Project Owner"),
-                                                textStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                                              ),
-                                              const VSp24(),
-                                              TechTagsWrap(
-                                                keyWrap: "Industries",
-                                                techTags: localProject.industries,
-                                                backgroundColor: Colors.white,
-                                                techTagsOrder: isAuth && !projectState.requesting
-                                                    ? (newIndex, oldIndex) {
-                                                        List<String> reordenable = localProject.industries.toList();
-                                                        reordenable.insert(newIndex, reordenable.removeAt(oldIndex));
-                                                        setState(() => localProject = localProject.copyWith(industries: reordenable));
-                                                      }
-                                                    : null,
-                                                onRemove: isAuth && !projectState.requesting
-                                                    ? (value) {
-                                                        List<String> newList = localProject.industries.where((e) => e != value).toList();
+                                        const VSp24(),
+                                        TechTagsWrap(
+                                          keyWrap: "Industries",
+                                          techTags: localProject.industries,
+                                          backgroundColor: Colors.white,
+                                          techTagsOrder: isAuth && !projectState.requesting
+                                              ? (newIndex, oldIndex) {
+                                                  List<String> reordenable = localProject.industries.toList();
+                                                  reordenable.insert(newIndex, reordenable.removeAt(oldIndex));
+                                                  setState(() => localProject = localProject.copyWith(industries: reordenable));
+                                                }
+                                              : null,
+                                          onRemove: isAuth && !projectState.requesting
+                                              ? (value) {
+                                                  List<String> newList = localProject.industries.where((e) => e != value).toList();
 
-                                                        setState(() => localProject = localProject.copyWith(industries: newList));
-                                                      }
-                                                    : null,
-                                              ),
-                                            ],
-                                          ),
-                                        )
+                                                  setState(() => localProject = localProject.copyWith(industries: newList));
+                                                }
+                                              : null,
+                                        ),
                                       ],
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ),
+                                    ),
+                                  )
+                                ],
+                              )
+                            ],
                           ),
-                        ],
+                        ),
                       ),
                       const SizedBox(height: 200)
                     ],
