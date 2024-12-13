@@ -59,11 +59,11 @@ class CloudFireStore {
       if (a.startDate == null && b.startDate == null) {
         return 0;
       } else if (a.startDate == null) {
-        return -1;
-      } else if (b.startDate == null) {
         return 1;
+      } else if (b.startDate == null) {
+        return -1;
       }
-      return a.startDate!.compareTo(b.startDate!);
+      return b.startDate!.compareTo(a.startDate!);
     });
     return DeveloperInfo(developer, projects);
   }
@@ -148,5 +148,4 @@ class CloudFireStore {
       return null;
     }
   }
-
 }
