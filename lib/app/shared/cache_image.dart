@@ -18,9 +18,14 @@ class ImageOnCache extends StatelessWidget {
     this.errorWidget,
   });
 
+
   @override
   Widget build(BuildContext context) {
     return CachedNetworkImage(
+      httpHeaders: const {
+        "Access-Control-Allow-Origin": "*",
+      },
+      useOldImageOnUrlChange: true,
       imageUrl: imageUrl,
       imageBuilder: (_, imageProvider) {
         final box = boxDecoration.copyWith(

@@ -4,8 +4,9 @@ import 'package:portfolio_eriel/domain/entities/__.dart';
 
 class CompanySection extends StatelessWidget {
   final List<Project> projects;
+  final int divideLine;
 
-  const CompanySection({super.key, required this.projects});
+  const CompanySection({super.key, required this.projects, required this.divideLine});
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +15,7 @@ class CompanySection extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Text("Contract Work (${projects.length})", style: const TextStyle(fontSize: 20)),
-        Expanded(child: GridSection(projects: projects, divideLine: 2))
+        Expanded(child: GridSection(projects: projects, divideLine: divideLine))
       ],
     );
   }

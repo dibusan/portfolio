@@ -22,13 +22,16 @@ class HomeWebPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-
-        Expanded(flex: 2, child: CompanySection(projects: projects.where((e) => !e.isPersonal).toList())),
-        const Divider(color: Colors.white, thickness: 2),
-        Expanded(flex: 1, child: PersonalSection(projects: projects.where((e) => e.isPersonal).toList()))
-      ],
-    );
+    return LayoutBuilder(builder: (context, constrains) {
+      bool heightOk = constrains.maxHeight > 1000;
+      return Column(
+        children: [
+          Expanded(
+              flex: heightOk ? 2 : 1, child: CompanySection(projects: projects.where((e) => !e.isPersonal).toList(), divideLine: heightOk ? 2 : 1)),
+          const Divider(color: Colors.white, thickness: 2),
+          Expanded(flex: 1, child: PersonalSection(projects: projects.where((e) => e.isPersonal).toList()))
+        ],
+      );
+    });
   }
 }

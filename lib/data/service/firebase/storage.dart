@@ -13,7 +13,8 @@ class FireStoreService {
     String? fileName,
     StorageBuckets bucket = StorageBuckets.none,
   }) async {
-    fileName = fileName ?? DateTime.now().millisecondsSinceEpoch.toString();
+    int milliseconds = DateTime.now().millisecondsSinceEpoch;
+    fileName = fileName == null ? milliseconds.toString() : "$fileName$milliseconds";
     String destination = 'portfolio/users/${developer.name}/${project == null ? "" : "${project.id}/"}';
 
     switch (bucket) {
