@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/material.dart';
+import 'package:cached_network_image_web/cached_network_image_web.dart';
 import 'package:glass_kit/glass_kit.dart';
 
 class ImageOnCache extends StatelessWidget {
