@@ -11,38 +11,57 @@ class SecretPage extends StatelessWidget {
   const SecretPage({super.key});
 
   /// Updates the URL metadata for a project.
-  static void updateUrlMetadata(BuildContext context, {required Project project, required Map<String, dynamic> urlMetadata}) {
-    final updatedMetadata = {...project.metadata, "${Project.urlsInMetadataKey}": urlMetadata};
+  static void updateUrlMetadata(BuildContext context,
+      {required Project project, required Map<String, dynamic> urlMetadata}) {
+    final updatedMetadata = {
+      ...project.metadata,
+      "${Project.urlsInMetadataKey}": urlMetadata
+    };
     final updatedProject = project.copyWith(
       metadata: updatedMetadata,
       appLink: urlMetadata['appLink'] ?? project.appLink,
     );
 
-    context.read<ProjectBloc>().add(ProjectEventUpdate(projectId: project.id, project: updatedProject));
+    context.read<ProjectBloc>().add(
+        ProjectEventUpdate(projectId: project.id, project: updatedProject));
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ProjectBloc, ProjectState>(
-      buildWhen: (previous, current) => previous.projects != current.projects || previous.loading != current.loading,
+      buildWhen: (previous, current) =>
+          previous.projects != current.projects ||
+          previous.loading != current.loading,
       builder: (context, state) {
         return Scaffold(
           appBar: AppBar(
             scrolledUnderElevation: 0,
             backgroundColor: Colors.transparent,
-            flexibleSpace: state.loading || state.requesting ? const LinearProgressIndicator() : null,
+            flexibleSpace: state.loading || state.requesting
+                ? const LinearProgressIndicator()
+                : null,
           ),
           extendBodyBehindAppBar: true,
           backgroundColor: Colors.transparent,
           body: Stack(
             children: [
               _buildBackground(),
-              _buildProjectList(context, state),
+              Column(
+                children: [
+                  _buildLinksSection(),
+                  const Divider(),
+                  Expanded(child: _buildProjectList(context, state),),
+                ],
+              ),
             ],
           ),
         );
       },
     );
+  }
+
+  Widget _buildLinksSection(){
+    return Text("test");
   }
 
   Widget _buildBackground() {
@@ -65,35 +84,29 @@ class SecretPage extends StatelessWidget {
       itemCount: state.projects.length,
       itemBuilder: (_, index) {
         final project = state.projects[index];
-        return _buildProjectTile(context, project);
+        return _buildUrlList(context, project);
       },
     );
   }
 
-  Widget _buildProjectTile(BuildContext context, Project project) {
-    return Column(
-      children: [
-        ListTile(
-          leading: CircleAvatar(
-            child: ImageOnCache(imageUrl: project.logoUrl ?? ""),
-          ),
-          title: Text(project.title),
-          subtitle: Text(project.subtitle ?? ""),
-          trailing: IconButton(
-            icon: const Icon(Icons.add),
-            onPressed: () => _showAddUrlDialog(context, project),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(left: 100),
-          child: _buildUrlList(context, project),
-        ),
-      ],
-    );
-  }
-
   Widget _buildUrlList(BuildContext context, Project project) {
-    final urls = Map<String, dynamic>.from(project.metadata[Project.urlsInMetadataKey] ?? {})..addAll({'appLink': project.appLink});
+    final urls = Map<String, dynamic>.from(
+        project.metadata[Project.urlsInMetadataKey] ?? {})
+      ..addAll({'appLink': project.appLink});
+
+    return Column(
+      children: urls.entries.map((entry) {
+        return Padding(
+          padding: const EdgeInsets.only(top: 10),
+          child: _buildUrlView(
+            context,
+            project.logoUrl ?? "",
+            entry.key,
+            entry.value ?? "",
+          ),
+        );
+      }).toList(),
+    );
 
     return Column(
       children: urls.entries.map((entry) {
@@ -115,7 +128,8 @@ class SecretPage extends StatelessWidget {
               _buildIconButton(
                 icon: Icons.edit,
                 color: Colors.green,
-                onTap: () => _showAddUrlDialog(context, project, urlKey: urlKey),
+                onTap: () =>
+                    _showAddUrlDialog(context, project, urlKey: urlKey),
               ),
               const HSp10(),
               _buildIconButton(
@@ -130,7 +144,46 @@ class SecretPage extends StatelessWidget {
     );
   }
 
-  Widget _buildIconButton({required IconData icon, required Color color, VoidCallback? onTap, VoidCallback? onLongPress}) {
+  Widget _buildUrlView(
+    BuildContext context,
+    String imgUrl,
+    String title,
+    String url,
+  ) {
+    final urlValue = Uri.tryParse(url);
+
+    return Row(
+      children: [
+        CircleAvatar(child: ImageOnCache(imageUrl: imgUrl)),
+        Container(
+          width: 30,
+        ),
+        SizedBox(
+          width: 100,
+          child: Text(title),
+        ),
+        SizedBox(
+          width: 400,
+          child: InkWell(
+            onTap: () {
+              _launchUrl(urlValue);
+            },
+            child: Text(
+              urlValue?.toString() ?? "",
+              style: const TextStyle(color: Colors.blue),
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildIconButton(
+      {required IconData icon,
+      required Color color,
+      VoidCallback? onTap,
+      VoidCallback? onLongPress}) {
     return InkWell(
       onTap: onTap,
       onLongPress: onLongPress,
@@ -155,11 +208,14 @@ class SecretPage extends StatelessWidget {
   }
 
   void _removeUrl(BuildContext context, Project project, String urlKey) {
-    final urlMetadata = Map<String, dynamic>.from(project.metadata[Project.urlsInMetadataKey] ?? {})..remove(urlKey);
+    final urlMetadata = Map<String, dynamic>.from(
+        project.metadata[Project.urlsInMetadataKey] ?? {})
+      ..remove(urlKey);
     updateUrlMetadata(context, project: project, urlMetadata: urlMetadata);
   }
 
-  void _showAddUrlDialog(BuildContext context, Project project, {String? urlKey}) {
+  void _showAddUrlDialog(BuildContext context, Project project,
+      {String? urlKey}) {
     showDialog(
       context: context,
       builder: (_) => DialogAddUrl(project: project, keyUrl: urlKey),
@@ -189,8 +245,9 @@ class _DialogAddUrlState extends State<DialogAddUrl> {
 
     if (isEditing) {
       controller1.text = widget.keyUrl!;
-      controller2.text =
-          ((widget.project.metadata[Project.urlsInMetadataKey] ?? {})[widget.keyUrl]) ?? (widget.keyUrl == 'appLink' ? widget.project.appLink : "");
+      controller2.text = ((widget.project.metadata[Project.urlsInMetadataKey] ??
+              {})[widget.keyUrl]) ??
+          (widget.keyUrl == 'appLink' ? widget.project.appLink : "");
     }
     super.initState();
   }
@@ -244,16 +301,20 @@ class _DialogAddUrlState extends State<DialogAddUrl> {
       ),
       TextButton(
         onPressed: _saveUrl,
-        child: const Text("Save", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.blue)),
+        child: const Text("Save",
+            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.blue)),
       ),
     ];
   }
 
   void _saveUrl() {
     if (_formKey.currentState?.validate() ?? false) {
-      final urlMetadata = Map<String, dynamic>.from(widget.project.metadata[Project.urlsInMetadataKey] ?? {})..[controller1.text] = controller2.text;
+      final urlMetadata = Map<String, dynamic>.from(
+          widget.project.metadata[Project.urlsInMetadataKey] ?? {})
+        ..[controller1.text] = controller2.text;
 
-      SecretPage.updateUrlMetadata(context, project: widget.project, urlMetadata: urlMetadata);
+      SecretPage.updateUrlMetadata(context,
+          project: widget.project, urlMetadata: urlMetadata);
       context.pop();
     }
   }
