@@ -32,6 +32,7 @@ class Project with _$Project {
     String? projectOwnerLogoUrl,
     ProjectType? projectType,
     @Default([]) List<String> industries,
+    @Default({}) Map<String, Map<String, dynamic>> metadata,
   }) = _Project;
 
   factory Project.fromJson(Map<String, Object?> json) => _$ProjectFromJson(json);

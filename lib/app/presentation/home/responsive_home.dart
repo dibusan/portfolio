@@ -4,6 +4,7 @@ import 'package:portfolio_eriel/app/bloc/filter/bloc.dart';
 import 'package:portfolio_eriel/app/bloc/filter/event.dart';
 import 'package:portfolio_eriel/app/bloc/filter/state.dart';
 import 'package:portfolio_eriel/app/bloc/project/project_bloc.dart';
+import 'package:portfolio_eriel/app/bloc/security/security_bloc.dart';
 import 'package:portfolio_eriel/app/presentation/home/home_movil.dart';
 import 'package:portfolio_eriel/app/presentation/home/home_web.dart';
 import 'package:portfolio_eriel/app/presentation/home/leftBar/letf_bar.dart';
@@ -58,6 +59,8 @@ class _ResponsiveHomeState extends State<ResponsiveHome> {
                       ),
                     ),
                     actions: [
+
+                      BlocBuilder<SecurityBloc, SecurityState>(builder: (_, sec) => sec.isAuth ? HeaderAppBar.secretPage(context) : const SizedBox()),
                       HeaderAppBar.pdfReport(context),
                       HeaderAppBar.aboutMe(context, developer: stateProjects.developer),
                       HeaderAppBar.contactMe(context, developer: stateProjects.developer),

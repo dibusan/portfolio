@@ -36,6 +36,10 @@ _$ProjectImpl _$$ProjectImplFromJson(Map<String, dynamic> json) =>
               ?.map((e) => e as String)
               .toList() ??
           const [],
+      metadata: (json['metadata'] as Map<String, dynamic>?)?.map(
+            (k, e) => MapEntry(k, e as Map<String, dynamic>),
+          ) ??
+          const {},
     );
 
 Map<String, dynamic> _$$ProjectImplToJson(_$ProjectImpl instance) =>
@@ -59,6 +63,7 @@ Map<String, dynamic> _$$ProjectImplToJson(_$ProjectImpl instance) =>
       'projectOwnerLogoUrl': instance.projectOwnerLogoUrl,
       'projectType': _$ProjectTypeEnumMap[instance.projectType],
       'industries': instance.industries,
+      'metadata': instance.metadata,
     };
 
 const _$ProjectTypeEnumMap = {

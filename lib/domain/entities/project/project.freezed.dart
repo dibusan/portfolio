@@ -40,6 +40,8 @@ mixin _$Project {
   String? get projectOwnerLogoUrl => throw _privateConstructorUsedError;
   ProjectType? get projectType => throw _privateConstructorUsedError;
   List<String> get industries => throw _privateConstructorUsedError;
+  Map<String, Map<String, dynamic>> get metadata =>
+      throw _privateConstructorUsedError;
 
   /// Serializes this Project to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -73,7 +75,8 @@ abstract class $ProjectCopyWith<$Res> {
       String? projectOwner,
       String? projectOwnerLogoUrl,
       ProjectType? projectType,
-      List<String> industries});
+      List<String> industries,
+      Map<String, Map<String, dynamic>> metadata});
 }
 
 /// @nodoc
@@ -109,6 +112,7 @@ class _$ProjectCopyWithImpl<$Res, $Val extends Project>
     Object? projectOwnerLogoUrl = freezed,
     Object? projectType = freezed,
     Object? industries = null,
+    Object? metadata = null,
   }) {
     return _then(_value.copyWith(
       priority: null == priority
@@ -183,6 +187,10 @@ class _$ProjectCopyWithImpl<$Res, $Val extends Project>
           ? _value.industries
           : industries // ignore: cast_nullable_to_non_nullable
               as List<String>,
+      metadata: null == metadata
+          ? _value.metadata
+          : metadata // ignore: cast_nullable_to_non_nullable
+              as Map<String, Map<String, dynamic>>,
     ) as $Val);
   }
 }
@@ -212,7 +220,8 @@ abstract class _$$ProjectImplCopyWith<$Res> implements $ProjectCopyWith<$Res> {
       String? projectOwner,
       String? projectOwnerLogoUrl,
       ProjectType? projectType,
-      List<String> industries});
+      List<String> industries,
+      Map<String, Map<String, dynamic>> metadata});
 }
 
 /// @nodoc
@@ -246,6 +255,7 @@ class __$$ProjectImplCopyWithImpl<$Res>
     Object? projectOwnerLogoUrl = freezed,
     Object? projectType = freezed,
     Object? industries = null,
+    Object? metadata = null,
   }) {
     return _then(_$ProjectImpl(
       priority: null == priority
@@ -320,6 +330,10 @@ class __$$ProjectImplCopyWithImpl<$Res>
           ? _value._industries
           : industries // ignore: cast_nullable_to_non_nullable
               as List<String>,
+      metadata: null == metadata
+          ? _value._metadata
+          : metadata // ignore: cast_nullable_to_non_nullable
+              as Map<String, Map<String, dynamic>>,
     ));
   }
 }
@@ -345,10 +359,12 @@ class _$ProjectImpl extends _Project {
       this.projectOwner,
       this.projectOwnerLogoUrl,
       this.projectType,
-      final List<String> industries = const []})
+      final List<String> industries = const [],
+      final Map<String, Map<String, dynamic>> metadata = const {}})
       : _techTags = techTags,
         _images = images,
         _industries = industries,
+        _metadata = metadata,
         super._();
 
   factory _$ProjectImpl.fromJson(Map<String, dynamic> json) =>
@@ -415,9 +431,18 @@ class _$ProjectImpl extends _Project {
     return EqualUnmodifiableListView(_industries);
   }
 
+  final Map<String, Map<String, dynamic>> _metadata;
+  @override
+  @JsonKey()
+  Map<String, Map<String, dynamic>> get metadata {
+    if (_metadata is EqualUnmodifiableMapView) return _metadata;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(_metadata);
+  }
+
   @override
   String toString() {
-    return 'Project(priority: $priority, id: $id, title: $title, salary: $salary, subtitle: $subtitle, logoUrl: $logoUrl, description: $description, techTags: $techTags, images: $images, githubLink: $githubLink, appLink: $appLink, startDate: $startDate, endDate: $endDate, isPersonal: $isPersonal, projectOwner: $projectOwner, projectOwnerLogoUrl: $projectOwnerLogoUrl, projectType: $projectType, industries: $industries)';
+    return 'Project(priority: $priority, id: $id, title: $title, salary: $salary, subtitle: $subtitle, logoUrl: $logoUrl, description: $description, techTags: $techTags, images: $images, githubLink: $githubLink, appLink: $appLink, startDate: $startDate, endDate: $endDate, isPersonal: $isPersonal, projectOwner: $projectOwner, projectOwnerLogoUrl: $projectOwnerLogoUrl, projectType: $projectType, industries: $industries, metadata: $metadata)';
   }
 
   @override
@@ -452,31 +477,34 @@ class _$ProjectImpl extends _Project {
             (identical(other.projectType, projectType) ||
                 other.projectType == projectType) &&
             const DeepCollectionEquality()
-                .equals(other._industries, _industries));
+                .equals(other._industries, _industries) &&
+            const DeepCollectionEquality().equals(other._metadata, _metadata));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      priority,
-      id,
-      title,
-      salary,
-      subtitle,
-      logoUrl,
-      description,
-      const DeepCollectionEquality().hash(_techTags),
-      const DeepCollectionEquality().hash(_images),
-      githubLink,
-      appLink,
-      startDate,
-      endDate,
-      isPersonal,
-      projectOwner,
-      projectOwnerLogoUrl,
-      projectType,
-      const DeepCollectionEquality().hash(_industries));
+  int get hashCode => Object.hashAll([
+        runtimeType,
+        priority,
+        id,
+        title,
+        salary,
+        subtitle,
+        logoUrl,
+        description,
+        const DeepCollectionEquality().hash(_techTags),
+        const DeepCollectionEquality().hash(_images),
+        githubLink,
+        appLink,
+        startDate,
+        endDate,
+        isPersonal,
+        projectOwner,
+        projectOwnerLogoUrl,
+        projectType,
+        const DeepCollectionEquality().hash(_industries),
+        const DeepCollectionEquality().hash(_metadata)
+      ]);
 
   /// Create a copy of Project
   /// with the given fields replaced by the non-null parameter values.
@@ -513,7 +541,8 @@ abstract class _Project extends Project {
       final String? projectOwner,
       final String? projectOwnerLogoUrl,
       final ProjectType? projectType,
-      final List<String> industries}) = _$ProjectImpl;
+      final List<String> industries,
+      final Map<String, Map<String, dynamic>> metadata}) = _$ProjectImpl;
   const _Project._() : super._();
 
   factory _Project.fromJson(Map<String, dynamic> json) = _$ProjectImpl.fromJson;
@@ -556,6 +585,8 @@ abstract class _Project extends Project {
   ProjectType? get projectType;
   @override
   List<String> get industries;
+  @override
+  Map<String, Map<String, dynamic>> get metadata;
 
   /// Create a copy of Project
   /// with the given fields replaced by the non-null parameter values.

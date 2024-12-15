@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:portfolio_eriel/app/bloc/filter/bloc.dart';
 import 'package:portfolio_eriel/app/bloc/filter/state.dart';
+import 'package:portfolio_eriel/app/bloc/security/security_bloc.dart';
 import 'package:portfolio_eriel/app/navigator.dart';
 import 'package:portfolio_eriel/app/presentation/about_me/about_me.dart';
 import 'package:portfolio_eriel/app/shared/__.dart';
@@ -27,6 +28,16 @@ class HeaderAppBar extends StatelessWidget {
             style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
           )
         ],
+      ),
+    );
+  }
+
+  static secretPage(BuildContext context) {
+    return TextButton(
+      onPressed: () => context.goNamed(AppRoute.secret.name),
+      child: const Text(
+        "App Urls",
+        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
       ),
     );
   }
@@ -103,6 +114,8 @@ class HeaderAppBar extends StatelessWidget {
           children: [
             Flexible(child: HeaderAppBar.searchField(context)),
             const Expanded(child: SizedBox()),
+            const HSp16(),
+            BlocBuilder<SecurityBloc, SecurityState>(builder: (_, sec) => sec.isAuth ? HeaderAppBar.secretPage(context) : const SizedBox()),
             const HSp16(),
             HeaderAppBar.pdfReport(context),
             const HSp16(),
