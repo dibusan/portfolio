@@ -21,6 +21,7 @@ class _GridSectionState extends State<GridSection> {
   void initState() {
     super.initState();
     controller.addListener(_checkScrollPosition);
+    Future.microtask(() => _checkScrollPosition());
   }
 
   @override
