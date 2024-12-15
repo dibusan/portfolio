@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:portfolio_eriel/app/shared/__.dart';
 
 class ImagesCarousel extends StatelessWidget {
@@ -8,8 +9,10 @@ class ImagesCarousel extends StatelessWidget {
   final List<String> remotes;
   final Function(String image, bool onlyRemote)? onDelete;
   final bool enable;
+  final Function(int oldIndex, int newIndex)? changeIndex;
 
-  const ImagesCarousel({super.key, required this.allImages, this.locals = const [], this.remotes = const [], this.onDelete, this.enable = true});
+  const ImagesCarousel(
+      {super.key, required this.allImages, this.locals = const [], this.remotes = const [], this.onDelete, this.enable = true, this.changeIndex});
 
   _imageOnlyLocal(String image) {
     return !remotes.contains(image) && locals.contains(image);
@@ -21,6 +24,28 @@ class ImagesCarousel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Widget priorityWidget(image, index) => Positioned(
+          left: 10,
+          top: 10,
+          child: SizedBox(
+            width: 40,
+            child: TextFormField(
+              controller: TextEditingController(text: "$index"),
+              validator: (v) {
+                int? value = int.tryParse(v ?? "");
+                if (value == null) return "Invalid number";
+                return null;
+              },
+              onFieldSubmitted: (value) {
+                int? newIndex = int.tryParse(value);
+                if (newIndex != null && newIndex >= 0 && newIndex < allImages.length) {
+                  changeIndex?.call(index, newIndex);
+                }
+              },
+            ),
+          ),
+        );
+
     Widget removeWidget(image) => Positioned(
           right: 10,
           top: 10,
@@ -86,7 +111,10 @@ class ImagesCarousel extends StatelessWidget {
               )
             : CarouselSlider(
                 options: CarouselOptions(height: 300.0, autoPlay: true, viewportFraction: 0.6),
-                items: allImages.map((i) {
+                items: allImages.asMap().entries.map((entry) {
+                  int index = entry.key;
+                  String i = entry.value;
+
                   return Builder(
                     builder: (BuildContext context) {
                       return Container(
@@ -101,7 +129,8 @@ class ImagesCarousel extends StatelessWidget {
                               fit: BoxFit.cover,
                             ),
                             ...infoWidget(i),
-                            if (onDelete != null && enable) removeWidget(i)
+                            if (onDelete != null && enable) removeWidget(i),
+                            if (changeIndex != null) priorityWidget(i, index),
                           ],
                         ),
                       );

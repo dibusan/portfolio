@@ -416,6 +416,18 @@ class _ProjectPageState extends State<ProjectPage> {
                             allImages: allImages,
                             remotes: widget.project?.images ?? [],
                             locals: localProject.images,
+                            changeIndex: localProject.images.length == (widget.project?.images ?? []).length
+                                ? (oldIndex, newIndex) {
+                                    List<String> temp = localProject.images.toList();
+                                    String toChange = temp[oldIndex];
+                                    temp.removeAt(oldIndex);
+                                    temp.insert(newIndex, toChange);
+                                    setState(() {
+                                      localProject = localProject.copyWith(images: temp);
+                                      widget.project = widget.project?.copyWith(images: temp);
+                                    });
+                                  }
+                                : null,
                             onDelete: (image, onlyRemote) {
                               if (onlyRemote) {
                                 setState(() => localProject = localProject.copyWith(images: [...localProject.images, image]));
