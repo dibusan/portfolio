@@ -11,17 +11,21 @@ import 'package:url_launcher/url_launcher.dart';
 class SecretPage extends StatelessWidget {
   const SecretPage({super.key});
 
-  static updateUrMetadataProject(BuildContext context, {required Project project, required Map<String, dynamic> urlMetadata}) {
+  /// Updates the URL metadata for a project.
+  static void updateUrlMetadata(BuildContext context, {required Project project, required Map<String, dynamic> urlMetadata}) {
     final updatedMetadata = {...project.metadata, 'urls': urlMetadata};
-    final Project pTemp = project.copyWith(metadata: updatedMetadata, appLink: urlMetadata['appLink'] ?? project.appLink);
+    final updatedProject = project.copyWith(
+      metadata: updatedMetadata,
+      appLink: urlMetadata['appLink'] ?? project.appLink,
+    );
 
-    final bloc = BlocProvider.of<ProjectBloc>(context);
-    bloc.add(ProjectEventUpdate(projectId: project.id, project: pTemp));
+    context.read<ProjectBloc>().add(ProjectEventUpdate(projectId: project.id, project: updatedProject));
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ProjectBloc, ProjectState>(
+      buildWhen: (previous, current) => previous.projects != current.projects || previous.loading != current.loading,
       builder: (context, state) {
         return Scaffold(
           appBar: AppBar(
@@ -33,101 +37,133 @@ class SecretPage extends StatelessWidget {
           backgroundColor: Colors.transparent,
           body: Stack(
             children: [
-              Container(
-                width: double.maxFinite,
-                height: double.maxFinite,
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage('assets/background.png'),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
-              ListView.separated(
-                shrinkWrap: true,
-                separatorBuilder: (_, i) => const Divider(),
-                itemBuilder: (_, index) {
-                  final proj = state.projects[index];
-
-                  return Column(
-                    children: [
-                      ListTile(
-                        leading: CircleAvatar(
-                          child: ImageOnCache(imageUrl: proj.logoUrl ?? ""),
-                        ),
-                        title: Text(proj.title),
-                        subtitle: Text(proj.subtitle ?? ""),
-                        trailing: CircleAvatar(
-                          backgroundColor: Colors.blue.withOpacity(0.3),
-                          child: IconButton(
-                              onPressed: () {
-                                showDialog(context: context, builder: (_) => DialogAddUrl(project: proj));
-                              },
-                              icon: const Icon(Icons.add)),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 100),
-                        child: SingleChildScrollView(
-                          child: Column(
-                            children: ((proj.metadata['urls'] ?? {})..addAll({'appLink': proj.appLink})).keys.map(
-                              (e) {
-                                final url = Uri.parse((proj.metadata['urls'] ?? {})[e] ?? "");
-                                return ListTile(
-                                  title: Text(e),
-                                  subtitle: Text(url.toString()),
-                                  trailing: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      InkWell(
-                                        onTap: () => canLaunchUrl(url).then((result) => result ? launchUrl(url) : debugPrint("Can't launch")),
-                                        child: CircleAvatar(
-                                          radius: 16,
-                                          backgroundColor: Colors.white.withOpacity(0.3),
-                                          child: const Icon(Icons.open_in_new, size: 16),
-                                        ),
-                                      ),
-                                      const HSp10(),
-                                      InkWell(
-                                        onTap: () {
-                                          showDialog(context: context, builder: (_) => DialogAddUrl(project: proj, keyUrl: e));
-                                        },
-                                        child: CircleAvatar(
-                                          radius: 16,
-                                          backgroundColor: Colors.green.withOpacity(0.3),
-                                          child: const Icon(Icons.edit, size: 16),
-                                        ),
-                                      ),
-                                      const HSp10(),
-                                      InkWell(
-                                        onLongPress: () {
-                                          final urlMetadata = Map<String, dynamic>.from(proj.metadata['urls'] ?? {});
-                                          urlMetadata.remove(e);
-                                          SecretPage.updateUrMetadataProject(context, project: proj, urlMetadata: urlMetadata);
-                                        },
-                                        child: CircleAvatar(
-                                          radius: 16,
-                                          backgroundColor: Colors.red.withOpacity(0.3),
-                                          child: const Icon(Icons.remove, size: 16),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              },
-                            ).toList(),
-                          ),
-                        ),
-                      )
-                    ],
-                  );
-                },
-                itemCount: state.projects.length,
-              )
+              _buildBackground(),
+              _buildProjectList(context, state),
             ],
           ),
         );
       },
+    );
+  }
+
+  Widget _buildBackground() {
+    return Container(
+      width: double.infinity,
+      height: double.infinity,
+      decoration: const BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage('assets/background.png'),
+          fit: BoxFit.cover,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildProjectList(BuildContext context, ProjectState state) {
+    return ListView.separated(
+      padding: const EdgeInsets.only(top: kToolbarHeight),
+      separatorBuilder: (_, __) => const Divider(),
+      itemCount: state.projects.length,
+      itemBuilder: (_, index) {
+        final project = state.projects[index];
+        return _buildProjectTile(context, project);
+      },
+    );
+  }
+
+  Widget _buildProjectTile(BuildContext context, Project project) {
+    return Column(
+      children: [
+        ListTile(
+          leading: CircleAvatar(
+            child: ImageOnCache(imageUrl: project.logoUrl ?? ""),
+          ),
+          title: Text(project.title),
+          subtitle: Text(project.subtitle ?? ""),
+          trailing: IconButton(
+            icon: const Icon(Icons.add),
+            onPressed: () => _showAddUrlDialog(context, project),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: 100),
+          child: _buildUrlList(context, project),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildUrlList(BuildContext context, Project project) {
+    final urls = Map<String, dynamic>.from(project.metadata['urls'] ?? {})..addAll({'appLink': project.appLink});
+
+    return Column(
+      children: urls.entries.map((entry) {
+        final urlKey = entry.key;
+        final urlValue = Uri.tryParse(entry.value ?? "");
+
+        return ListTile(
+          title: Text(urlKey),
+          subtitle: Text(urlValue?.toString() ?? ""),
+          trailing: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              _buildIconButton(
+                icon: Icons.open_in_new,
+                color: Colors.blue,
+                onTap: () => _launchUrl(urlValue),
+              ),
+              const HSp10(),
+              _buildIconButton(
+                icon: Icons.edit,
+                color: Colors.green,
+                onTap: () => _showAddUrlDialog(context, project, urlKey: urlKey),
+              ),
+              const HSp10(),
+              _buildIconButton(
+                icon: Icons.remove,
+                color: Colors.red,
+                onLongPress: () => _removeUrl(context, project, urlKey),
+              ),
+            ],
+          ),
+        );
+      }).toList(),
+    );
+  }
+
+  Widget _buildIconButton({required IconData icon, required Color color, VoidCallback? onTap, VoidCallback? onLongPress}) {
+    return InkWell(
+      onTap: onTap,
+      onLongPress: onLongPress,
+      child: CircleAvatar(
+        radius: 16,
+        backgroundColor: color.withOpacity(0.3),
+        child: Icon(icon, size: 16),
+      ),
+    );
+  }
+
+  void _launchUrl(Uri? url) {
+    if (url != null) {
+      canLaunchUrl(url).then((result) {
+        if (result) {
+          launchUrl(url);
+        } else {
+          debugPrint("Cannot launch URL: $url");
+        }
+      });
+    }
+  }
+
+  void _removeUrl(BuildContext context, Project project, String urlKey) {
+    final urlMetadata = Map<String, dynamic>.from(project.metadata['urls'] ?? {})..remove(urlKey);
+    updateUrlMetadata(context, project: project, urlMetadata: urlMetadata);
+  }
+
+  void _showAddUrlDialog(BuildContext context, Project project, {String? urlKey}) {
+    showDialog(
+      context: context,
+      builder: (_) => DialogAddUrl(project: project, keyUrl: urlKey),
     );
   }
 }
@@ -145,93 +181,86 @@ class DialogAddUrl extends StatefulWidget {
 class _DialogAddUrlState extends State<DialogAddUrl> {
   final TextEditingController controller1 = TextEditingController();
   final TextEditingController controller2 = TextEditingController();
-  late bool editKey;
-  final GlobalKey<FormState> _key = GlobalKey();
+  final GlobalKey<FormState> _formKey = GlobalKey();
+  late final bool isEditing;
 
   @override
   void initState() {
-    editKey = widget.keyUrl != null;
-    if (editKey) {
+    isEditing = widget.keyUrl != null;
+
+    if (isEditing) {
       controller1.text = widget.keyUrl!;
       controller2.text = (widget.project.metadata['urls'] ?? {})[widget.keyUrl] ?? "";
     }
-
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
+    return AlertDialog(
+      title: AppBar(
+        title: Text(isEditing ? "Edit URL" : "Add URL"),
+        backgroundColor: Colors.transparent,
+      ),
+      backgroundColor: Colors.grey,
+      content: _buildForm(context),
+      actions: _buildActions(context),
+    );
+  }
 
-    return BlocBuilder<ProjectBloc, ProjectState>(
-      builder: (_, state) {
-        final isLoading = state.requesting || state.loading;
-        return AlertDialog(
-          title: AppBar(title: Text(editKey ? "Edit Url" : "Add Url"), backgroundColor: Colors.transparent),
-          backgroundColor: Colors.grey,
-          content: SizedBox(
-            width: context.isMobile ? size.width : size.width * 0.5,
-            child: Form(
-              key: _key,
-              child: Row(
-                children: [
-                  Expanded(
-                    child: MyFieldWithText(
-                      controller: controller1,
-                      text: controller1.text,
-                      inputDecoration: const InputDecoration(hintText: "Identifier"),
-                      enable: !editKey,
-                      textAlign: TextAlign.left,
-                    ),
-                  ),
-                  const HSp16(),
-                  Expanded(
-                    flex: 3,
-                    child: MyFieldWithText(
-                      controller: controller2,
-                      text: controller2.text,
-                      inputDecoration: const InputDecoration(hintText: "Url"),
-                      textAlign: TextAlign.left,
-                      validator: (value) {
-                        if (value?.isEmpty ?? true) {
-                          return null;
-                        }
-                        if (Uri.parse(value!).host.isEmpty) {
-                          return "Type correct Uri";
-                        }
-                        return null;
-                      },
-                    ),
-                  ),
-                ],
-              ),
+  Widget _buildForm(BuildContext context) {
+    return Form(
+      key: _formKey,
+      child: Row(
+        children: [
+          Expanded(
+            child: MyFieldWithText(
+              controller: controller1,
+              text: controller1.text,
+              inputDecoration: const InputDecoration(hintText: "Identifier"),
+              enable: !isEditing,
             ),
           ),
-          actions: [
-            TextButton(
-              onPressed: () => context.pop(),
-              child: const Text(
-                "Close",
-                style: TextStyle(color: Colors.black),
-              ),
+          const HSp16(),
+          Expanded(
+            flex: 3,
+            child: MyFieldWithText(
+              controller: controller2,
+              text: controller2.text,
+              inputDecoration: const InputDecoration(hintText: "URL"),
+              validator: _urlValidator,
             ),
-            TextButton(
-              onPressed: isLoading
-                  ? null
-                  : () {
-                      if (_key.currentState?.validate() ?? false) {
-                        final urlMetadata = Map<String, dynamic>.from(widget.project.metadata['urls'] ?? {})..[controller1.text] = controller2.text;
-                        SecretPage.updateUrMetadataProject(context, project: widget.project, urlMetadata: urlMetadata);
-                      }
-                    },
-              child: const Text(
-                "Save",
-                style: TextStyle(fontWeight: FontWeight.bold, color: Colors.blue),
-              ),
-            )
-          ],
-        );
-      },
+          ),
+        ],
+      ),
     );
+  }
+
+  List<Widget> _buildActions(BuildContext context) {
+    return [
+      TextButton(
+        onPressed: () => context.pop(),
+        child: const Text("Close", style: TextStyle(color: Colors.black)),
+      ),
+      TextButton(
+        onPressed: _saveUrl,
+        child: const Text("Save", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.blue)),
+      ),
+    ];
+  }
+
+  void _saveUrl() {
+    if (_formKey.currentState?.validate() ?? false) {
+      final urlMetadata = Map<String, dynamic>.from(widget.project.metadata['urls'] ?? {})..[controller1.text] = controller2.text;
+
+      SecretPage.updateUrlMetadata(context, project: widget.project, urlMetadata: urlMetadata);
+      context.pop();
+    }
+  }
+
+  String? _urlValidator(String? value) {
+    if (value == null || value.isEmpty) return "URL cannot be empty";
+    if (Uri.tryParse(value)?.host.isEmpty ?? true) return "Enter a valid URL";
+    return null;
   }
 }
