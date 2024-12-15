@@ -130,7 +130,7 @@ class ImagesCarousel extends StatelessWidget {
                             ),
                             ...infoWidget(i),
                             if (onDelete != null && enable) removeWidget(i),
-                            if (changeIndex != null) priorityWidget(i, index),
+                            if (changeIndex != null && enable) priorityWidget(i, index),
                           ],
                         ),
                       );
