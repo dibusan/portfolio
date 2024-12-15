@@ -109,7 +109,7 @@ class ProjectPreviewCard extends StatelessWidget {
                           child: Stack(
                             children: [
                               project.images.isEmpty
-                                  ? const SizedBox()
+                                  ? const SizedBox(height: double.maxFinite)
                                   : ImageOnCache(
                                       key: Key(project.images.first),
                                       imageUrl: project.images.first,
