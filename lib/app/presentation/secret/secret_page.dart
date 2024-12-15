@@ -4,7 +4,6 @@ import 'package:portfolio_eriel/app/bloc/project/project_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:portfolio_eriel/app/presentation/project/dialog/field.dart';
 import 'package:portfolio_eriel/app/shared/__.dart';
-import 'package:portfolio_eriel/app/shared/responsive/device.dart';
 import 'package:portfolio_eriel/domain/entities/__.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -13,7 +12,7 @@ class SecretPage extends StatelessWidget {
 
   /// Updates the URL metadata for a project.
   static void updateUrlMetadata(BuildContext context, {required Project project, required Map<String, dynamic> urlMetadata}) {
-    final updatedMetadata = {...project.metadata, 'urls': urlMetadata};
+    final updatedMetadata = {...project.metadata, "${Project.urlsInMetadataKey}": urlMetadata};
     final updatedProject = project.copyWith(
       metadata: updatedMetadata,
       appLink: urlMetadata['appLink'] ?? project.appLink,
@@ -94,7 +93,7 @@ class SecretPage extends StatelessWidget {
   }
 
   Widget _buildUrlList(BuildContext context, Project project) {
-    final urls = Map<String, dynamic>.from(project.metadata['urls'] ?? {})..addAll({'appLink': project.appLink});
+    final urls = Map<String, dynamic>.from(project.metadata[Project.urlsInMetadataKey] ?? {})..addAll({'appLink': project.appLink});
 
     return Column(
       children: urls.entries.map((entry) {
@@ -156,7 +155,7 @@ class SecretPage extends StatelessWidget {
   }
 
   void _removeUrl(BuildContext context, Project project, String urlKey) {
-    final urlMetadata = Map<String, dynamic>.from(project.metadata['urls'] ?? {})..remove(urlKey);
+    final urlMetadata = Map<String, dynamic>.from(project.metadata[Project.urlsInMetadataKey] ?? {})..remove(urlKey);
     updateUrlMetadata(context, project: project, urlMetadata: urlMetadata);
   }
 
@@ -190,7 +189,8 @@ class _DialogAddUrlState extends State<DialogAddUrl> {
 
     if (isEditing) {
       controller1.text = widget.keyUrl!;
-      controller2.text = (widget.project.metadata['urls'] ?? {})[widget.keyUrl] ?? "";
+      controller2.text =
+          ((widget.project.metadata[Project.urlsInMetadataKey] ?? {})[widget.keyUrl]) ?? (widget.keyUrl == 'appLink' ? widget.project.appLink : "");
     }
     super.initState();
   }
@@ -251,7 +251,7 @@ class _DialogAddUrlState extends State<DialogAddUrl> {
 
   void _saveUrl() {
     if (_formKey.currentState?.validate() ?? false) {
-      final urlMetadata = Map<String, dynamic>.from(widget.project.metadata['urls'] ?? {})..[controller1.text] = controller2.text;
+      final urlMetadata = Map<String, dynamic>.from(widget.project.metadata[Project.urlsInMetadataKey] ?? {})..[controller1.text] = controller2.text;
 
       SecretPage.updateUrlMetadata(context, project: widget.project, urlMetadata: urlMetadata);
       context.pop();

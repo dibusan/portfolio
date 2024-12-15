@@ -41,6 +41,8 @@ class Project with _$Project {
     return projects.map((p) => p.techTags).toList().expand((element) => element).toSet().toList();
   }
 
+  static get urlsInMetadataKey => 'urls';
+
   String get descriptionFirstLine {
     final document = parse(description ?? "");
     final firstElement = document.querySelector('p, h1, h2, h3, h4, h5, h6');
