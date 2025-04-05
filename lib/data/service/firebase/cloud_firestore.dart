@@ -133,6 +133,27 @@ class CloudFireStore {
     }
   }
 
+  Future<List<Project>> createMultipleProjects(String developerId, List<Project> projects) async {
+    final List<Project> createdProjects = [];
+
+    try {
+      final DocumentReference developerDoc = collection.doc("Projects");
+      final CollectionReference projectsSubCollection = developerDoc.collection(developerId);
+
+      for (final project in projects) {
+        final DocumentReference newProjectDoc = await projectsSubCollection.add(project.toJson());
+        final DocumentSnapshot newProjectSnapshot = await newProjectDoc.get();
+        final newProject = Project.fromJson(newProjectSnapshot.data() as Map<String, dynamic>);
+        createdProjects.add(newProject);
+      }
+    } catch (e) {
+      // Optionally log error or rethrow
+      print('Error creating projects: $e');
+    }
+
+    return createdProjects;
+  }
+
   Future<Developer?> updateDeveloper(String developerId, Developer developer) async {
     try {
       DocumentReference developerDoc = collection.doc(developerId);

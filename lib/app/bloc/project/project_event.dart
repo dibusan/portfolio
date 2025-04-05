@@ -16,4 +16,6 @@ class ProjectEvent with _$ProjectEvent {
       ProjectEventUploadFile;
 
   const factory ProjectEvent.closeEvent({@Default([]) List<String> removeTempFile}) = ProjectEventClose;
+
+  const factory ProjectEvent.batchUpload({required List<Project> projects}) = ProjectEventBatchUpload;
 }

@@ -94,5 +94,8 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
       event.onResult?.call(uploadedFiles);
       return add(const ProjectEventClose());
     });
+    on<ProjectEventBatchUpload>((event, emit) async {
+      List<Project> projects = await CloudFireStore.instance.createMultipleProjects(state.developer!.id, event.projects);
+    });
   }
 }

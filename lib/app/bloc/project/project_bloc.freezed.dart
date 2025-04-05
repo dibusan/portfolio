@@ -32,6 +32,7 @@ mixin _$ProjectEvent {
             bool multiple, Project? project)
         uploadFile,
     required TResult Function(List<String> removeTempFile) closeEvent,
+    required TResult Function(List<Project> projects) batchUpload,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -49,6 +50,7 @@ mixin _$ProjectEvent {
             Project? project)?
         uploadFile,
     TResult? Function(List<String> removeTempFile)? closeEvent,
+    TResult? Function(List<Project> projects)? batchUpload,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -66,6 +68,7 @@ mixin _$ProjectEvent {
             Project? project)?
         uploadFile,
     TResult Function(List<String> removeTempFile)? closeEvent,
+    TResult Function(List<Project> projects)? batchUpload,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -78,6 +81,7 @@ mixin _$ProjectEvent {
     required TResult Function(ProjectEventDelete value) deleteProject,
     required TResult Function(ProjectEventUploadFile value) uploadFile,
     required TResult Function(ProjectEventClose value) closeEvent,
+    required TResult Function(ProjectEventBatchUpload value) batchUpload,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -89,6 +93,7 @@ mixin _$ProjectEvent {
     TResult? Function(ProjectEventDelete value)? deleteProject,
     TResult? Function(ProjectEventUploadFile value)? uploadFile,
     TResult? Function(ProjectEventClose value)? closeEvent,
+    TResult? Function(ProjectEventBatchUpload value)? batchUpload,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -100,6 +105,7 @@ mixin _$ProjectEvent {
     TResult Function(ProjectEventDelete value)? deleteProject,
     TResult Function(ProjectEventUploadFile value)? uploadFile,
     TResult Function(ProjectEventClose value)? closeEvent,
+    TResult Function(ProjectEventBatchUpload value)? batchUpload,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -160,7 +166,7 @@ class _$ProjectEventStartedImpl
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('type', 'ProjectEvent.started'));
+    properties..add(DiagnosticsProperty('type', 'ProjectEvent.started'));
   }
 
   @override
@@ -190,6 +196,7 @@ class _$ProjectEventStartedImpl
             bool multiple, Project? project)
         uploadFile,
     required TResult Function(List<String> removeTempFile) closeEvent,
+    required TResult Function(List<Project> projects) batchUpload,
   }) {
     return started();
   }
@@ -210,6 +217,7 @@ class _$ProjectEventStartedImpl
             Project? project)?
         uploadFile,
     TResult? Function(List<String> removeTempFile)? closeEvent,
+    TResult? Function(List<Project> projects)? batchUpload,
   }) {
     return started?.call();
   }
@@ -230,6 +238,7 @@ class _$ProjectEventStartedImpl
             Project? project)?
         uploadFile,
     TResult Function(List<String> removeTempFile)? closeEvent,
+    TResult Function(List<Project> projects)? batchUpload,
     required TResult orElse(),
   }) {
     if (started != null) {
@@ -248,6 +257,7 @@ class _$ProjectEventStartedImpl
     required TResult Function(ProjectEventDelete value) deleteProject,
     required TResult Function(ProjectEventUploadFile value) uploadFile,
     required TResult Function(ProjectEventClose value) closeEvent,
+    required TResult Function(ProjectEventBatchUpload value) batchUpload,
   }) {
     return started(this);
   }
@@ -262,6 +272,7 @@ class _$ProjectEventStartedImpl
     TResult? Function(ProjectEventDelete value)? deleteProject,
     TResult? Function(ProjectEventUploadFile value)? uploadFile,
     TResult? Function(ProjectEventClose value)? closeEvent,
+    TResult? Function(ProjectEventBatchUpload value)? batchUpload,
   }) {
     return started?.call(this);
   }
@@ -276,6 +287,7 @@ class _$ProjectEventStartedImpl
     TResult Function(ProjectEventDelete value)? deleteProject,
     TResult Function(ProjectEventUploadFile value)? uploadFile,
     TResult Function(ProjectEventClose value)? closeEvent,
+    TResult Function(ProjectEventBatchUpload value)? batchUpload,
     required TResult orElse(),
   }) {
     if (started != null) {
@@ -398,6 +410,7 @@ class _$ProjectEventSelectImpl
             bool multiple, Project? project)
         uploadFile,
     required TResult Function(List<String> removeTempFile) closeEvent,
+    required TResult Function(List<Project> projects) batchUpload,
   }) {
     return selectProject(project);
   }
@@ -418,6 +431,7 @@ class _$ProjectEventSelectImpl
             Project? project)?
         uploadFile,
     TResult? Function(List<String> removeTempFile)? closeEvent,
+    TResult? Function(List<Project> projects)? batchUpload,
   }) {
     return selectProject?.call(project);
   }
@@ -438,6 +452,7 @@ class _$ProjectEventSelectImpl
             Project? project)?
         uploadFile,
     TResult Function(List<String> removeTempFile)? closeEvent,
+    TResult Function(List<Project> projects)? batchUpload,
     required TResult orElse(),
   }) {
     if (selectProject != null) {
@@ -456,6 +471,7 @@ class _$ProjectEventSelectImpl
     required TResult Function(ProjectEventDelete value) deleteProject,
     required TResult Function(ProjectEventUploadFile value) uploadFile,
     required TResult Function(ProjectEventClose value) closeEvent,
+    required TResult Function(ProjectEventBatchUpload value) batchUpload,
   }) {
     return selectProject(this);
   }
@@ -470,6 +486,7 @@ class _$ProjectEventSelectImpl
     TResult? Function(ProjectEventDelete value)? deleteProject,
     TResult? Function(ProjectEventUploadFile value)? uploadFile,
     TResult? Function(ProjectEventClose value)? closeEvent,
+    TResult? Function(ProjectEventBatchUpload value)? batchUpload,
   }) {
     return selectProject?.call(this);
   }
@@ -484,6 +501,7 @@ class _$ProjectEventSelectImpl
     TResult Function(ProjectEventDelete value)? deleteProject,
     TResult Function(ProjectEventUploadFile value)? uploadFile,
     TResult Function(ProjectEventClose value)? closeEvent,
+    TResult Function(ProjectEventBatchUpload value)? batchUpload,
     required TResult orElse(),
   }) {
     if (selectProject != null) {
@@ -622,6 +640,7 @@ class _$DeveloperEventUpdateImpl
             bool multiple, Project? project)
         uploadFile,
     required TResult Function(List<String> removeTempFile) closeEvent,
+    required TResult Function(List<Project> projects) batchUpload,
   }) {
     return updateDeveloper(developer, onDone);
   }
@@ -642,6 +661,7 @@ class _$DeveloperEventUpdateImpl
             Project? project)?
         uploadFile,
     TResult? Function(List<String> removeTempFile)? closeEvent,
+    TResult? Function(List<Project> projects)? batchUpload,
   }) {
     return updateDeveloper?.call(developer, onDone);
   }
@@ -662,6 +682,7 @@ class _$DeveloperEventUpdateImpl
             Project? project)?
         uploadFile,
     TResult Function(List<String> removeTempFile)? closeEvent,
+    TResult Function(List<Project> projects)? batchUpload,
     required TResult orElse(),
   }) {
     if (updateDeveloper != null) {
@@ -680,6 +701,7 @@ class _$DeveloperEventUpdateImpl
     required TResult Function(ProjectEventDelete value) deleteProject,
     required TResult Function(ProjectEventUploadFile value) uploadFile,
     required TResult Function(ProjectEventClose value) closeEvent,
+    required TResult Function(ProjectEventBatchUpload value) batchUpload,
   }) {
     return updateDeveloper(this);
   }
@@ -694,6 +716,7 @@ class _$DeveloperEventUpdateImpl
     TResult? Function(ProjectEventDelete value)? deleteProject,
     TResult? Function(ProjectEventUploadFile value)? uploadFile,
     TResult? Function(ProjectEventClose value)? closeEvent,
+    TResult? Function(ProjectEventBatchUpload value)? batchUpload,
   }) {
     return updateDeveloper?.call(this);
   }
@@ -708,6 +731,7 @@ class _$DeveloperEventUpdateImpl
     TResult Function(ProjectEventDelete value)? deleteProject,
     TResult Function(ProjectEventUploadFile value)? uploadFile,
     TResult Function(ProjectEventClose value)? closeEvent,
+    TResult Function(ProjectEventBatchUpload value)? batchUpload,
     required TResult orElse(),
   }) {
     if (updateDeveloper != null) {
@@ -858,6 +882,7 @@ class _$ProjectEventUpdateImpl
             bool multiple, Project? project)
         uploadFile,
     required TResult Function(List<String> removeTempFile) closeEvent,
+    required TResult Function(List<Project> projects) batchUpload,
   }) {
     return updateProject(projectId, project, onDone);
   }
@@ -878,6 +903,7 @@ class _$ProjectEventUpdateImpl
             Project? project)?
         uploadFile,
     TResult? Function(List<String> removeTempFile)? closeEvent,
+    TResult? Function(List<Project> projects)? batchUpload,
   }) {
     return updateProject?.call(projectId, project, onDone);
   }
@@ -898,6 +924,7 @@ class _$ProjectEventUpdateImpl
             Project? project)?
         uploadFile,
     TResult Function(List<String> removeTempFile)? closeEvent,
+    TResult Function(List<Project> projects)? batchUpload,
     required TResult orElse(),
   }) {
     if (updateProject != null) {
@@ -916,6 +943,7 @@ class _$ProjectEventUpdateImpl
     required TResult Function(ProjectEventDelete value) deleteProject,
     required TResult Function(ProjectEventUploadFile value) uploadFile,
     required TResult Function(ProjectEventClose value) closeEvent,
+    required TResult Function(ProjectEventBatchUpload value) batchUpload,
   }) {
     return updateProject(this);
   }
@@ -930,6 +958,7 @@ class _$ProjectEventUpdateImpl
     TResult? Function(ProjectEventDelete value)? deleteProject,
     TResult? Function(ProjectEventUploadFile value)? uploadFile,
     TResult? Function(ProjectEventClose value)? closeEvent,
+    TResult? Function(ProjectEventBatchUpload value)? batchUpload,
   }) {
     return updateProject?.call(this);
   }
@@ -944,6 +973,7 @@ class _$ProjectEventUpdateImpl
     TResult Function(ProjectEventDelete value)? deleteProject,
     TResult Function(ProjectEventUploadFile value)? uploadFile,
     TResult Function(ProjectEventClose value)? closeEvent,
+    TResult Function(ProjectEventBatchUpload value)? batchUpload,
     required TResult orElse(),
   }) {
     if (updateProject != null) {
@@ -1074,6 +1104,7 @@ class _$ProjectEventDeleteImpl
             bool multiple, Project? project)
         uploadFile,
     required TResult Function(List<String> removeTempFile) closeEvent,
+    required TResult Function(List<Project> projects) batchUpload,
   }) {
     return deleteProject(projectId, onDelete);
   }
@@ -1094,6 +1125,7 @@ class _$ProjectEventDeleteImpl
             Project? project)?
         uploadFile,
     TResult? Function(List<String> removeTempFile)? closeEvent,
+    TResult? Function(List<Project> projects)? batchUpload,
   }) {
     return deleteProject?.call(projectId, onDelete);
   }
@@ -1114,6 +1146,7 @@ class _$ProjectEventDeleteImpl
             Project? project)?
         uploadFile,
     TResult Function(List<String> removeTempFile)? closeEvent,
+    TResult Function(List<Project> projects)? batchUpload,
     required TResult orElse(),
   }) {
     if (deleteProject != null) {
@@ -1132,6 +1165,7 @@ class _$ProjectEventDeleteImpl
     required TResult Function(ProjectEventDelete value) deleteProject,
     required TResult Function(ProjectEventUploadFile value) uploadFile,
     required TResult Function(ProjectEventClose value) closeEvent,
+    required TResult Function(ProjectEventBatchUpload value) batchUpload,
   }) {
     return deleteProject(this);
   }
@@ -1146,6 +1180,7 @@ class _$ProjectEventDeleteImpl
     TResult? Function(ProjectEventDelete value)? deleteProject,
     TResult? Function(ProjectEventUploadFile value)? uploadFile,
     TResult? Function(ProjectEventClose value)? closeEvent,
+    TResult? Function(ProjectEventBatchUpload value)? batchUpload,
   }) {
     return deleteProject?.call(this);
   }
@@ -1160,6 +1195,7 @@ class _$ProjectEventDeleteImpl
     TResult Function(ProjectEventDelete value)? deleteProject,
     TResult Function(ProjectEventUploadFile value)? uploadFile,
     TResult Function(ProjectEventClose value)? closeEvent,
+    TResult Function(ProjectEventBatchUpload value)? batchUpload,
     required TResult orElse(),
   }) {
     if (deleteProject != null) {
@@ -1320,6 +1356,7 @@ class _$ProjectEventUploadFileImpl
             bool multiple, Project? project)
         uploadFile,
     required TResult Function(List<String> removeTempFile) closeEvent,
+    required TResult Function(List<Project> projects) batchUpload,
   }) {
     return uploadFile(onResult, multiple, project);
   }
@@ -1340,6 +1377,7 @@ class _$ProjectEventUploadFileImpl
             Project? project)?
         uploadFile,
     TResult? Function(List<String> removeTempFile)? closeEvent,
+    TResult? Function(List<Project> projects)? batchUpload,
   }) {
     return uploadFile?.call(onResult, multiple, project);
   }
@@ -1360,6 +1398,7 @@ class _$ProjectEventUploadFileImpl
             Project? project)?
         uploadFile,
     TResult Function(List<String> removeTempFile)? closeEvent,
+    TResult Function(List<Project> projects)? batchUpload,
     required TResult orElse(),
   }) {
     if (uploadFile != null) {
@@ -1378,6 +1417,7 @@ class _$ProjectEventUploadFileImpl
     required TResult Function(ProjectEventDelete value) deleteProject,
     required TResult Function(ProjectEventUploadFile value) uploadFile,
     required TResult Function(ProjectEventClose value) closeEvent,
+    required TResult Function(ProjectEventBatchUpload value) batchUpload,
   }) {
     return uploadFile(this);
   }
@@ -1392,6 +1432,7 @@ class _$ProjectEventUploadFileImpl
     TResult? Function(ProjectEventDelete value)? deleteProject,
     TResult? Function(ProjectEventUploadFile value)? uploadFile,
     TResult? Function(ProjectEventClose value)? closeEvent,
+    TResult? Function(ProjectEventBatchUpload value)? batchUpload,
   }) {
     return uploadFile?.call(this);
   }
@@ -1406,6 +1447,7 @@ class _$ProjectEventUploadFileImpl
     TResult Function(ProjectEventDelete value)? deleteProject,
     TResult Function(ProjectEventUploadFile value)? uploadFile,
     TResult Function(ProjectEventClose value)? closeEvent,
+    TResult Function(ProjectEventBatchUpload value)? batchUpload,
     required TResult orElse(),
   }) {
     if (uploadFile != null) {
@@ -1534,6 +1576,7 @@ class _$ProjectEventCloseImpl
             bool multiple, Project? project)
         uploadFile,
     required TResult Function(List<String> removeTempFile) closeEvent,
+    required TResult Function(List<Project> projects) batchUpload,
   }) {
     return closeEvent(removeTempFile);
   }
@@ -1554,6 +1597,7 @@ class _$ProjectEventCloseImpl
             Project? project)?
         uploadFile,
     TResult? Function(List<String> removeTempFile)? closeEvent,
+    TResult? Function(List<Project> projects)? batchUpload,
   }) {
     return closeEvent?.call(removeTempFile);
   }
@@ -1574,6 +1618,7 @@ class _$ProjectEventCloseImpl
             Project? project)?
         uploadFile,
     TResult Function(List<String> removeTempFile)? closeEvent,
+    TResult Function(List<Project> projects)? batchUpload,
     required TResult orElse(),
   }) {
     if (closeEvent != null) {
@@ -1592,6 +1637,7 @@ class _$ProjectEventCloseImpl
     required TResult Function(ProjectEventDelete value) deleteProject,
     required TResult Function(ProjectEventUploadFile value) uploadFile,
     required TResult Function(ProjectEventClose value) closeEvent,
+    required TResult Function(ProjectEventBatchUpload value) batchUpload,
   }) {
     return closeEvent(this);
   }
@@ -1606,6 +1652,7 @@ class _$ProjectEventCloseImpl
     TResult? Function(ProjectEventDelete value)? deleteProject,
     TResult? Function(ProjectEventUploadFile value)? uploadFile,
     TResult? Function(ProjectEventClose value)? closeEvent,
+    TResult? Function(ProjectEventBatchUpload value)? batchUpload,
   }) {
     return closeEvent?.call(this);
   }
@@ -1620,6 +1667,7 @@ class _$ProjectEventCloseImpl
     TResult Function(ProjectEventDelete value)? deleteProject,
     TResult Function(ProjectEventUploadFile value)? uploadFile,
     TResult Function(ProjectEventClose value)? closeEvent,
+    TResult Function(ProjectEventBatchUpload value)? batchUpload,
     required TResult orElse(),
   }) {
     if (closeEvent != null) {
@@ -1640,6 +1688,222 @@ abstract class ProjectEventClose implements ProjectEvent {
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ProjectEventCloseImplCopyWith<_$ProjectEventCloseImpl> get copyWith =>
       throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$ProjectEventBatchUploadImplCopyWith<$Res> {
+  factory _$$ProjectEventBatchUploadImplCopyWith(
+          _$ProjectEventBatchUploadImpl value,
+          $Res Function(_$ProjectEventBatchUploadImpl) then) =
+      __$$ProjectEventBatchUploadImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({List<Project> projects});
+}
+
+/// @nodoc
+class __$$ProjectEventBatchUploadImplCopyWithImpl<$Res>
+    extends _$ProjectEventCopyWithImpl<$Res, _$ProjectEventBatchUploadImpl>
+    implements _$$ProjectEventBatchUploadImplCopyWith<$Res> {
+  __$$ProjectEventBatchUploadImplCopyWithImpl(
+      _$ProjectEventBatchUploadImpl _value,
+      $Res Function(_$ProjectEventBatchUploadImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of ProjectEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? projects = null,
+  }) {
+    return _then(_$ProjectEventBatchUploadImpl(
+      projects: null == projects
+          ? _value._projects
+          : projects // ignore: cast_nullable_to_non_nullable
+              as List<Project>,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$ProjectEventBatchUploadImpl
+    with DiagnosticableTreeMixin
+    implements ProjectEventBatchUpload {
+  const _$ProjectEventBatchUploadImpl({required final List<Project> projects})
+      : _projects = projects;
+
+  final List<Project> _projects;
+  @override
+  List<Project> get projects {
+    if (_projects is EqualUnmodifiableListView) return _projects;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_projects);
+  }
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'ProjectEvent.batchUpload(projects: $projects)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'ProjectEvent.batchUpload'))
+      ..add(DiagnosticsProperty('projects', projects));
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$ProjectEventBatchUploadImpl &&
+            const DeepCollectionEquality().equals(other._projects, _projects));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(_projects));
+
+  /// Create a copy of ProjectEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ProjectEventBatchUploadImplCopyWith<_$ProjectEventBatchUploadImpl>
+      get copyWith => __$$ProjectEventBatchUploadImplCopyWithImpl<
+          _$ProjectEventBatchUploadImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() started,
+    required TResult Function(Project? project) selectProject,
+    required TResult Function(
+            Developer developer, dynamic Function(Developer)? onDone)
+        updateDeveloper,
+    required TResult Function(String? projectId, Project project,
+            dynamic Function(Project)? onDone)
+        updateProject,
+    required TResult Function(String projectId, dynamic Function()? onDelete)
+        deleteProject,
+    required TResult Function(dynamic Function(List<String>)? onResult,
+            bool multiple, Project? project)
+        uploadFile,
+    required TResult Function(List<String> removeTempFile) closeEvent,
+    required TResult Function(List<Project> projects) batchUpload,
+  }) {
+    return batchUpload(projects);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? started,
+    TResult? Function(Project? project)? selectProject,
+    TResult? Function(Developer developer, dynamic Function(Developer)? onDone)?
+        updateDeveloper,
+    TResult? Function(String? projectId, Project project,
+            dynamic Function(Project)? onDone)?
+        updateProject,
+    TResult? Function(String projectId, dynamic Function()? onDelete)?
+        deleteProject,
+    TResult? Function(dynamic Function(List<String>)? onResult, bool multiple,
+            Project? project)?
+        uploadFile,
+    TResult? Function(List<String> removeTempFile)? closeEvent,
+    TResult? Function(List<Project> projects)? batchUpload,
+  }) {
+    return batchUpload?.call(projects);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? started,
+    TResult Function(Project? project)? selectProject,
+    TResult Function(Developer developer, dynamic Function(Developer)? onDone)?
+        updateDeveloper,
+    TResult Function(String? projectId, Project project,
+            dynamic Function(Project)? onDone)?
+        updateProject,
+    TResult Function(String projectId, dynamic Function()? onDelete)?
+        deleteProject,
+    TResult Function(dynamic Function(List<String>)? onResult, bool multiple,
+            Project? project)?
+        uploadFile,
+    TResult Function(List<String> removeTempFile)? closeEvent,
+    TResult Function(List<Project> projects)? batchUpload,
+    required TResult orElse(),
+  }) {
+    if (batchUpload != null) {
+      return batchUpload(projects);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(ProjectEventStarted value) started,
+    required TResult Function(ProjectEventSelect value) selectProject,
+    required TResult Function(DeveloperEventUpdate value) updateDeveloper,
+    required TResult Function(ProjectEventUpdate value) updateProject,
+    required TResult Function(ProjectEventDelete value) deleteProject,
+    required TResult Function(ProjectEventUploadFile value) uploadFile,
+    required TResult Function(ProjectEventClose value) closeEvent,
+    required TResult Function(ProjectEventBatchUpload value) batchUpload,
+  }) {
+    return batchUpload(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(ProjectEventStarted value)? started,
+    TResult? Function(ProjectEventSelect value)? selectProject,
+    TResult? Function(DeveloperEventUpdate value)? updateDeveloper,
+    TResult? Function(ProjectEventUpdate value)? updateProject,
+    TResult? Function(ProjectEventDelete value)? deleteProject,
+    TResult? Function(ProjectEventUploadFile value)? uploadFile,
+    TResult? Function(ProjectEventClose value)? closeEvent,
+    TResult? Function(ProjectEventBatchUpload value)? batchUpload,
+  }) {
+    return batchUpload?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(ProjectEventStarted value)? started,
+    TResult Function(ProjectEventSelect value)? selectProject,
+    TResult Function(DeveloperEventUpdate value)? updateDeveloper,
+    TResult Function(ProjectEventUpdate value)? updateProject,
+    TResult Function(ProjectEventDelete value)? deleteProject,
+    TResult Function(ProjectEventUploadFile value)? uploadFile,
+    TResult Function(ProjectEventClose value)? closeEvent,
+    TResult Function(ProjectEventBatchUpload value)? batchUpload,
+    required TResult orElse(),
+  }) {
+    if (batchUpload != null) {
+      return batchUpload(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class ProjectEventBatchUpload implements ProjectEvent {
+  const factory ProjectEventBatchUpload(
+      {required final List<Project> projects}) = _$ProjectEventBatchUploadImpl;
+
+  List<Project> get projects;
+
+  /// Create a copy of ProjectEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$ProjectEventBatchUploadImplCopyWith<_$ProjectEventBatchUploadImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc

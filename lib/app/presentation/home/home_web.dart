@@ -11,6 +11,7 @@ import 'package:portfolio_eriel/app/presentation/home/sections/personal/personal
 import 'package:portfolio_eriel/app/presentation/home/widgets/export_projects_button.dart';
 import 'package:portfolio_eriel/app/presentation/home/widgets/header.dart';
 import 'package:portfolio_eriel/app/presentation/home/leftBar/letf_bar.dart';
+import 'package:portfolio_eriel/app/presentation/home/widgets/import_projects_button.dart';
 import 'package:portfolio_eriel/app/presentation/project/project.dart';
 import 'package:portfolio_eriel/app/presentation/project/widgets/project_preview_card.dart';
 import 'package:portfolio_eriel/domain/entities/__.dart';
@@ -19,7 +20,8 @@ class HomeWebPage extends StatelessWidget {
   final Developer? developer;
   final List<Project> projects;
 
-  const HomeWebPage({super.key, required this.developer, required this.projects});
+  const HomeWebPage(
+      {super.key, required this.developer, required this.projects});
 
   @override
   Widget build(BuildContext context) {
@@ -27,11 +29,22 @@ class HomeWebPage extends StatelessWidget {
       bool heightOk = constrains.maxHeight > 1000;
       return Column(
         children: [
-          ExportProjectsButton(projects: projects),
+          Row(
+            children: [
+              ExportProjectsButton(projects: projects),
+              const ImportProjectsButton(),
+            ],
+          ),
           Expanded(
-              flex: heightOk ? 2 : 1, child: CompanySection(projects: projects.where((e) => !e.isPersonal).toList(), divideLine: heightOk ? 2 : 1)),
+              flex: heightOk ? 2 : 1,
+              child: CompanySection(
+                  projects: projects.where((e) => !e.isPersonal).toList(),
+                  divideLine: heightOk ? 2 : 1)),
           const Divider(color: Colors.white, thickness: 2),
-          Expanded(flex: 1, child: PersonalSection(projects: projects.where((e) => e.isPersonal).toList()))
+          Expanded(
+              flex: 1,
+              child: PersonalSection(
+                  projects: projects.where((e) => e.isPersonal).toList()))
         ],
       );
     });
