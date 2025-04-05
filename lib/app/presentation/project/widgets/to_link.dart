@@ -35,7 +35,7 @@ class _ToLinkState extends State<ToLink> {
               alignment: Alignment.centerLeft,
               child: widget.onTextChange == null
                   ? TextButton(
-                      iconAlignment: IconAlignment.start,
+                      // iconAlignment: IconAlignment.start,
                       onPressed: widget.uri == null
                           ? null
                           : () => canLaunchUrl(widget.uri!).then((result) => result ? launchUrl(widget.uri!) : debugPrint("Can't launch")),

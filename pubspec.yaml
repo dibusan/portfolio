@@ -48,6 +48,7 @@ dependencies:
   flutter_widget_from_html: ^0.15.3
   super_banners: ^0.0.1
 
+  share_plus: ^10.1.4
 
 
 

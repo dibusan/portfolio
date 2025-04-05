@@ -8,6 +8,7 @@ import 'package:portfolio_eriel/app/bloc/filter/state.dart';
 import 'package:portfolio_eriel/app/bloc/project/project_bloc.dart';
 import 'package:portfolio_eriel/app/presentation/home/sections/company/company_section.dart';
 import 'package:portfolio_eriel/app/presentation/home/sections/personal/personal_section.dart';
+import 'package:portfolio_eriel/app/presentation/home/widgets/export_projects_button.dart';
 import 'package:portfolio_eriel/app/presentation/home/widgets/header.dart';
 import 'package:portfolio_eriel/app/presentation/home/leftBar/letf_bar.dart';
 import 'package:portfolio_eriel/app/presentation/project/project.dart';
@@ -26,6 +27,7 @@ class HomeWebPage extends StatelessWidget {
       bool heightOk = constrains.maxHeight > 1000;
       return Column(
         children: [
+          ExportProjectsButton(projects: projects),
           Expanded(
               flex: heightOk ? 2 : 1, child: CompanySection(projects: projects.where((e) => !e.isPersonal).toList(), divideLine: heightOk ? 2 : 1)),
           const Divider(color: Colors.white, thickness: 2),
