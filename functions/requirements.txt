@@ -1,0 +1,4 @@
+firebase-functions>=0.4.2
+firebase-admin>=6.0.0
+requests>=2.27.1
+python-dotenv>=1.0.0

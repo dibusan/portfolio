@@ -18,7 +18,7 @@ class HeaderAppBar extends StatelessWidget {
 
   static pdfReport(BuildContext context) {
     return TextButton(
-      onPressed: () => context.goNamed(AppRoute.resume.name),
+      onPressed: () => context.goNamed(AppRoute.resumePage.name),
       child: Row(
         children: [
           const Icon(Icons.picture_as_pdf),
