@@ -28,8 +28,10 @@ class HomeWebPage extends StatelessWidget {
     return LayoutBuilder(builder: (context, constrains) {
       bool heightOk = constrains.maxHeight > 1000;
       return Column(
+        spacing: 10,
         children: [
           Row(
+            spacing: 10,
             children: [
               ExportProjectsButton(projects: projects),
               const ImportProjectsButton(),

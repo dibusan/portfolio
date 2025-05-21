@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:portfolio_eriel/app/bloc/security/security_bloc.dart';
 
 import '../../../../domain/entities/project/project.dart';
 import '../../../bloc/project/project_bloc.dart';
@@ -27,9 +28,11 @@ class ImportProjectsButton extends StatelessWidget {
       final file = result.files.first;
 
       Uint8List? bytes = file.bytes;
+
       if (bytes == null) {
+        if (!context.mounted) return;
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Could not read file')),
+          const SnackBar(content: Text('Could not read file')),
         );
         return;
       }
@@ -51,16 +54,23 @@ class ImportProjectsButton extends StatelessWidget {
     }
   }
 
-  Future<void> saveProjectsToDatabase(BuildContext context, List<Project> projects) async {
+  Future<void> saveProjectsToDatabase(
+      BuildContext context, List<Project> projects) async {
     // 📝 TODO: Implement your logic to save to Firestore or any DB
-    context.read<ProjectBloc>().add(ProjectEventBatchUpload(projects: projects));
+    context
+        .read<ProjectBloc>()
+        .add(ProjectEventBatchUpload(projects: projects));
   }
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: () => _importProjects(context),
-      child: Text('Import Projects'),
+    return BlocBuilder<SecurityBloc, SecurityState>(
+      builder: (_, state) => state.isAuth
+          ? ElevatedButton(
+              onPressed: () => _importProjects(context),
+              child: const Text('Import Projects'),
+            )
+          : const SizedBox(),
     );
   }
 }

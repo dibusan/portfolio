@@ -3,7 +3,9 @@ import 'dart:io';
 import 'dart:io' as io;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:portfolio_eriel/app/bloc/security/security_bloc.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../../../../domain/entities/project/project.dart';
@@ -13,11 +15,11 @@ import '../../../../domain/entities/project/project.dart';
 // ignore: avoid_web_libraries_in_flutter
 import 'dart:html' as html;
 
-
 class ExportProjectsButton extends StatelessWidget {
   final List<Project> projects;
 
-  const ExportProjectsButton({Key? key, required this.projects}) : super(key: key);
+  const ExportProjectsButton({Key? key, required this.projects})
+      : super(key: key);
 
   Future<void> _exportProjects(BuildContext context) async {
     try {
@@ -45,9 +47,11 @@ class ExportProjectsButton extends StatelessWidget {
         );
       }
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Exported successfully!')),
-      );
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Exported successfully!')),
+        );
+      }
     } catch (e) {
       print(e);
       ScaffoldMessenger.of(context).showSnackBar(
@@ -58,9 +62,13 @@ class ExportProjectsButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: () => _exportProjects(context),
-      child: Text('Export Projects'),
+    return BlocBuilder<SecurityBloc, SecurityState>(
+      builder: (_, state) => state.isAuth
+          ? ElevatedButton(
+              onPressed: () => _exportProjects(context),
+              child: const Text('Export Projects'),
+            )
+          : const SizedBox(),
     );
   }
 }
