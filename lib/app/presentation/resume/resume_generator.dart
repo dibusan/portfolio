@@ -23,7 +23,7 @@ class _ResumeGeneratorState extends State<ResumeGenerator>
   String? _generatedResume;
   bool _isLoading = false;
   List<String> _allTechTags = [];
-  Set<String> _selectedTechTags = {};
+  final Set<String> _selectedTechTags = {};
 
   late TabController _tabController;
   int _currentTabIndex = 0;
@@ -32,11 +32,8 @@ class _ResumeGeneratorState extends State<ResumeGenerator>
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
-    _tabController.addListener(() {
-      setState(() {
-        _currentTabIndex = _tabController.index;
-      });
-    });
+    _tabController.addListener(
+        () => setState(() => _currentTabIndex = _tabController.index));
     _extractTechTags();
   }
 

@@ -1,147 +1,330 @@
+import 'dart:async';
 import 'dart:convert';
-import 'package:flutter/material.dart';
+import 'dart:math';
 import 'package:http/http.dart' as http;
 import 'package:portfolio_eriel/domain/entities/__.dart';
 
-// Service for interacting with Claude API
+/// Service for interacting with Claude API - Optimized to prevent overload
 class ClaudeService {
+  static const String _baseUrl = 'https://claude-proxy-56oomooeja-uc.a.run.app';
+  static const String _defaultModel = 'claude-3-5-haiku-20241022';
+  static const Duration _timeout = Duration(seconds: 30);
 
+  // Retry configuration
+  static const int _maxRetries = 3;
+  static const List<int> _retryDelays = [3, 8, 15]; // Increased delays
+
+  // Reduced token limits to prevent overload
+  static const int _maxTokensResume = 800;  // Reduced from 1500
+  static const int _maxTokensJobMatch = 1000;  // Reduced from 2000
+  static const double _temperature = 0.7;
+
+  // Compact system prompts
+  static const String _systemPromptResume =
+      'Expert tech resume writer. Create ATS-optimized Markdown resumes with clear structure, quantified achievements, and relevant keywords.';
+
+  static const String _systemPromptJobMatch =
+      'Resume expert. Match job requirements to candidate experience. Create tailored resumes highlighting relevant skills.';
+
+  /// Strips HTML tags from text
   String _stripHtmlTags(String htmlText) {
-    RegExp exp = RegExp(r"<[^>]*>", multiLine: true, caseSensitive: true);
-    return htmlText.replaceAll(exp, '');
+    if (htmlText.isEmpty) return '';
+    final exp = RegExp(r'<[^>]*>', multiLine: true, caseSensitive: true);
+    return htmlText.replaceAll(exp, '').trim();
   }
 
+  /// Formats date duration for resume
   String _formatDuration(DateTime? startDate, DateTime? endDate) {
-    if (startDate == null) return 'N/A';
+    if (startDate == null) return '';
 
-    final start = startDate.toIso8601String().substring(0, 7);
-    final end = endDate != null
-        ? endDate.toIso8601String().substring(0, 7)
-        : 'Present';
+    final start = '${startDate.month}/${startDate.year}';
+    final end = endDate != null ? '${endDate.month}/${endDate.year}' : 'Present';
 
-    return '$start to $end';
+    return '$start-$end';
   }
 
+  /// Converts projects to COMPACT data structure
+  List<Map<String, dynamic>> _prepareProjectsData(List<Project> projects, {int maxProjects = 5}) {
+    return projects
+        .take(maxProjects)  // Limit number of projects
+        .map((project) => {
+      'title': project.title?.trim() ?? '',
+      'role': project.subtitle?.trim() ?? '',
+      'tech': (project.techTags ?? []).take(5).toList(), // Limit tech tags
+      'duration': _formatDuration(project.startDate, project.endDate),
+      // Compact description
+      'summary': _getCompactSummary(project.description ?? ''),
+    })
+        .where((p) => p['title'].toString().isNotEmpty)
+        .toList();
+  }
+
+  /// Gets a compact summary from description
+  String _getCompactSummary(String description) {
+    final cleaned = _stripHtmlTags(description);
+    if (cleaned.isEmpty) return '';
+
+    // Get first meaningful sentence only
+    final sentences = cleaned.split(RegExp(r'[.!?]'));
+    for (final sentence in sentences) {
+      final trimmed = sentence.trim();
+      if (trimmed.length > 20 && trimmed.length < 150) {
+        return trimmed;
+      }
+    }
+
+    // Fallback: truncate
+    return cleaned.length > 100 ? '${cleaned.substring(0, 97)}...' : cleaned;
+  }
+
+  /// Smart data truncation
+  String _truncateData(dynamic data, int maxLength) {
+    final jsonStr = jsonEncode(data);
+    if (jsonStr.length <= maxLength) return jsonStr;
+
+    if (data is List && data.isNotEmpty) {
+      // Progressively reduce items until it fits
+      for (int i = data.length; i > 0; i--) {
+        final truncated = jsonEncode(data.take(i).toList());
+        if (truncated.length <= maxLength) {
+          return truncated;
+        }
+      }
+    }
+
+    return jsonEncode([data is List ? data.first : data]);
+  }
+
+  /// Makes API request with better error handling
+  Future<String> _makeApiRequest({
+    required String systemPrompt,
+    required String userPrompt,
+    required int maxTokens,
+  }) async {
+    // Add initial delay to avoid bursts
+    await Future.delayed(Duration(milliseconds: 500));
+
+    for (int attempt = 0; attempt < _maxRetries; attempt++) {
+      try {
+        final response = await http
+            .post(
+          Uri.parse(_baseUrl),
+          headers: {'Content-Type': 'application/json'},
+          body: jsonEncode({
+            'model': _defaultModel,
+            'max_tokens': maxTokens,
+            'temperature': _temperature,
+            'system': systemPrompt,
+            'messages': [
+              {'role': 'user', 'content': userPrompt}
+            ],
+          }),
+        )
+            .timeout(_timeout);
+
+        if (response.statusCode == 200) {
+          final data = jsonDecode(response.body);
+          final content = data['content']?[0]?['text'];
+          if (content == null || content.isEmpty) {
+            throw Exception('Empty response from API');
+          }
+          return content;
+        }
+
+        // Parse error
+        final errorData = _parseErrorResponse(response.body);
+        print('API Error (attempt ${attempt + 1}): ${errorData['type']} - ${errorData['message']}');
+
+        if (_shouldRetry(response.statusCode, errorData['type'] ?? '', attempt)) {
+          final delay = _retryDelays[attempt];
+          print('Retrying in $delay seconds...');
+          await Future.delayed(Duration(seconds: delay));
+          continue;
+        }
+
+        throw Exception(errorData['message'] ?? 'API request failed');
+
+      } on TimeoutException {
+        print('Timeout on attempt ${attempt + 1}');
+        if (attempt < _maxRetries - 1) {
+          await Future.delayed(Duration(seconds: _retryDelays[attempt]));
+          continue;
+        }
+        throw Exception('Request timeout after $_maxRetries attempts');
+      } catch (e) {
+        print('Error on attempt ${attempt + 1}: $e');
+        if (attempt < _maxRetries - 1 && _isRetryableError(e.toString())) {
+          await Future.delayed(Duration(seconds: _retryDelays[attempt]));
+          continue;
+        }
+        rethrow;
+      }
+    }
+
+    throw Exception('Failed after $_maxRetries attempts');
+  }
+
+  /// Parses error response from API
+  Map<String, String> _parseErrorResponse(String responseBody) {
+    try {
+      final data = jsonDecode(responseBody);
+      return {
+        'type': data['error']?['type'] ?? 'unknown_error',
+        'message': data['error']?['message'] ?? 'Unknown error occurred',
+      };
+    } catch (_) {
+      return {
+        'type': 'parse_error',
+        'message': 'Failed to parse error response',
+      };
+    }
+  }
+
+  /// Determines if request should be retried
+  bool _shouldRetry(int statusCode, String errorType, int attempt) {
+    if (attempt >= _maxRetries - 1) return false;
+
+    return statusCode == 503 ||
+        statusCode == 429 ||
+        statusCode == 504 ||
+        errorType == 'overloaded_error' ||
+        errorType == 'rate_limit_error' ||
+        errorType == 'timeout_error';
+  }
+
+  /// Checks if error is retryable
+  bool _isRetryableError(String error) {
+    final retryableErrors = [
+      'overloaded',
+      'timeout',
+      'connection',
+      'socket',
+      'rate limit',
+      '503',
+      '429',
+    ];
+
+    final errorLower = error.toLowerCase();
+    return retryableErrors.any((e) => errorLower.contains(e));
+  }
+
+  /// Generates resume with compact data
   Future<String> generateResumeContent({
     required List<Project> projects,
     required List<String> focusedTechStack,
     String? additionalContext,
   }) async {
+    if (projects.isEmpty) {
+      throw ArgumentError('Projects list cannot be empty');
+    }
+
     try {
-      // Build the prompt
-      final prompt =
-          "Create a professional resume focused on this tech stack: $focusedTechStack and using this json that highlights my past projects $projects. This is some additional context: $additionalContext";
+      // Prepare compact data
+      final projectsData = _prepareProjectsData(projects, maxProjects: 5);
+      final truncatedProjects = _truncateData(projectsData, 1500); // Reduced from 3000
 
-      // Call your Firebase function instead of Anthropic API directly
-      final response = await http.post(
-        // Uri.parse('https://us-central1-YOUR_PROJECT_ID.cloudfunctions.net/claude_proxy'),
-        Uri.parse('https://claude-proxy-56oomooeja-uc.a.run.app'),
-        headers: {'Content-Type': 'application/json'},
-        body: jsonEncode({
-          'model': 'claude-3-5-haiku-20241022',
-          // 'model': 'claude-3-opus-20240229',
-          'max_tokens': 1500,
-          'system': 'You are an expert resume writer and career consultant. Create professional, compelling resumes that highlight achievements and skills effectively. Use action verbs, quantify accomplishments when possible, and tailor content to showcase relevant experience. Format responses in clear, professional resume structure.',
-          'messages': [
-            {'role': 'user', 'content': prompt},
-          ]
-        }),
+      // Compact user prompt
+      final userPrompt = '''Resume for ${focusedTechStack.take(3).join(', ')} developer.
+
+Projects:
+$truncatedProjects
+
+${additionalContext != null ? 'Info: ${additionalContext.substring(0, min(100, additionalContext.length))}' : ''}
+
+Create Markdown resume with: Summary, Skills, Experience (5 projects max), Education.''';
+
+      return await _makeApiRequest(
+        systemPrompt: _systemPromptResume,
+        userPrompt: userPrompt,
+        maxTokens: _maxTokensResume,
       );
-
-      if (response.statusCode == 200) {
-        final responseData = jsonDecode(response.body);
-        return responseData['content'][0]['text'];
-      } else {
-        throw Exception('Failed to generate resume: ${response.body}');
-      }
     } catch (e) {
-      throw Exception('Error generating resume: $e');
+      throw Exception('Resume generation failed: ${e.toString()}');
     }
   }
 
+  /// Generates job-tailored resume with compact data
   Future<String> generateResumeFromJobDescription({
     required List<Project> projects,
     required String jobDescription,
     String? additionalContext,
   }) async {
+    if (projects.isEmpty || jobDescription.trim().isEmpty) {
+      throw ArgumentError('Projects and job description are required');
+    }
+
     try {
-      // Prepare the projects data in a cleaner format for the prompt
-      final projectsData = projects.map((project) {
-        return {
-          'title': project.title,
-          'role': project.subtitle,
-          'company': project.projectOwner,
-          'description': _stripHtmlTags(project.description ?? ''),
-          'technologies': project.techTags,
-          'duration': _formatDuration(project.startDate, project.endDate),
-        };
-      }).toList();
+      // Prepare very compact data
+      final projectsData = _prepareProjectsData(projects, maxProjects: 4);
+      final truncatedProjects = _truncateData(projectsData, 1200);
 
-      // Build the prompt for Claude with job description analysis
-      final prompt = """
-Based on the following job description, analyze the key technical skills, technologies, and requirements mentioned, then create a professional resume that highlights the most relevant experience from my project portfolio.
+      // Extract key job requirements only
+      final jobKeywords = _extractKeywords(jobDescription);
+      final truncatedJob = jobKeywords.length > 500
+          ? '${jobKeywords.substring(0, 497)}...'
+          : jobKeywords;
 
-JOB DESCRIPTION:
-${jobDescription}
+      final userPrompt = '''Match resume to job:
 
-MY PROJECT PORTFOLIO:
-${jsonEncode(projectsData)}
+JOB KEY REQUIREMENTS:
+$truncatedJob
 
-${additionalContext ?? ''}
+MY PROJECTS:
+$truncatedProjects
 
-Instructions:
-1. First, identify the key technologies, skills, and requirements from the job description
-2. Prioritize and highlight the most relevant projects and experiences that match the job requirements
-3. Create a professional resume that emphasizes the technologies and skills mentioned in the job description
-4. Format the resume with clear sections for:
-   - Professional Summary (tailored to the job)
-   - Skills (emphasizing job-relevant technologies)
-   - Professional Experience (prioritizing most relevant projects)
-   - Education (make a reasonable assumption)
+Create targeted Markdown resume focusing on job match.''';
 
-The tone should be professional and achievements-focused, directly addressing the job requirements.
-    """;
+      return await _makeApiRequest(
+        systemPrompt: _systemPromptJobMatch,
+        userPrompt: userPrompt,
+        maxTokens: _maxTokensJobMatch,
+      );
+    } catch (e) {
+      throw Exception('Job-tailored resume generation failed: ${e.toString()}');
+    }
+  }
 
-      // Send request to your Firebase function
-      final response = await http.post(
-        Uri.parse('https://claude-proxy-56oomooeja-uc.a.run.app'),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: jsonEncode({
-          'model': 'claude-3-5-haiku-20241022',
-          'max_tokens': 2000, // Increased for job description analysis
-          'system': 'You are an expert resume writer and career consultant specializing in analyzing job descriptions and creating tailored resumes. You excel at identifying key requirements from job postings and highlighting the most relevant candidate experience to match those requirements.',
-          'messages': [
-            {
-              'role': 'user',
-              'content': prompt,
-            }
-          ],
-        }),
+  /// Extract key requirements from job description
+  String _extractKeywords(String jobDescription) {
+    // Simple keyword extraction - just get important sentences
+    final lines = jobDescription.split('\n');
+    final keywords = <String>[];
+
+    for (final line in lines) {
+      final lower = line.toLowerCase();
+      if (lower.contains('require') ||
+          lower.contains('must have') ||
+          lower.contains('experience') ||
+          lower.contains('skill') ||
+          lower.contains('years')) {
+        keywords.add(line.trim());
+      }
+    }
+
+    return keywords.take(5).join('\n');
+  }
+
+  /// Simpler job analysis
+  Future<Map<String, dynamic>> analyzeJobDescription(String jobDescription) async {
+    try {
+      final truncatedJob = jobDescription.length > 800
+          ? jobDescription.substring(0, 800)
+          : jobDescription;
+
+      final prompt = '''Extract from job description:
+$truncatedJob
+
+List: 1) Required skills 2) Nice-to-have 3) Experience level''';
+
+      final result = await _makeApiRequest(
+        systemPrompt: 'Job analyzer. Extract key requirements concisely.',
+        userPrompt: prompt,
+        maxTokens: 400,  // Reduced
       );
 
-      if (response.statusCode == 200) {
-        final responseData = jsonDecode(response.body);
-        return responseData['content'][0]['text'];
-      } else {
-        throw Exception('Failed to generate resume: ${response.body}');
-      }
+      return {'analysis': result};
     } catch (e) {
-      throw Exception('Error generating resume: $e');
+      throw Exception('Job analysis failed: ${e.toString()}');
     }
   }
 }
-
-// Example of how to integrate this with your existing GoRouter
-// Add this to your GoRouter configuration:
-/*
-GoRoute(
-  path: '/resume-generator',
-  builder: (context, state) {
-    // Get projects data from your state management solution or pass it as a parameter
-    final List<dynamic> projects = _getProjects(); // Replace with your method
-    return ResumeGenerator(projects: projects);
-  },
-),
-*/

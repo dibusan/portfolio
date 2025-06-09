@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:portfolio_eriel/app/presentation/home/home_web.dart';
 import 'package:portfolio_eriel/app/presentation/home/responsive_home.dart';
 import 'package:portfolio_eriel/app/presentation/resume/resume_page.dart';
+import 'package:portfolio_eriel/app/presentation/resume_generator/pages/resume_generator_page.dart';
 import 'package:portfolio_eriel/app/presentation/resume_pdf/resume.dart';
 import 'package:portfolio_eriel/app/presentation/secret/secret_page.dart';
 import 'package:portfolio_eriel/app/presentation/security/security_page.dart';
@@ -39,7 +40,7 @@ final router = GoRouter(
     GoRoute(
       path: '/resume',
       name: AppRoute.resumePage.name,
-      builder: (context, state) => ResumePage(),
+      builder: (context, state) => const ResumeGeneratorPage(),
     ),
     GoRoute(
       path: '/home',

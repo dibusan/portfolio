@@ -8,7 +8,7 @@ import 'package:portfolio_eriel/domain/entities/__.dart';
 import '../../bloc/project/project_bloc.dart';
 
 class ResumePage extends StatefulWidget {
-  ResumePage({Key? key}) : super(key: key);
+  const ResumePage({super.key});
 
   @override
   State<ResumePage> createState() => _ResumePageState();
@@ -102,9 +102,6 @@ class _ResumePageState extends State<ResumePage> {
     return BlocBuilder<ProjectBloc, ProjectState>(
       builder: (context, state) {
         _projects = state.projects;
-        _allTechTags = extractTechTags(_projects);
-        _allIndustries = extractIndustries(_projects);
-
         return Scaffold(
           body: ResumeGenerator(
             projects: _projects,
