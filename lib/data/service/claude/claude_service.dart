@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:portfolio_eriel/domain/entities/__.dart';
 
 // Service for interacting with Claude API
 class ClaudeService {
@@ -10,19 +11,19 @@ class ClaudeService {
     return htmlText.replaceAll(exp, '');
   }
 
-  String _formatDuration(String? startDate, String? endDate) {
+  String _formatDuration(DateTime? startDate, DateTime? endDate) {
     if (startDate == null) return 'N/A';
 
-    final start = DateTime.tryParse(startDate)?.toIso8601String().substring(0, 7) ?? 'N/A';
+    final start = startDate.toIso8601String().substring(0, 7);
     final end = endDate != null
-        ? DateTime.tryParse(endDate)?.toIso8601String().substring(0, 7) ?? 'Present'
+        ? endDate.toIso8601String().substring(0, 7)
         : 'Present';
 
     return '$start to $end';
   }
 
   Future<String> generateResumeContent({
-    required List<dynamic> projects,
+    required List<Project> projects,
     required List<String> focusedTechStack,
     String? additionalContext,
   }) async {
@@ -59,7 +60,7 @@ class ClaudeService {
   }
 
   Future<String> generateResumeFromJobDescription({
-    required List<dynamic> projects,
+    required List<Project> projects,
     required String jobDescription,
     String? additionalContext,
   }) async {
@@ -67,12 +68,12 @@ class ClaudeService {
       // Prepare the projects data in a cleaner format for the prompt
       final projectsData = projects.map((project) {
         return {
-          'title': project['title'],
-          'role': project['subtitle'],
-          'company': project['projectOwner'],
-          'description': _stripHtmlTags(project['description'] ?? ''),
-          'technologies': project['techTags'],
-          'duration': _formatDuration(project['startDate'], project['endDate']),
+          'title': project.title,
+          'role': project.subtitle,
+          'company': project.projectOwner,
+          'description': _stripHtmlTags(project.description ?? ''),
+          'technologies': project.techTags,
+          'duration': _formatDuration(project.startDate, project.endDate),
         };
       }).toList();
 

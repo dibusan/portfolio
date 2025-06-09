@@ -22,19 +22,27 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
     }
 
     on<ProjectEventStarted>((event, emit) async {
-      DeveloperInfo developerInfo = await CloudFireStore.instance.getInfo(defaultDeveloper);
-      emit(state.copyWith(loading: false, requesting: false, developer: developerInfo.developer, projects: developerInfo.projects));
+      DeveloperInfo developerInfo =
+          await CloudFireStore.instance.getInfo(defaultDeveloper);
+      emit(state.copyWith(
+          loading: false,
+          requesting: false,
+          developer: developerInfo.developer,
+          projects: developerInfo.projects));
     });
     on<DeveloperEventUpdate>((event, emit) async {
       if (state.developer == null) return;
       emit(state.copyWith(requesting: true));
-      final result = await CloudFireStore.instance.updateDeveloper(state.developer!.id, event.developer);
+      final result = await CloudFireStore.instance
+          .updateDeveloper(state.developer!.id, event.developer);
       event.onDone?.call(result ?? state.developer!);
-      emit(state.copyWith(developer: result ?? state.developer, requesting: false));
+      emit(state.copyWith(
+          developer: result ?? state.developer, requesting: false));
     });
     on<ProjectEventDelete>((event, emit) async {
       emit(state.copyWith(requesting: true));
-      final resultDelete = await CloudFireStore.instance.deleteProject(developerId: state.developer!.id, projectId: event.projectId);
+      final resultDelete = await CloudFireStore.instance.deleteProject(
+          developerId: state.developer!.id, projectId: event.projectId);
       if (resultDelete) {
         event.onDelete?.call();
         add(const ProjectEventStarted());
@@ -44,11 +52,15 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
     });
     on<ProjectEventClose>((event, emit) async {
       for (var url in event.removeTempFile) {
-        final exist = state.tempFileUploaded.where((e) => e == url).firstOrNull != null;
+        final exist =
+            state.tempFileUploaded.where((e) => e == url).firstOrNull != null;
         if (!exist) continue;
-        final (bool, Exception?) result = await FireStoreService.deleteFile(url);
+        final (bool, Exception?) result =
+            await FireStoreService.deleteFile(url);
         if (result.$1) {
-          emit(state.copyWith(tempFileUploaded: state.tempFileUploaded.where((e) => e != url).toList()));
+          emit(state.copyWith(
+              tempFileUploaded:
+                  state.tempFileUploaded.where((e) => e != url).toList()));
         }
       }
 
@@ -59,9 +71,11 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
       if (state.developer == null) return add(const ProjectEventClose());
       Project? project;
       if (event.projectId == null) {
-        project = await CloudFireStore.instance.createProject(state.developer!.id, event.project);
+        project = await CloudFireStore.instance
+            .createProject(state.developer!.id, event.project);
       } else {
-        project = await CloudFireStore.instance.updateProject(state.developer!.id, event.projectId!, event.project.toJson());
+        project = await CloudFireStore.instance.updateProject(
+            state.developer!.id, event.projectId!, event.project.toJson());
       }
 
       if (project == null) return add(const ProjectEventClose());
@@ -71,7 +85,8 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
     });
     on<ProjectEventUploadFile>((event, emit) async {
       emit(state.copyWith(requesting: true));
-      FilePickerResult? result = await FilePicker.platform.pickFiles(type: FileType.image, allowMultiple: event.multiple);
+      FilePickerResult? result = await FilePicker.platform
+          .pickFiles(type: FileType.image, allowMultiple: event.multiple);
       if (result == null) return add(const ProjectEventClose());
       List<String> uploadedFiles = [];
 
@@ -79,7 +94,8 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
         Uint8List? bytes = file.bytes;
         String? name = file.name;
         if (bytes == null || state.developer == null) continue;
-        final (String?, Exception?) uploadResult = await FireStoreService.uploadFile(
+        final (String?, Exception?) uploadResult =
+            await FireStoreService.uploadFile(
           developer: state.developer!,
           project: event.project,
           bytes: bytes,
@@ -90,12 +106,14 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
         uploadedFiles.add(uploadResult.$1!);
       }
 
-      emit(state.copyWith(tempFileUploaded: [...state.tempFileUploaded, ...uploadedFiles]));
+      emit(state.copyWith(
+          tempFileUploaded: [...state.tempFileUploaded, ...uploadedFiles]));
       event.onResult?.call(uploadedFiles);
       return add(const ProjectEventClose());
     });
     on<ProjectEventBatchUpload>((event, emit) async {
-      List<Project> projects = await CloudFireStore.instance.createMultipleProjects(state.developer!.id, event.projects);
+      List<Project> projects = await CloudFireStore.instance
+          .createMultipleProjects(state.developer!.id, event.projects);
     });
   }
 }

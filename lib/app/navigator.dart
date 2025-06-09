@@ -39,7 +39,7 @@ final router = GoRouter(
     GoRoute(
       path: '/resume',
       name: AppRoute.resumePage.name,
-      builder: (context, state) => const ResumePage(),
+      builder: (context, state) => ResumePage(),
     ),
     GoRoute(
       path: '/home',

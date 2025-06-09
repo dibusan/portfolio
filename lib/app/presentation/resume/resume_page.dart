@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'dart:convert';
 
 import 'package:portfolio_eriel/app/presentation/resume/resume_generator.dart';
 import 'package:portfolio_eriel/domain/entities/__.dart';
 
-class ResumePage extends StatefulWidget {
-  const ResumePage({Key? key, required List<Project> this.projects}) : super(key: key);
+import '../../bloc/project/project_bloc.dart';
 
-  final List<dynamic> projects;
+class ResumePage extends StatefulWidget {
+  ResumePage({Key? key}) : super(key: key);
 
   @override
   State<ResumePage> createState() => _ResumePageState();
@@ -15,6 +16,8 @@ class ResumePage extends StatefulWidget {
 
 class _ResumePageState extends State<ResumePage> {
   final TextEditingController _promptController = TextEditingController();
+
+  List<Project> _projects = [];
 
   late List<dynamic> _filteredProjects;
   List<String> _allTechTags = [];
@@ -24,42 +27,47 @@ class _ResumePageState extends State<ResumePage> {
   void initState() {
     super.initState();
 
+    setState(() {
+      _allTechTags = extractTechTags(_projects);
+      _allIndustries = extractIndustries(_projects);
+    });
+  }
+
+  List<String> extractTechTags(List<Project> projects) {
     // Extract all unique tech tags
     final Set<String> techTags = {};
-    for (var project in widget.projects) {
-      if (project['techTags'] != null) {
-        for (var tag in project['techTags']) {
-          techTags.add(tag);
-        }
+    for (var project in projects) {
+      for (var tag in project.techTags) {
+        techTags.add(tag);
       }
     }
-    _allTechTags = techTags.toList()..sort();
+    return techTags.toList()..sort();
+  }
 
+  List<String> extractIndustries(List<Project> projects) {
     // Extract all unique industries
     final Set<String> industries = {};
-    for (var project in widget.projects) {
-      if (project['industries'] != null) {
-        for (var industry in project['industries']) {
-          industries.add(industry);
-        }
+    for (var project in projects) {
+      for (var industry in project.industries) {
+        industries.add(industry);
       }
     }
-    _allIndustries = industries.toList()..sort();
+    return industries.toList()..sort();
   }
 
   void _filterProjects(String query) {
     setState(() {
       if (query.isEmpty) {
-        _filteredProjects = List.from(widget.projects);
+        _filteredProjects = List.from(_projects);
       } else {
         query = query.toLowerCase();
-        _filteredProjects = widget.projects.where((project) {
-          final title = project['title']?.toLowerCase() ?? '';
-          final description = project['description']?.toLowerCase() ?? '';
-          final subtitle = project['subtitle']?.toLowerCase() ?? '';
-          final projectOwner = project['projectOwner']?.toLowerCase() ?? '';
-          final techTags = project['techTags'] ?? [];
-          final industries = project['industries'] ?? [];
+        _filteredProjects = _projects.where((project) {
+          final title = project.title.toLowerCase() ?? '';
+          final description = project.description?.toLowerCase() ?? '';
+          final subtitle = project.subtitle?.toLowerCase() ?? '';
+          final projectOwner = project.projectOwner?.toLowerCase() ?? '';
+          final techTags = project.techTags;
+          final industries = project.industries;
 
           // Check if query matches any of the project fields
           final titleMatch = title.contains(query);
@@ -91,8 +99,18 @@ class _ResumePageState extends State<ResumePage> {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
 
-    return Scaffold(
-      body: ResumeGenerator(projects: widget.projects,),
+    return BlocBuilder<ProjectBloc, ProjectState>(
+      builder: (context, state) {
+        _projects = state.projects;
+        _allTechTags = extractTechTags(_projects);
+        _allIndustries = extractIndustries(_projects);
+
+        return Scaffold(
+          body: ResumeGenerator(
+            projects: _projects,
+          ),
+        );
+      },
     );
   }
 
@@ -104,7 +122,7 @@ class _ResumePageState extends State<ResumePage> {
 }
 
 class ProjectCard extends StatelessWidget {
-  final Map<String, dynamic> project;
+  final Project project;
 
   const ProjectCard({Key? key, required this.project}) : super(key: key);
 
@@ -117,11 +135,11 @@ class ProjectCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              if (project['logoUrl'] != null)
+              if (project.logoUrl != null)
                 ClipRRect(
                   borderRadius: BorderRadius.circular(8.0),
                   child: Image.network(
-                    project['logoUrl'],
+                    project.logoUrl ?? '',
                     width: 48,
                     height: 48,
                     errorBuilder: (context, error, stackTrace) {
@@ -140,16 +158,16 @@ class ProjectCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      project['title'] ?? 'Untitled Project',
+                      project.title,
                       style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
                       ),
                     ),
-                    if (project['subtitle'] != null)
+                    if (project.subtitle != null)
                       Text(
-                        project['subtitle'],
+                        project.subtitle!,
                         style: TextStyle(
                           fontSize: 14,
                           color: Colors.grey[400],
@@ -158,7 +176,7 @@ class ProjectCard extends StatelessWidget {
                   ],
                 ),
               ),
-              if (project['appLink'] != null)
+              if (project.appLink != null)
                 IconButton(
                   icon: const Icon(Icons.link, color: Colors.blue),
                   onPressed: () {
@@ -168,9 +186,9 @@ class ProjectCard extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 12),
-          if (project['description'] != null)
+          if (project.description != null)
             Text(
-              _stripHtmlTags(project['description']),
+              _stripHtmlTags(project.description!),
               maxLines: 3,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
@@ -180,12 +198,11 @@ class ProjectCard extends StatelessWidget {
               ),
             ),
           const SizedBox(height: 8),
-          if (project['techTags'] != null &&
-              (project['techTags'] as List).isNotEmpty)
+          if (project.techTags.isNotEmpty)
             Wrap(
               spacing: 8,
               runSpacing: 4,
-              children: (project['techTags'] as List)
+              children: project.techTags
                   .take(5)
                   .map((tag) => Container(
                         padding: const EdgeInsets.symmetric(
@@ -215,25 +232,3 @@ class ProjectCard extends StatelessWidget {
   }
 }
 
-// Usage in main.dart
-/*
-void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Portfolio Showcase',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-      home: const PortfolioLayout(),
-    );
-  }
-}
-*/

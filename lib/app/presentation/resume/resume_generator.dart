@@ -1,12 +1,13 @@
 // UI Widget for generating resumes with tabbed input selection
 import 'package:flutter/material.dart';
+import 'package:portfolio_eriel/domain/entities/__.dart';
 
 import '../../../data/service/claude/claude_service.dart';
 
 class ResumeGenerator extends StatefulWidget {
-  final List<dynamic> projects;
+  final List<Project> projects;
 
-  const ResumeGenerator({Key? key, required this.projects}) : super(key: key);
+  const ResumeGenerator({super.key, required this.projects});
 
   @override
   State<ResumeGenerator> createState() => _ResumeGeneratorState();
@@ -15,9 +16,9 @@ class ResumeGenerator extends StatefulWidget {
 class _ResumeGeneratorState extends State<ResumeGenerator>
     with SingleTickerProviderStateMixin {
   final TextEditingController _additionalContextController =
-  TextEditingController();
+      TextEditingController();
   final TextEditingController _jobDescriptionController =
-  TextEditingController();
+      TextEditingController();
 
   String? _generatedResume;
   bool _isLoading = false;
@@ -41,11 +42,9 @@ class _ResumeGeneratorState extends State<ResumeGenerator>
 
   void _extractTechTags() {
     final Set<String> techTags = {};
-    for (var project in widget.projects) {
-      if (project['techTags'] != null) {
-        for (var tag in project['techTags']) {
-          techTags.add(tag.toString());
-        }
+    for (Project project in widget.projects) {
+      for (var tag in project.techTags) {
+        techTags.add(tag.toString());
       }
     }
     _allTechTags = techTags.toList()..sort();
@@ -194,7 +193,8 @@ class _ResumeGeneratorState extends State<ResumeGenerator>
           child: TextField(
             controller: _jobDescriptionController,
             decoration: const InputDecoration(
-              hintText: 'Paste the job description here. AI will analyze it to identify the most relevant technologies and skills to highlight in your resume...',
+              hintText:
+                  'Paste the job description here. AI will analyze it to identify the most relevant technologies and skills to highlight in your resume...',
               border: InputBorder.none,
               contentPadding: EdgeInsets.all(16),
             ),
@@ -272,19 +272,18 @@ class _ResumeGeneratorState extends State<ResumeGenerator>
               child: ElevatedButton(
                 onPressed: _isLoading ? null : _generateResume,
                 style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
                 ),
                 child: _isLoading
                     ? const SizedBox(
-                  width: 20,
-                  height: 20,
-                  child: CircularProgressIndicator(strokeWidth: 2),
-                )
-                    : Text(
-                    _currentTabIndex == 0
+                        width: 20,
+                        height: 20,
+                        child: CircularProgressIndicator(strokeWidth: 2),
+                      )
+                    : Text(_currentTabIndex == 0
                         ? 'Generate Resume from Tech Stack'
-                        : 'Generate Resume from Job Description'
-                ),
+                        : 'Generate Resume from Job Description'),
               ),
             ),
 
