@@ -24,6 +24,9 @@ dependencies:
   file_saver: ^0.2.14
   universal_platform: ^1.1.0
   http: ^1.1.0
+  markdown_widget: ^2.3.2+8
+  printing: ^5.14.2
+  htmltopdfwidgets: ^1.1.0
 
 
   # State

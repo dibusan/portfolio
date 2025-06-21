@@ -1,6 +1,11 @@
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:portfolio_eriel/domain/entities/__.dart';
 import 'package:portfolio_eriel/data/service/claude/claude_service.dart';
+import 'package:pdf/pdf.dart';
+import 'package:pdf/widgets.dart' as pw;
+import 'package:printing/printing.dart';
+import 'package:htmltopdfwidgets/htmltopdfwidgets.dart';
 
 abstract class ResumeGeneratorEvent {
   const ResumeGeneratorEvent();
@@ -24,6 +29,15 @@ class ToggleTechTag extends ResumeGeneratorEvent {
 
   @override
   List<Object?> get props => [tag];
+}
+
+class ToggleJob extends ResumeGeneratorEvent {
+  final Project project;
+
+  const ToggleJob(this.project);
+
+  @override
+  List<Object?> get props => [project];
 }
 
 class ClearSelectedTags extends ResumeGeneratorEvent {}
@@ -52,12 +66,21 @@ class GenerateResumeFromJobDescription extends ResumeGeneratorEvent {}
 
 class CopyResumeToClipboard extends ResumeGeneratorEvent {}
 
-class DownloadResumeAsPdf extends ResumeGeneratorEvent {}
+class DownloadResumeAsPdf extends ResumeGeneratorEvent {
+  final String markdown;
+
+  const DownloadResumeAsPdf(this.markdown);
+
+  @override
+  List<Object?> get props => [markdown];
+}
 
 // States
 abstract class ResumeGeneratorState {
   final Map<String, List<String>> techCategories;
   final Set<String> selectedTechTags;
+  final List<Project> jobs;
+  final List<Project> selectedJobs;
   final String jobDescription;
   final String additionalContext;
   final String? generatedResume;
@@ -66,7 +89,9 @@ abstract class ResumeGeneratorState {
 
   const ResumeGeneratorState({
     this.techCategories = const {},
+    this.jobs = const [],
     this.selectedTechTags = const {},
+    this.selectedJobs = const [],
     this.jobDescription = '',
     this.additionalContext = '',
     this.generatedResume,
@@ -76,8 +101,10 @@ abstract class ResumeGeneratorState {
 
   @override
   List<Object?> get props => [
+        jobs,
         techCategories,
         selectedTechTags,
+        selectedJobs,
         jobDescription,
         additionalContext,
         generatedResume,
@@ -90,8 +117,10 @@ class ResumeGeneratorInitial extends ResumeGeneratorState {}
 
 class ResumeGeneratorLoaded extends ResumeGeneratorState {
   const ResumeGeneratorLoaded({
+    required super.jobs,
     required super.techCategories,
     super.selectedTechTags,
+    super.selectedJobs,
     super.jobDescription,
     super.additionalContext,
     super.generatedResume,
@@ -100,8 +129,10 @@ class ResumeGeneratorLoaded extends ResumeGeneratorState {
   });
 
   ResumeGeneratorLoaded copyWith({
+    List<Project>? jobs,
     Map<String, List<String>>? techCategories,
     Set<String>? selectedTechTags,
+    List<Project>? selectedJobs,
     String? jobDescription,
     String? additionalContext,
     String? generatedResume,
@@ -109,8 +140,10 @@ class ResumeGeneratorLoaded extends ResumeGeneratorState {
     bool? isLoading,
   }) {
     return ResumeGeneratorLoaded(
+      jobs: jobs ?? this.jobs,
       techCategories: techCategories ?? this.techCategories,
       selectedTechTags: selectedTechTags ?? this.selectedTechTags,
+      selectedJobs: selectedJobs ?? this.selectedJobs,
       jobDescription: jobDescription ?? this.jobDescription,
       additionalContext: additionalContext ?? this.additionalContext,
       generatedResume: generatedResume ?? this.generatedResume,
@@ -134,14 +167,14 @@ class ResumeCopiedToClipboard extends ResumeGeneratorState {
 class ResumeGeneratorBloc
     extends Bloc<ResumeGeneratorEvent, ResumeGeneratorState> {
   final ClaudeService _claudeService;
-  List<Project> _projects = [];
 
   ResumeGeneratorBloc({
     required ClaudeService claudeService,
   })  : _claudeService = claudeService,
         super(ResumeGeneratorInitial()) {
-    on<InitializeTechStack>(_onInitializeTechStack);
+    on<InitializeTechStack>(_onInitialize);
     on<ToggleTechTag>(_onToggleTechTag);
+    on<ToggleJob>(_onToggleJob);
     on<ClearSelectedTags>(_onClearSelectedTags);
     on<UpdateJobDescription>(_onUpdateJobDescription);
     on<UpdateAdditionalContext>(_onUpdateAdditionalContext);
@@ -151,14 +184,15 @@ class ResumeGeneratorBloc
     on<DownloadResumeAsPdf>(_onDownloadResumeAsPdf);
   }
 
-  void _onInitializeTechStack(
+  void _onInitialize(
     InitializeTechStack event,
     Emitter<ResumeGeneratorState> emit,
   ) {
-    _projects = event.projects;
     final techCategories = _categorizeTechTags(event.projects);
 
     emit(ResumeGeneratorLoaded(
+      jobs: event.projects,
+      selectedJobs: event.projects,
       techCategories: techCategories,
     ));
   }
@@ -179,6 +213,27 @@ class ResumeGeneratorBloc
 
       emit(currentState.copyWith(
         selectedTechTags: updatedTags,
+        errorMessage: null,
+      ));
+    }
+  }
+
+  void _onToggleJob(
+    ToggleJob event,
+    Emitter<ResumeGeneratorState> emit,
+  ) {
+    if (state is ResumeGeneratorLoaded) {
+      final currentState = state as ResumeGeneratorLoaded;
+      final updatedJobs = List<Project>.from(currentState.selectedJobs);
+
+      if (updatedJobs.contains(event.project)) {
+        updatedJobs.remove(event.project);
+      } else {
+        updatedJobs.add(event.project);
+      }
+
+      emit(currentState.copyWith(
+        selectedJobs: updatedJobs,
         errorMessage: null,
       ));
     }
@@ -229,6 +284,12 @@ class ResumeGeneratorBloc
     if (state is ResumeGeneratorLoaded) {
       final currentState = state as ResumeGeneratorLoaded;
 
+      if (currentState.selectedJobs.isEmpty) {
+        emit(currentState.copyWith(
+          errorMessage: 'Please select at least one jobs',
+        ));
+        return;
+      }
       if (currentState.selectedTechTags.isEmpty) {
         emit(currentState.copyWith(
           errorMessage: 'Please select at least one technology to focus on',
@@ -240,7 +301,7 @@ class ResumeGeneratorBloc
 
       try {
         final resume = await _claudeService.generateResumeContent(
-          projects: _projects,
+          projects: state.selectedJobs,
           focusedTechStack: currentState.selectedTechTags.toList(),
           additionalContext: currentState.additionalContext.isNotEmpty
               ? currentState.additionalContext
@@ -278,7 +339,7 @@ class ResumeGeneratorBloc
 
       try {
         final resume = await _claudeService.generateResumeFromJobDescription(
-          projects: _projects,
+          projects: state.selectedJobs,
           jobDescription: currentState.jobDescription,
           additionalContext: currentState.additionalContext.isNotEmpty
               ? currentState.additionalContext
@@ -322,8 +383,21 @@ class ResumeGeneratorBloc
   void _onDownloadResumeAsPdf(
     DownloadResumeAsPdf event,
     Emitter<ResumeGeneratorState> emit,
-  ) {
-    // TODO: Implement PDF download
+  ) async {
+    try {
+      final pdf = pw.Document();
+      final List<Widget> markdownWidgets = await HTMLToPdf().convertMarkdown(event.markdown);
+
+      pdf.addPage(MultiPage(maxPages: 200, build: (context) => markdownWidgets));
+
+      final Uint8List pdfBytes = await pdf.save();
+
+      await Printing.layoutPdf(
+        onLayout: (PdfPageFormat format) async => pdfBytes,
+      );
+    } catch (e) {
+      print('Error generating PDF: $e');
+    }
   }
 
   Map<String, List<String>> _categorizeTechTags(List<Project> projects) {

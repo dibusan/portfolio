@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:markdown_widget/markdown_widget.dart';
 
 class GeneratedResumeViewer extends StatelessWidget {
   final String? resume;
   final VoidCallback onCopy;
-  final VoidCallback onDownload;
+  final Function(String markdown) onDownload;
 
   const GeneratedResumeViewer({
     super.key,
@@ -63,14 +64,14 @@ class GeneratedResumeViewer extends StatelessWidget {
             icon: Icons.copy,
             tooltip: 'Copy to clipboard',
             backgroundColor: Colors.blue.shade50,
-            onPressed: onCopy,
+            onPressed: resume != null ? onCopy : null,
           ),
           const SizedBox(width: 8),
           _ActionButton(
             icon: Icons.download,
             tooltip: 'Download as Markdown',
             backgroundColor: Colors.green.shade50,
-            onPressed: onDownload,
+            onPressed: resume != null ? () => onDownload(resume!) : null,
           ),
         ],
       ),
@@ -80,16 +81,7 @@ class GeneratedResumeViewer extends StatelessWidget {
   Widget _buildResumeContent() {
     return Container(
       padding: const EdgeInsets.all(24),
-      child: SingleChildScrollView(
-        child: SelectableText(
-          resume ?? '',
-          style: const TextStyle(
-            fontSize: 15,
-            height: 1.6,
-            fontFamily: 'monospace',
-          ),
-        ),
-      ),
+      child: MarkdownWidget(data: resume ?? ''),
     );
   }
 }
@@ -98,13 +90,13 @@ class _ActionButton extends StatelessWidget {
   final IconData icon;
   final String tooltip;
   final Color backgroundColor;
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
 
   const _ActionButton({
     required this.icon,
     required this.tooltip,
     required this.backgroundColor,
-    required this.onPressed,
+    this.onPressed,
   });
 
   @override

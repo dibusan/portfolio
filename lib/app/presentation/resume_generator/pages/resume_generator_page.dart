@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:portfolio_eriel/app/bloc/project/project_bloc.dart';
+import 'package:portfolio_eriel/app/presentation/resume_generator/widgets/job_selector.dart';
 import 'package:portfolio_eriel/app/presentation/resume_generator/widgets/resume_generator_header.dart';
 import 'package:portfolio_eriel/data/service/claude/claude_service.dart';
 import '../bloc/resume_generator_bloc.dart';
@@ -102,9 +103,9 @@ class _ResumeGeneratorPageState extends State<ResumeGeneratorPage>
                                   onCopy: () => context
                                       .read<ResumeGeneratorBloc>()
                                       .add(CopyResumeToClipboard()),
-                                  onDownload: () => context
+                                  onDownload: (markdown) => context
                                       .read<ResumeGeneratorBloc>()
-                                      .add(DownloadResumeAsPdf()),
+                                      .add(DownloadResumeAsPdf(markdown)),
                                 )),
                           ],
                         ),
@@ -129,6 +130,12 @@ class _ResumeGeneratorPageState extends State<ResumeGeneratorPage>
       return Column(
         spacing: 16,
         children: [
+          JobSelector(
+            jobs: state.jobs,
+            selectedJobs: state.selectedJobs,
+            onTagToggled: (job) =>
+                context.read<ResumeGeneratorBloc>().add(ToggleJob(job)),
+          ),
           Expanded(
             child: TabBarView(
               controller: _tabController,
