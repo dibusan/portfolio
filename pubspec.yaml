@@ -23,6 +23,10 @@ dependencies:
   pdfrx: ^1.0.93
   file_saver: ^0.2.14
   universal_platform: ^1.1.0
+  http: ^1.1.0
+  markdown_widget: ^2.3.2+8
+  printing: ^5.14.2
+  htmltopdfwidgets: ^1.1.0
 
 
   # State
@@ -44,8 +48,15 @@ dependencies:
   carousel_slider: ^5.0.0
   json_annotation: ^4.9.0
   glass_kit: ^4.0.1
-  html_editor_enhanced: ^2.6.0
-  flutter_widget_from_html: ^0.15.3
+
+  # TODO este override es necesario para evitar el error: Undefined name 'platformViewRegistry'
+  # Utilizamos el fork de alguien q lo reparo en este paquete, pero debemos regresar al paquete
+  # original cuando se arregle ese error.
+  # html_editor_enhanced: ^2.6.0
+  html_editor_enhanced:
+    git: https://github.com/eoinzy/html-editor-enhanced
+
+  flutter_widget_from_html: ^0.16.0
   super_banners: ^0.0.1
 
   share_plus: ^10.1.4
