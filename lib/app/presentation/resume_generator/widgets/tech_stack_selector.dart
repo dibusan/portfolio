@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class TechStackSelector extends StatelessWidget {
+class TechStackSelector extends StatefulWidget {
   final Map<String, List<String>> techCategories;
   final Set<String> selectedTags;
   final Function(String) onTagToggled;
@@ -13,6 +13,15 @@ class TechStackSelector extends StatelessWidget {
     required this.onTagToggled,
     required this.onClearAll,
   });
+
+  @override
+  State<TechStackSelector> createState() => _TechStackSelectorState();
+}
+
+class _TechStackSelectorState extends State<TechStackSelector> {
+  final TextEditingController _searchController = TextEditingController();
+
+  String _searchQuery = '';
 
   @override
   Widget build(BuildContext context) {
@@ -38,18 +47,43 @@ class TechStackSelector extends StatelessWidget {
   Widget _buildHeader(BuildContext context) {
     return Row(
       children: [
-        Icon(Icons.code, color: Theme.of(context).primaryColor),
-        const SizedBox(width: 8),
-        const Text(
-          'Select technologies',
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-        ),
-        const Spacer(),
-        if (selectedTags.isNotEmpty)
-          TextButton(
-            onPressed: onClearAll,
-            child: const Text('Clear all'),
+        Expanded(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Icon(Icons.code, color: Theme.of(context).primaryColor),
+              const SizedBox(width: 8),
+              Text(
+                'Select technologies${widget.selectedTags.isEmpty ? '' : ' (${widget.selectedTags.length})'}',
+                style:
+                    const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+            ],
           ),
+        ),
+        Expanded(
+          child: TextField(
+            controller: _searchController,
+            decoration: InputDecoration(
+              hintText: 'Search technologies...',
+              prefixIcon: const Icon(Icons.search),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              suffixIcon: widget.selectedTags.isEmpty
+                  ? null
+                  : TextButton(
+                      onPressed: widget.onClearAll,
+                      child: const Text('Clear all'),
+                    ),
+            ),
+            onChanged: (value) {
+              _searchQuery = value.toLowerCase();
+              (context as Element).markNeedsBuild();
+            },
+          ),
+        ),
       ],
     );
   }
@@ -58,14 +92,16 @@ class TechStackSelector extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: techCategories.entries.map((entry) {
+        children: widget.techCategories.entries.map((entry) {
           return Padding(
             padding: const EdgeInsets.only(bottom: 20),
             child: _TechCategorySection(
               category: entry.key,
-              tags: entry.value,
-              selectedTags: selectedTags,
-              onTagToggled: onTagToggled,
+              tags: entry.value
+                  .where((tag) => tag.toLowerCase().contains(_searchQuery))
+                  .toList(),
+              selectedTags: widget.selectedTags,
+              onTagToggled: widget.onTagToggled,
             ),
           );
         }).toList(),
@@ -85,7 +121,7 @@ class TechStackSelector extends StatelessWidget {
           Icon(Icons.info_outline, size: 20, color: Colors.blue.shade700),
           const SizedBox(width: 8),
           Text(
-            '${selectedTags.length} technologies selected',
+            '${widget.selectedTags.length} technologies selected',
             style: TextStyle(
               color: Colors.blue.shade700,
               fontWeight: FontWeight.w500,
