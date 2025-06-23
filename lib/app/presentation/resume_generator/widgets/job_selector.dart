@@ -34,7 +34,7 @@ class _JobSelectorState extends State<JobSelector> {
           borderRadius: BorderRadius.circular(16),
           border: Border.all(color: Colors.white, width: 1)),
       child: Theme(
-        data: ThemeData().copyWith(dividerColor: Colors.transparent),
+        data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
         child: ExpansionTile(
           dense: true,
           title: IntrinsicHeight(
@@ -63,16 +63,11 @@ class _JobSelectorState extends State<JobSelector> {
                         });
                       },
                       decoration: InputDecoration(
-                        hintText: 'Search',
-                        contentPadding: const EdgeInsets.symmetric(
-                            horizontal: 12, vertical: 8),
-                        filled: true,
-                        fillColor: Colors.white70,
+                        prefixIcon: const Icon(Icons.search),
+                        hintText: 'Search Jobs...',
                         border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(16),
-                          borderSide: BorderSide.none,
+                          borderRadius: BorderRadius.circular(12),
                         ),
-                        isDense: false,
                       ),
                     ),
                   ),
