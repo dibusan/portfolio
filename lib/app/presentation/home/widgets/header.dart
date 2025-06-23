@@ -44,7 +44,9 @@ class HeaderAppBar extends StatelessWidget {
 
   static aboutMe(BuildContext context, {Developer? developer}) {
     return TextButton(
-      onPressed: developer == null ? null : () => AboutMeDialog.show(context, developer: developer),
+      onPressed: developer == null
+          ? null
+          : () => AboutMeDialog.show(context, developer: developer),
       child: const Text(
         "About me",
         style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
@@ -109,21 +111,24 @@ class HeaderAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<FilterBloc, FilterState>(
       builder: (context, state) {
-        return Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Flexible(child: HeaderAppBar.searchField(context)),
-            const Expanded(child: SizedBox()),
-            const HSp16(),
-            BlocBuilder<SecurityBloc, SecurityState>(builder: (_, sec) => sec.isAuth ? HeaderAppBar.secretPage(context) : const SizedBox()),
-            const HSp16(),
-            HeaderAppBar.pdfReport(context),
-            const HSp16(),
-            HeaderAppBar.aboutMe(context, developer: developer),
-            const HSp16(),
-            HeaderAppBar.contactMe(context, developer: developer)
-          ],
-        );
+        return BlocBuilder<SecurityBloc, SecurityState>(
+            builder: (context, security) {
+          return Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Flexible(child: HeaderAppBar.searchField(context)),
+              const Expanded(child: SizedBox()),
+              if (security.isAuth) const HSp16(),
+              if (security.isAuth) HeaderAppBar.secretPage(context),
+              if (security.isAuth) const HSp16(),
+              if (security.isAuth) HeaderAppBar.pdfReport(context),
+              const HSp16(),
+              HeaderAppBar.aboutMe(context, developer: developer),
+              const HSp16(),
+              HeaderAppBar.contactMe(context, developer: developer)
+            ],
+          );
+        });
       },
     );
   }
